@@ -8,9 +8,10 @@ import { LcuDirective } from './directives/lcu.directive';
 import { LcuSetupManageElementComponent } from './elements/manage/manage.component';
 import { LcuSetupAdminElementComponent } from './elements/admin/admin.component';
 import { LcuSetupDevicesElementComponent } from './elements/devices/devices.component';
+import { LcuSetupSetupElementComponent } from './elements/setup/setup.component';
 
 @NgModule({
-  declarations: [LcuComponent, LcuDirective, LcuSetupManageElementComponent, LcuSetupAdminElementComponent, LcuSetupDevicesElementComponent],
+  declarations: [LcuComponent, LcuDirective, LcuSetupManageElementComponent, LcuSetupAdminElementComponent, LcuSetupDevicesElementComponent, LcuSetupSetupElementComponent],
   imports: [
     FathymSharedModule,
     FormsModule,
@@ -18,8 +19,8 @@ import { LcuSetupDevicesElementComponent } from './elements/devices/devices.comp
     FlexLayoutModule,
     MaterialModule
   ],
-  exports: [LcuComponent, LcuDirective, LcuSetupManageElementComponent, LcuSetupAdminElementComponent, LcuSetupDevicesElementComponent],
-  entryComponents: [LcuSetupManageElementComponent, LcuSetupAdminElementComponent, LcuSetupDevicesElementComponent]
+  exports: [LcuComponent, LcuDirective, LcuSetupManageElementComponent, LcuSetupAdminElementComponent, LcuSetupDevicesElementComponent, LcuSetupSetupElementComponent],
+  entryComponents: [LcuSetupManageElementComponent, LcuSetupAdminElementComponent, LcuSetupDevicesElementComponent, LcuSetupSetupElementComponent]
 })
 export class LcuSetupModule {
   static forRoot(): ModuleWithProviders<LcuSetupModule> {

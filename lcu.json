@@ -17,6 +17,9 @@
 			},
 			"devices": {
 				"element": "lcu-setup-devices-element"
+			},
+			"setup": {
+				"element": "lcu-setup-setup-element"
 			}
 		},
 		"elements": {},

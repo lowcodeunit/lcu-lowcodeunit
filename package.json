@@ -2,6 +2,7 @@
 	"name": "@iot-ensemble/lcu-setup",
 	"version": "0.0.1",
 	"scripts": {
+		"build:app-host": "ng build app-host --prod",
 		"build:common": "ng build common",
 		"build:demo": "ng build demo --prod",
 		"build:lcu": "ng build lcu --prod --single-bundle && npm run pack",
@@ -9,7 +10,8 @@
 		"demo": "npm run build:common && npm run start:demo",
 		"demo:lcu": "npm run build:common && npm run build:lcu && npm run start:demo",
 		"deploy": "npm version patch && npm run deploy:all",
-		"deploy:all": "npm run deploy:common && npm run deploy:lcu && npm run deploy:demo && npm run deploy:setup",
+		"deploy:all": "npm run deploy:common && npm run deploy:lcu && npm run deploy:demo && npm run deploy:setup && npm run deploy:app-host",
+		"deploy:app-host": "npm version patch --prefix projects/app-host && npm run build:app-host && npm publish ./dist/app-host --access public",
 		"deploy:common": "npm version patch --prefix projects/common && npm run build:common && npm publish ./dist/common --access public",
 		"deploy:demo": "npm version patch --prefix projects/demo && npm run build:demo && npm publish ./dist/demo --access public",
 		"deploy:lcu": "npm version patch --prefix projects/lcu && npm run build:lcu && npm publish ./dist/lcu --access public",
