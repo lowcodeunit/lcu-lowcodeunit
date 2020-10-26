@@ -7,3 +7,5 @@ export * from './lib/state/lcu-management-state.context';
 export * from './lib/state/lcu-management.state';
 export * from './lib/utils/lcu.utils';
 export * from './lib/elements/manage/manage.component';
+export * from './lib/elements/admin/admin.component';
+export * from './lib/elements/devices/devices.component';

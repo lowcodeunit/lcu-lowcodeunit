@@ -11,6 +11,12 @@
 		"solutions": {
 			"manage": {
 				"element": "lcu-setup-manage-element"
+			},
+			"admin": {
+				"element": "lcu-setup-admin-element"
+			},
+			"devices": {
+				"element": "lcu-setup-devices-element"
 			}
 		},
 		"elements": {},

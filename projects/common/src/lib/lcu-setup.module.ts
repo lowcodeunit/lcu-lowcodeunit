@@ -6,9 +6,11 @@ import { LcuService } from './services/lcu.service';
 import { LcuComponent } from './controls/lcu/lcu.component';
 import { LcuDirective } from './directives/lcu.directive';
 import { LcuSetupManageElementComponent } from './elements/manage/manage.component';
+import { LcuSetupAdminElementComponent } from './elements/admin/admin.component';
+import { LcuSetupDevicesElementComponent } from './elements/devices/devices.component';
 
 @NgModule({
-  declarations: [LcuComponent, LcuDirective, LcuSetupManageElementComponent],
+  declarations: [LcuComponent, LcuDirective, LcuSetupManageElementComponent, LcuSetupAdminElementComponent, LcuSetupDevicesElementComponent],
   imports: [
     FathymSharedModule,
     FormsModule,
@@ -16,8 +18,8 @@ import { LcuSetupManageElementComponent } from './elements/manage/manage.compone
     FlexLayoutModule,
     MaterialModule
   ],
-  exports: [LcuComponent, LcuDirective, LcuSetupManageElementComponent],
-  entryComponents: [LcuSetupManageElementComponent]
+  exports: [LcuComponent, LcuDirective, LcuSetupManageElementComponent, LcuSetupAdminElementComponent, LcuSetupDevicesElementComponent],
+  entryComponents: [LcuSetupManageElementComponent, LcuSetupAdminElementComponent, LcuSetupDevicesElementComponent]
 })
 export class LcuSetupModule {
   static forRoot(): ModuleWithProviders<LcuSetupModule> {
