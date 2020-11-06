@@ -1,3 +1,44 @@
-<h2>LcuSetup Manage Next Steps</h2>
+<div *ngIf="!State.Loading">
+  <div class="header">
+    <h2>Welcome to IoT Ensemble</h2>
 
-<p>Do stuff and things!</p>
+    <p>You can use this dashboard to get your data flowing.</p>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div fxFlex="50%">
+      <div class="emulated-devices">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title></mat-card-title>
+          </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+
+    <div fxFlex="50%">
+      <div class="devices-dashboard">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="devices-telemetry">
+
+  </div>
+
+  <div class="storage-access">
+
+  </div>
+</div>
+
+<div *ngIf="State.Loading">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    class="spinner-container"
+  >
+    <mat-spinner diameter="75"></mat-spinner>
+    <div class="spinner-logo" logo-alt="Fathym Logo"></div>
+  </div>
+</div>
