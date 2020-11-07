@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  <button
+    mat-icon-button
+    class="menu-button"
+    (click)="MenuClick($event)"
+    *ngIf="ShowMenu"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <img src="assets/img/logo.svg" class="logo" />
+
+  <a mat-button href="/">{{ Text }}</a>
+
+  <div class="filler"></div>
+</mat-toolbar>

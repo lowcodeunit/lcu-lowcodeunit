@@ -5,6 +5,8 @@ export class IoTEnsembleState {
 
   public Devices?: IoTEnsembleDeviceInfo[];
 
+  public Drawers?: IoTEnsembleDrawersConfig[];
+
   public Emulated?: EmulatedDeviceInfo;
 
   public Loading?: boolean;
@@ -16,6 +18,14 @@ export class IoTEnsembleState {
   public Storage?: IoTEnsembleStorageConfiguration[];
 
   public UserEnterpriseLookup?: string;
+}
+
+export class IoTEnsembleDrawersConfig {
+  public DetailsOpened: boolean;
+
+  public HasBackdrop: boolean;
+
+  public NavOpened: boolean;
 }
 
 export class EmulatedDeviceInfo {

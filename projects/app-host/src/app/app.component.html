@@ -1,0 +1,28 @@
+<div class="page">
+  <lcu-header
+    class="header"
+    [show-menu]="IsMobile"
+    (menu-click)="HeaderMenuClicked($event)"
+  ></lcu-header>
+
+  <mat-drawer-container class="drawers" [hasBackdrop]="IsMobile">
+    <mat-drawer class="nav-drawer" opened [mode]="NavDrawerMode" #navDrawer>
+      nav drawer
+    </mat-drawer>
+
+    <mat-drawer
+      class="details-drawer"
+      #detailsDrawer
+      mode="over"
+      position="end"
+    >
+      End content
+    </mat-drawer>
+
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
+
+  <lcu-footer class="footer"></lcu-footer>
+</div>
