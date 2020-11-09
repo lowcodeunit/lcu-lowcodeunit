@@ -12,12 +12,19 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
   }
 
   // API Methods
-  public ToggleEmulatedEnabled(): void {
-      this.Execute({
-          Arguments: {},
-          Type: 'ToggleEmulatedEnabled'
-      });
-  }
+  public ToggleDetailsPane(): void {
+    this.Execute({
+        Arguments: {},
+        Type: 'ToggleDetailsPane'
+    });
+}
+
+public ToggleEmulatedEnabled(): void {
+  this.Execute({
+      Arguments: {},
+      Type: 'ToggleEmulatedEnabled'
+  });
+}
 
   //  Helpers
   protected defaultValue() {

@@ -47,6 +47,10 @@ export class AppComponent {
   }
 
   //  API Methods
+  public CloseDetailsDrawer() {
+    this.iotEnsCtxt.ToggleDetailsPane();
+  }
+
   public HeaderMenuClicked(event: MouseEvent) {
     this.NavDrawer.toggle();
   }

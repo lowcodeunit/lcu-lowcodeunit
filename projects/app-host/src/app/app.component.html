@@ -6,17 +6,26 @@
   ></lcu-header>
 
   <mat-drawer-container class="drawers" [hasBackdrop]="IsMobile">
-    <mat-drawer class="nav-drawer" opened [mode]="NavDrawerMode" #navDrawer>
+    <mat-drawer class="nav-drawer" [mode]="NavDrawerMode" #navDrawer>
       nav drawer
     </mat-drawer>
 
     <mat-drawer
       class="details-drawer"
       #detailsDrawer
+      [opened]="State.Drawers?.DetailsActive"
       mode="over"
       position="end"
     >
-      End content
+      <div class="content spread">
+        <button mat-icon-button class="close" (click)="CloseDetailsDrawer()">
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <h2>Welcome to IoT Ensemble</h2>
+
+        <p>You can use this dashboard to get your data flowing.</p>
+      </div>
     </mat-drawer>
 
     <div class="page-content">

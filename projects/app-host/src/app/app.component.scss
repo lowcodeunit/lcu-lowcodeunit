@@ -12,12 +12,18 @@
       .nav-drawer,
       .details-drawer {
         width: 300px;
+
+        .content {
+        }
       }
 
       .nav-drawer {
       }
 
       .details-drawer {
+        .close {
+          float: right;
+        }
       }
 
       .page-content {

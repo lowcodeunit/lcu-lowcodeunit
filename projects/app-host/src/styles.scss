@@ -34,3 +34,7 @@ $global-background: map-get(map-get($global-theme, background), 'background');
     width: 50px !important;
     background-repeat:no-repeat;
 }
+
+.wrapperloading {
+  display: none !important;
+}

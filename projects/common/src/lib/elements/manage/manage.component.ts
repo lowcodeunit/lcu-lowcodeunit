@@ -7,11 +7,18 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  AfterViewInit,
+  ViewChild,
 } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import {
+  MatSlideToggle,
+  MatSlideToggleChange,
+} from '@angular/material/slide-toggle';
 import { LCUElementContext, LcuElementComponent } from '@lcu/common';
 import { IoTEnsembleState } from './../../state/iot-ensemble.state';
 import { IoTEnsembleStateContext } from './../../state/iot-ensemble-state.context';
+
+declare var freeboard: any;
 
 export class LcuSetupManageElementState {}
 
@@ -28,17 +35,22 @@ export const SELECTOR_LCU_SETUP_MANAGE_ELEMENT = 'lcu-setup-manage-element';
 })
 export class LcuSetupManageElementComponent
   extends LcuElementComponent<LcuSetupManageContext>
-  implements OnChanges, OnInit {
+  implements OnChanges, OnInit, AfterViewInit {
   //  Fields
 
   //  Properties
-  public DashboardIFrameHeight: string;
+  public ConnectedDevicesDisplayedColumns: string[] = ['deviceId', 'connStr'];
+
+  public EmulatedEnabledText: string;
 
   @Input('state')
   public State: IoTEnsembleState;
 
   @Output('toggle-emulated-enabled')
   public ToggleEmulatedEnabled: EventEmitter<boolean>;
+
+  @ViewChild('emulatedEnabled')
+  public EmulatedEnabledToggle: MatSlideToggle;
 
   //  Constructors
   constructor(protected injector: Injector) {
@@ -48,6 +60,10 @@ export class LcuSetupManageElementComponent
   }
 
   //  Life Cycle
+  public ngAfterViewInit() {
+    // this.setupFreeboard();
+  }
+
   public ngOnChanges(changes: SimpleChanges) {
     if (changes.State) {
       this.handleStateChanged();
@@ -59,16 +75,42 @@ export class LcuSetupManageElementComponent
   }
 
   //  API Methods
-  public ResizeDashboardIFrame(iframe: any) {
-    this.DashboardIFrameHeight = iframe.contentWindow.document.documentElement.scrollHeight + 'px';
-  }
-
   public ToggleEmulatedEnabledChanged(event: MatSlideToggleChange) {
     this.ToggleEmulatedEnabled.emit(this.State.Emulated.Enabled);
+
+    this.establishEmulatedEnabledText();
   }
 
   //  Helpers
+  protected establishEmulatedEnabledText() {
+    if (this.State.Emulated) {
+      this.EmulatedEnabledText = this.State.Emulated.Enabled
+        ? 'Enabled'
+        : 'Disabled';
+
+      if (
+        this.EmulatedEnabledToggle &&
+        ((this.EmulatedEnabledToggle.checked &&
+          this.EmulatedEnabledText !== 'Enabled') ||
+          (!this.EmulatedEnabledToggle.checked &&
+            this.EmulatedEnabledText !== 'Disabled'))
+      ) {
+        this.EmulatedEnabledText = 'Saving...';
+      }
+    }
+  }
+
   protected handleStateChanged() {
-    console.log('state-here');
+    this.establishEmulatedEnabledText();
+  }
+
+  protected setupFreeboard() {
+    if (this.State.Dashboard.FreeboardConfig) {
+      freeboard.initialize(true);
+
+      freeboard.loadDashboard(this.State.Dashboard.FreeboardConfig, () => {
+        freeboard.setEditing(false);
+      });
+    }
   }
 }

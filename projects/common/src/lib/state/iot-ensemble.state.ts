@@ -20,14 +20,6 @@ export class IoTEnsembleState {
   public UserEnterpriseLookup?: string;
 }
 
-export class IoTEnsembleDrawersConfig {
-  public DetailsActive: boolean;
-
-  public HasBackdrop: boolean;
-
-  public NavActive: boolean;
-}
-
 export class EmulatedDeviceInfo {
   public Enabled: boolean;
 }
@@ -52,6 +44,14 @@ export class IoTEnsembleDeviceInfo {
 
 export class IoTEnsembleDeviceTelemetry {
   public Payload: any;
+}
+
+export class IoTEnsembleDrawersConfig {
+  public DetailsActive: boolean;
+
+  public HasBackdrop: boolean;
+
+  public NavActive: boolean;
 }
 
 export class IoTEnsembleStorageConfiguration {
