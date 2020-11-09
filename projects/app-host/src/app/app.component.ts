@@ -1,12 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import {
+  BreakpointObserver,
+  Breakpoints,
+  BreakpointState,
+} from '@angular/cdk/layout';
 import {
   IoTEnsembleState,
   IoTEnsembleStateContext,
+  BreakpointUtils,
 } from '@iot-ensemble/lcu-setup-common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'lcu-root',
@@ -31,25 +34,16 @@ export class AppComponent {
   //  Constructors
   constructor(
     protected iotEnsCtxt: IoTEnsembleStateContext,
-    protected breakpointObserver: BreakpointObserver
+    protected breakpointUtils: BreakpointUtils
   ) {}
 
   //  Life Cycle
   public ngOnInit(): void {
-    this.breakpointObserver
-      .observe([
-        Breakpoints.Handset,
-        Breakpoints.HandsetPortrait,
-        Breakpoints.Small,
-        Breakpoints.XSmall,
-      ])
-      .subscribe((result) => {
-        this.IsMobile = result.matches;
+    this.breakpointUtils.SetupIsMobileObserver((result) =>
+      this.handleMobileObserver(result)
+    );
 
-        if (!this.IsMobile && this.NavDrawer) {
-          this.NavDrawer.open();
-        }
-      });
+    this.setupStateHandler();
   }
 
   //  API Methods
@@ -58,4 +52,23 @@ export class AppComponent {
   }
 
   //  Helpers
+  protected handleMobileObserver(result?: BreakpointState) {
+    this.IsMobile = result.matches;
+
+    if (!this.IsMobile && this.NavDrawer) {
+      this.NavDrawer.open();
+    }
+  }
+
+  protected handleStateChanged() {
+    console.log(this.State);
+  }
+
+  protected setupStateHandler() {
+    this.iotEnsCtxt.Context.subscribe((state) => {
+      this.State = state;
+
+      this.handleStateChanged();
+    });
+  }
 }

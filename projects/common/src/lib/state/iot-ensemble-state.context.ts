@@ -12,14 +12,12 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
   }
 
   // API Methods
-  // public GetLcuById(id: number): void {
-  //     this.Execute({
-  //         Arguments: {
-  //             LcuId: id
-  //         },
-  //         Type: 'GetLcuById'
-  //     });
-  // }
+  public ToggleEmulatedEnabled(): void {
+      this.Execute({
+          Arguments: {},
+          Type: 'ToggleEmulatedEnabled'
+      });
+  }
 
   //  Helpers
   protected defaultValue() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IoTEnsembleState, IoTEnsembleStateContext } from '@iot-ensemble/lcu-setup-common';
+import { IoTEnsembleState } from '@iot-ensemble/lcu-setup-common';
 
 @Component({
   selector: 'lcu-footer',

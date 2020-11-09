@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { IoTEnsembleStateContext } from './../../../../../common/src/lib/state/iot-ensemble-state.context';
 import { IoTEnsembleState } from './../../../../../common/src/lib/state/iot-ensemble.state';
 
 @Component({

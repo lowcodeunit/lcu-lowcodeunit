@@ -9,6 +9,7 @@ import { HomeComponent } from './controls/home/home.component';
 import { DocumentationComponent } from './controls/documentation/documentation.component';
 import { LcuDocumentationModule } from '@lowcodeunit/lcu-documentation-common';
 import { LcuSetupModule } from '@iot-ensemble/lcu-setup-common';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -17,14 +18,14 @@ import { LcuSetupModule } from '@iot-ensemble/lcu-setup-common';
     DocumentationComponent
   ],
   imports: [
-    AppRoutingModule,
+  AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     FathymSharedModule,
     MaterialModule,
     FlexLayoutModule,
     LcuDocumentationModule.forRoot(),
-    LcuSetupModule.forRoot()
+    LcuSetupModule.forRoot(environment)
   ],
   providers: [],
   bootstrap: [AppComponent],

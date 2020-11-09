@@ -5,7 +5,7 @@ export class IoTEnsembleState {
 
   public Devices?: IoTEnsembleDeviceInfo[];
 
-  public Drawers?: IoTEnsembleDrawersConfig[];
+  public Drawers?: IoTEnsembleDrawersConfig;
 
   public Emulated?: EmulatedDeviceInfo;
 
@@ -21,11 +21,11 @@ export class IoTEnsembleState {
 }
 
 export class IoTEnsembleDrawersConfig {
-  public DetailsOpened: boolean;
+  public DetailsActive: boolean;
 
   public HasBackdrop: boolean;
 
-  public NavOpened: boolean;
+  public NavActive: boolean;
 }
 
 export class EmulatedDeviceInfo {

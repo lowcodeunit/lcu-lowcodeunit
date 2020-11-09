@@ -1,43 +1,68 @@
 <div *ngIf="!State.Loading">
-  <div class="header">
+  <div class="manage-header">
     <h2>Welcome to IoT Ensemble</h2>
 
     <p>You can use this dashboard to get your data flowing.</p>
   </div>
 
-  <div fxLayout="row wrap" fxLayoutAlign="center center">
-    <div fxFlex="50%">
-      <div class="emulated-devices">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title></mat-card-title>
-          </mat-card-header>
-        </mat-card>
+  <div class="manage">
+    <div
+      class="devices spread"
+      fxLayout="row wrap"
+      fxLayoutAlign="center center"
+    >
+      <div fxFlex="50%" fxFlex.lt-md="100%">
+        <div class="emulated widget">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Emulated Devices</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+              <p>
+                When enabled, emulated device data will be provided in your data
+                queries. The emulated device, is for smart room detection and
+                provides temperature, humidity and occupancy of a room.
+              </p>
+            </mat-card-content>
+
+            <mat-card-actions>
+              <div fxFlex></div>
+
+              <mat-slide-toggle
+                [checked]="State.Emulated?.Enabled"
+                (change)="ToggleEmulatedEnabledChanged($event)"
+              >
+                {{ State.Emulated.Enabled ? "Enabled" : "Disabled" }}
+              </mat-slide-toggle>
+            </mat-card-actions>
+          </mat-card>
+        </div>
       </div>
+
+      <div fxFlex="50%" fxFlex.lt-md="100%">
+        <div class="connected widget">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Connected Devices</mat-card-title>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="dashboard widget" fxFlex="100%">
+        <iframe src="/freeboard" [height]="DashboardIFrameHeight" frameborder="0" scrolling="no" (load)="ResizeDashboardIFrame(this)"></iframe>
+      </div>
+
+      <div class="telemetry widget" fxFlex="100%"></div>
     </div>
 
-    <div fxFlex="50%">
-      <div class="devices-dashboard">
-
-      </div>
-    </div>
-  </div>
-
-  <div class="devices-telemetry">
-
-  </div>
-
-  <div class="storage-access">
-
+    <div class="storage-access"></div>
   </div>
 </div>
 
 <div *ngIf="State.Loading">
-  <div
-    fxLayout="row"
-    fxLayoutAlign="center center"
-    class="spinner-container"
-  >
+  <div fxLayout="row" fxLayoutAlign="center center" class="spinner-container">
     <mat-spinner diameter="75"></mat-spinner>
     <div class="spinner-logo" logo-alt="Fathym Logo"></div>
   </div>

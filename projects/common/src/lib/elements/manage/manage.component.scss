@@ -1,0 +1,33 @@
+:host {
+  .manage-header {
+  }
+
+  .manage {
+    .widget {
+      margin: 1em;
+    }
+
+    .devices {
+      .emulated {
+      }
+
+      .connected {
+      }
+
+      .dashboard {
+        iframe {
+          width: 100%;
+        }
+      }
+
+      .telemetry {
+      }
+    }
+
+    .connected {
+    }
+
+    .storage-access {
+    }
+  }
+}
