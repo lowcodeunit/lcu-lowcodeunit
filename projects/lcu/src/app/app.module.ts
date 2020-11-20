@@ -9,16 +9,12 @@ import { createCustomElement } from '@angular/elements';
 @NgModule({
   declarations: [],
   imports: [
-    BrowserModule,
+  BrowserModule,
     BrowserAnimationsModule,
     FathymSharedModule,
-    LcuSetupModule.forRoot()
+    LcuSetupModule.forRoot(environment)
   ],
   providers: [
-    {
-      provide: LCUServiceSettings,
-      useValue: FathymSharedModule.DefaultServiceSettings(environment)
-    }
   ],
   exports: [LcuSetupModule]
 })
@@ -29,15 +25,15 @@ export class AppModule implements DoBootstrap {
 		const manage = createCustomElement(LcuSetupManageElementComponent, { injector: this.injector });
 
 		customElements.define(SELECTOR_LCU_SETUP_MANAGE_ELEMENT, manage);
-	
+
 		const admin = createCustomElement(LcuSetupAdminElementComponent, { injector: this.injector });
 
 		customElements.define(SELECTOR_LCU_SETUP_ADMIN_ELEMENT, admin);
-	
+
 		const devices = createCustomElement(LcuSetupDevicesElementComponent, { injector: this.injector });
 
 		customElements.define(SELECTOR_LCU_SETUP_DEVICES_ELEMENT, devices);
-	
+
 		const setup = createCustomElement(LcuSetupSetupElementComponent, { injector: this.injector });
 
 		customElements.define(SELECTOR_LCU_SETUP_SETUP_ELEMENT, setup);
