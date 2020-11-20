@@ -306,7 +306,6 @@
               }
             ],
             "styles": [
-              "node_modules/freeboard/freeboard/css/freeboard.min.css",
               "projects/app-host/src/styles.scss"
             ],
             "scripts": [
