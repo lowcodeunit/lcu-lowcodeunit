@@ -9,6 +9,8 @@ import {
   EventEmitter,
   AfterViewInit,
   ViewChild,
+  AfterContentInit,
+  SecurityContext,
 } from '@angular/core';
 import {
   MatSlideToggle,
@@ -17,6 +19,7 @@ import {
 import { LCUElementContext, LcuElementComponent } from '@lcu/common';
 import { IoTEnsembleState } from './../../state/iot-ensemble.state';
 import { IoTEnsembleStateContext } from './../../state/iot-ensemble-state.context';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 declare var freeboard: any;
 
@@ -35,13 +38,23 @@ export const SELECTOR_LCU_SETUP_MANAGE_ELEMENT = 'lcu-setup-manage-element';
 })
 export class LcuSetupManageElementComponent
   extends LcuElementComponent<LcuSetupManageContext>
-  implements OnChanges, OnInit, AfterViewInit {
+  implements OnChanges, OnInit, AfterViewInit, AfterContentInit {
   //  Fields
 
   //  Properties
-  public ConnectedDevicesDisplayedColumns: string[] = ['deviceId', 'connStr'];
+  public ConnectedDevicesDisplayedColumns: string[] = [
+    'deviceId',
+    'enabled',
+    'lastUpdate',
+    'connStr',
+  ];
+
+  public DashboardIFrameURL: SafeResourceUrl;
 
   public EmulatedEnabledText: string;
+
+  @ViewChild('emulatedEnabled')
+  public EmulatedEnabledToggle: MatSlideToggle;
 
   @Input('state')
   public State: IoTEnsembleState;
@@ -49,17 +62,18 @@ export class LcuSetupManageElementComponent
   @Output('toggle-emulated-enabled')
   public ToggleEmulatedEnabled: EventEmitter<boolean>;
 
-  @ViewChild('emulatedEnabled')
-  public EmulatedEnabledToggle: MatSlideToggle;
-
   //  Constructors
-  constructor(protected injector: Injector) {
+  constructor(protected injector: Injector, protected sanitizer: DomSanitizer) {
     super(injector);
 
     this.ToggleEmulatedEnabled = new EventEmitter();
   }
 
   //  Life Cycle
+  public ngAfterContentInit() {
+    // this.setupFreeboard();
+  }
+
   public ngAfterViewInit() {
     // this.setupFreeboard();
   }
@@ -72,6 +86,8 @@ export class LcuSetupManageElementComponent
 
   public ngOnInit() {
     super.ngOnInit();
+
+    this.setDashboardIFrameURL();
   }
 
   //  API Methods
@@ -102,15 +118,31 @@ export class LcuSetupManageElementComponent
 
   protected handleStateChanged() {
     this.establishEmulatedEnabledText();
+
+    this.setupFreeboard();
+  }
+
+  public setDashboardIFrameURL() {
+    const source = this.State.Dashboard?.FreeboardConfig
+      ? JSON.stringify(this.State.Dashboard?.FreeboardConfig)
+      : '';
+
+    this.DashboardIFrameURL = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `https://fathym.fathym-it.com/freeboard?source=${source}`
+    );
   }
 
   protected setupFreeboard() {
-    if (this.State.Dashboard.FreeboardConfig) {
-      freeboard.initialize(true);
-
-      freeboard.loadDashboard(this.State.Dashboard.FreeboardConfig, () => {
-        freeboard.setEditing(false);
-      });
-    }
+    // if (this.State.Dashboard && this.State.Dashboard.FreeboardConfig) {
+    //   // debugger;
+    //   // freeboard.initialize(true);
+    //   // const dashboard = freeboard.loadDashboard(
+    //   //   this.State.Dashboard.FreeboardConfig,
+    //   //   () => {
+    //   //     freeboard.setEditing(false);
+    //   //   }
+    //   // );
+    //   // console.log(dashboard);
+    // }
   }
 }

@@ -5,6 +5,8 @@ export class IoTEnsembleState {
 
   public Devices?: IoTEnsembleDeviceInfo[];
 
+  public DeviceTelemetry?: IoTEnsembleDeviceTelemetry;
+
   public Drawers?: IoTEnsembleDrawersConfig;
 
   public Emulated?: EmulatedDeviceInfo;
@@ -12,8 +14,6 @@ export class IoTEnsembleState {
   public Loading?: boolean;
 
   public SelectedDeviceID?: string;
-
-  public SelectedDeviceTelemetry?: IoTEnsembleDeviceTelemetry[];
 
   public Storage?: IoTEnsembleStorageConfiguration[];
 
@@ -43,7 +43,29 @@ export class IoTEnsembleDeviceInfo {
 }
 
 export class IoTEnsembleDeviceTelemetry {
-  public Payload: any;
+  public Payloads: IoTEnsembleDeviceTelemetryPayload[];
+
+  public RefreshRate: number;
+}
+
+export class IoTEnsembleDeviceTelemetryPayload {
+  [prop: string]: any;
+
+  public DeviceData: { [prop: string]: any };
+
+  public DeviceID: string;
+
+  public DeviceType: string;
+
+  public ID: string;
+
+  public SensorMetadata: { [prop: string]: any };
+
+  public SensorReadings: { [prop: string]: any };
+
+  public Timestamp: Date;
+
+  public Version: string;
 }
 
 export class IoTEnsembleDrawersConfig {

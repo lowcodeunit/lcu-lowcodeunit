@@ -7,7 +7,24 @@
       fxLayout="row wrap"
       fxLayoutAlign="center center"
     >
-      <div fxFlex="50%" fxFlex.lt-md="100%">
+      <div fxFlex="30%" fxFlex.lt-md="100%">
+        <div class="emulated widget">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Welcome To your Fathym Dashboard</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+              <p>
+                Emulate, Simulate, and Connect your devices to discover the
+                power of your IoT solution.
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <div fxFlex="70%" fxFlex.lt-md="100%">
         <div class="emulated widget">
           <mat-card>
             <mat-card-header>
@@ -42,7 +59,7 @@
         </div>
       </div>
 
-      <div fxFlex="50%" fxFlex.lt-md="100%">
+      <div fxFlex="100%">
         <div class="connected widget">
           <mat-card>
             <mat-card-header>
@@ -50,25 +67,11 @@
             </mat-card-header>
 
             <mat-card-content>
-              <div class="">
-                <!-- <div
-                  *ngIf="isLoadingResults || isRateLimitReached"
-                >
-                  <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-                  <div
-                    class="example-rate-limit-reached"
-                    *ngIf="isRateLimitReached"
-                  >
-                    GitHub's API rate limit has been reached. It will be reset
-                    in one minute.
-                  </div>
-                </div> -->
-
-                <div class="devices-table-container">
+              <div class="device-list">
+                <div class="table-container">
                   <table
                     mat-table
                     [dataSource]="State.Devices"
-                    class="devices-table"
                   >
                     <!-- matSort
                         matSortActive="created"
@@ -88,21 +91,61 @@
                       "
                     ></tr>
 
-                    <!-- Title Column -->
                     <ng-container matColumnDef="deviceId">
                       <th mat-header-cell *matHeaderCellDef>DeviceID</th>
 
-                      <td mat-cell *matCellDef="let row">{{ row.DeviceID }}</td>
+                      <td mat-cell *matCellDef="let row">
+                        <mat-form-field class="spread deviceId">
+                          <input matInput [value]="row.DeviceID" disabled />
+                        </mat-form-field>
+                      </td>
                     </ng-container>
 
-                    <!-- State Column -->
+                    <ng-container matColumnDef="enabled">
+                      <th mat-header-cell *matHeaderCellDef>Enabled</th>
+
+                      <td mat-cell *matCellDef="let row">
+                        <div class="spread enabled">row.Enabled</div>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="lastUpdate">
+                      <th mat-header-cell *matHeaderCellDef>Last Update</th>
+
+                      <td mat-cell *matCellDef="let row">
+                        <div class="spread last-update">row.LastUpdate</div>
+                      </td>
+                    </ng-container>
+
                     <ng-container matColumnDef="connStr">
                       <th mat-header-cell *matHeaderCellDef>
                         Connection String
                       </th>
 
                       <td mat-cell *matCellDef="let row">
-                        <input [value]="row.ConnectionString" disabled />
+                        <mat-form-field class="spread connStr">
+                          <input
+                            matInput
+                            [value]="row.ConnectionString"
+                            disabled
+                          />
+                        </mat-form-field>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>
+                        Connection String
+                      </th>
+
+                      <td mat-cell *matCellDef="let row">
+                        <mat-form-field class="spread connStr">
+                          <input
+                            matInput
+                            [value]="row.ConnectionString"
+                            disabled
+                          />
+                        </mat-form-field>
                       </td>
                     </ng-container>
 
@@ -137,7 +180,6 @@
                 [loading]="EmulatedEnabledText == 'Saving...'"
               ></lcu-loader> -->
 
-
               <button mat-raised-button>Add Device</button>
             </mat-card-actions>
           </mat-card>
@@ -152,12 +194,18 @@
             </mat-card-header>
 
             <mat-card-content>
-              <iframe
-                src="https://marketing1.fathym-it.com/freeboard"
-                width="100%"
-                height="1000px"
-                frameborder="0"
-              ></iframe>
+              <div class="freeboard-display">
+                <!-- <div id="main-header">
+
+                </div> -->
+
+                <iframe
+                  [src]="DashboardIFrameURL"
+                  width="100%"
+                  height="1000px"
+                  frameborder="0"
+                ></iframe>
+              </div>
             </mat-card-content>
           </mat-card>
         </div>

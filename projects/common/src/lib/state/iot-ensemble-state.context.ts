@@ -14,17 +14,24 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
   // API Methods
   public ToggleDetailsPane(): void {
     this.Execute({
-        Arguments: {},
-        Type: 'ToggleDetailsPane'
-    });
-}
-
-public ToggleEmulatedEnabled(): void {
-  this.Execute({
       Arguments: {},
-      Type: 'ToggleEmulatedEnabled'
-  });
-}
+      Type: 'ToggleDetailsPane',
+    });
+  }
+
+  public ToggleEmulatedEnabled(): void {
+    this.Execute({
+      Arguments: {},
+      Type: 'ToggleEmulatedEnabled',
+    });
+  }
+
+  public ToggleTelemetrySync() {
+    this.Execute({
+      Arguments: {},
+      Type: 'ToggleTelemetrySync',
+    });
+  }
 
   //  Helpers
   protected defaultValue() {
@@ -32,7 +39,7 @@ public ToggleEmulatedEnabled(): void {
   }
 
   protected loadStateKey(): string {
-    return 'main';
+    return 'shared';
   }
 
   protected loadStateName(): string {
