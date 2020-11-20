@@ -75,11 +75,9 @@
               }
             ],
             "styles": [
-              "node_modules/freeboard/freeboard/css/freeboard.min.js",
               "projects/lcu/src/styles.scss"
             ],
             "scripts": [
-              "node_modules/freeboard/freeboard/js/freeboard.thirdparty.min.js",
               "node_modules/@webcomponents/custom-elements/src/native-shim.js",
               {
                 "bundleName": "polyfill-webcomp-es5",
