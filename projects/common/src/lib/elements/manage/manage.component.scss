@@ -29,6 +29,13 @@
     }
 
     .connected {
+      .device-list {
+        .table-container {
+          .mat-table {
+            width: 100%;
+          }
+        }
+      }
     }
 
     .storage-access {

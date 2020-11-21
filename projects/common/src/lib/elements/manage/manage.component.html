@@ -61,95 +61,102 @@
 
       <div fxFlex="100%">
         <div class="connected widget">
-          <mat-card>
-            <mat-card-header>
-              <mat-card-title>Connected Devices</mat-card-title>
-            </mat-card-header>
+          <form
+            [formGroup]="AddDeviceFormGroup"
+            (ngSubmit)="EnrollDeviceSubmit()"
+          >
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>Connected Devices</mat-card-title>
+              </mat-card-header>
 
-            <mat-card-content>
-              <div class="device-list">
-                <div class="table-container">
-                  <table
-                    mat-table
-                    [dataSource]="State.Devices"
-                  >
-                    <!-- matSort
+              <mat-card-content>
+                <div class="device-list" *ngIf="!AddingDevice">
+                  <div class="table-container">
+                    <table mat-table [dataSource]="State.Devices">
+                      <!-- matSort
                         matSortActive="created"
                         matSortDisableClear
                         matSortDirection="desc" -->
 
-                    <tr
-                      mat-header-row
-                      *matHeaderRowDef="ConnectedDevicesDisplayedColumns"
-                    ></tr>
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="ConnectedDevicesDisplayedColumns"
+                      ></tr>
 
-                    <tr
-                      mat-row
-                      *matRowDef="
-                        let row;
-                        columns: ConnectedDevicesDisplayedColumns
-                      "
-                    ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="
+                          let device;
+                          columns: ConnectedDevicesDisplayedColumns
+                        "
+                      ></tr>
 
-                    <ng-container matColumnDef="deviceId">
-                      <th mat-header-cell *matHeaderCellDef>DeviceID</th>
+                      <ng-container matColumnDef="deviceId">
+                        <th mat-header-cell *matHeaderCellDef>Device ID</th>
 
-                      <td mat-cell *matCellDef="let row">
-                        <mat-form-field class="spread deviceId">
-                          <input matInput [value]="row.DeviceID" disabled />
-                        </mat-form-field>
-                      </td>
-                    </ng-container>
+                        <td mat-cell *matCellDef="let device">
+                          <mat-form-field class="spread deviceId">
+                            <input matInput [value]="device.DeviceID" disabled />
+                          </mat-form-field>
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="enabled">
-                      <th mat-header-cell *matHeaderCellDef>Enabled</th>
+                      <ng-container matColumnDef="deviceName">
+                        <th mat-header-cell *matHeaderCellDef>Device Name</th>
 
-                      <td mat-cell *matCellDef="let row">
-                        <div class="spread enabled">row.Enabled</div>
-                      </td>
-                    </ng-container>
+                        <td mat-cell *matCellDef="let device">
+                          {{ device.DeviceName }}
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="lastUpdate">
-                      <th mat-header-cell *matHeaderCellDef>Last Update</th>
+                      <ng-container matColumnDef="enabled">
+                        <th mat-header-cell *matHeaderCellDef>Enabled</th>
 
-                      <td mat-cell *matCellDef="let row">
-                        <div class="spread last-update">row.LastUpdate</div>
-                      </td>
-                    </ng-container>
+                        <td mat-cell *matCellDef="let device">
+                          <div class="spread enabled">device.Enabled</div>
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="connStr">
-                      <th mat-header-cell *matHeaderCellDef>
-                        Connection String
-                      </th>
+                      <ng-container matColumnDef="lastUpdate">
+                        <th mat-header-cell *matHeaderCellDef>Last Update</th>
 
-                      <td mat-cell *matCellDef="let row">
-                        <mat-form-field class="spread connStr">
-                          <input
-                            matInput
-                            [value]="row.ConnectionString"
-                            disabled
-                          />
-                        </mat-form-field>
-                      </td>
-                    </ng-container>
+                        <td mat-cell *matCellDef="let device">
+                          <div class="spread last-update">device.LastUpdate</div>
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="actions">
-                      <th mat-header-cell *matHeaderCellDef>
-                        Connection String
-                      </th>
+                      <ng-container matColumnDef="connStr">
+                        <th mat-header-cell *matHeaderCellDef>
+                          Connection String
+                        </th>
 
-                      <td mat-cell *matCellDef="let row">
-                        <mat-form-field class="spread connStr">
-                          <input
-                            matInput
-                            [value]="row.ConnectionString"
-                            disabled
-                          />
-                        </mat-form-field>
-                      </td>
-                    </ng-container>
+                        <td mat-cell *matCellDef="let device">
+                          <mat-form-field class="spread connStr">
+                            <input
+                              matInput
+                              [value]="device.ConnectionString"
+                              disabled
+                            />
+                          </mat-form-field>
+                        </td>
+                      </ng-container>
 
-                    <!--
+                      <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef></th>
+
+                        <td mat-cell *matCellDef="let device">
+                          <a
+                            mat-icon-button
+                            color="warn"
+                            (click)="RevokeDeviceEnrollmentClick(device)"
+                          >
+                            <mat-icon>delete</mat-icon>
+                          </a>
+                        </td>
+                      </ng-container>
+
+                      <!--
                     <ng-container matColumnDef="created">
                       <th
                         mat-header-cell
@@ -163,26 +170,55 @@
                         {{ row.created_at | date }}
                       </td>
                     </ng-container> -->
-                  </table>
+                    </table>
+                  </div>
+
+                  <mat-paginator
+                    [length]="State.Devices.length"
+                    [pageSize]="10"
+                  ></mat-paginator>
                 </div>
 
-                <mat-paginator
-                  [length]="State.Devices.length"
-                  [pageSize]="10"
-                ></mat-paginator>
-              </div>
-            </mat-card-content>
+                <div class="device-adding" *ngIf="AddingDevice">
+                  <h2>Add a New Device</h2>
 
-            <mat-card-actions>
-              <div fxFlex></div>
+                  <mat-form-field>
+                    <input
+                      matInput
+                      formControlName="deviceName"
+                      placeholder="The Name of your Device"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+              </mat-card-content>
 
-              <!-- <lcu-loader
+              <mat-card-actions>
+                <div fxFlex></div>
+
+                <!-- <lcu-loader
                 [loading]="EmulatedEnabledText == 'Saving...'"
               ></lcu-loader> -->
 
-              <button mat-raised-button>Add Device</button>
-            </mat-card-actions>
-          </mat-card>
+                <ng-container *ngIf="!AddingDevice">
+                  <a mat-raised-button (click)="ToggleAddingDevice()">
+                    Add New Device
+                  </a>
+                </ng-container>
+
+                <ng-container *ngIf="AddingDevice">
+                  <button mat-raised-button type="submit" color="primary">
+                    Enroll Device
+                  </button>
+
+                  <a mat-button color="warn" (click)="ToggleAddingDevice()">
+                    <mat-icon>cancel</mat-icon>
+                    Cancel
+                  </a>
+                </ng-container>
+              </mat-card-actions>
+            </mat-card>
+          </form>
         </div>
       </div>
 
@@ -202,7 +238,7 @@
                 <iframe
                   [src]="DashboardIFrameURL"
                   width="100%"
-                  height="1000px"
+                  height="500px"
                   frameborder="0"
                 ></iframe>
               </div>

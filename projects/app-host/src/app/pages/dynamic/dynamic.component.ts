@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import {
   IoTEnsembleState,
   IoTEnsembleStateContext,
-  BreakpointUtils
+  BreakpointUtils,
+  IoTEnsembleDeviceEnrollment
 } from '@iot-ensemble/lcu-setup-common';
 
 @Component({
@@ -35,10 +36,21 @@ export class DynamicComponent implements OnInit {
   }
 
   //  API Methods
+  public EnrollDevice(device: IoTEnsembleDeviceEnrollment) {
+    this.State.Loading = true;
+
+    this.iotEnsCtxt.EnrollDevice(device);
+  }
+
+  public RevokeDeviceEnrollment(deviceId: string) {
+    this.State.Loading = true;
+
+    this.iotEnsCtxt.RevokeDeviceEnrollment(deviceId);
+  }
+
   public ToggleEmulatedEnabled() {
     this.iotEnsCtxt.ToggleEmulatedEnabled();
   }
-
 
   //  Helpers
   protected handleMobileObserver(result?: BreakpointState) {

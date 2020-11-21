@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { StateContext } from '@lcu/common';
-import { IoTEnsembleState } from './iot-ensemble.state';
+import { IoTEnsembleDeviceEnrollment, IoTEnsembleState } from './iot-ensemble.state';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +12,24 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
   }
 
   // API Methods
+  public EnrollDevice(device: IoTEnsembleDeviceEnrollment): void {
+    this.Execute({
+      Arguments: {
+        Device: device
+      },
+      Type: 'EnrollDevice',
+    });
+  }
+
+  public RevokeDeviceEnrollment(deviceId: string): void {
+    this.Execute({
+      Arguments: {
+        DeviceID: deviceId
+      },
+      Type: 'RevokeDeviceEnrollment',
+    });
+  }
+
   public ToggleDetailsPane(): void {
     this.Execute({
       Arguments: {},

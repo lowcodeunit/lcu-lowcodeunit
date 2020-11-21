@@ -17,9 +17,14 @@ import {
   MatSlideToggleChange,
 } from '@angular/material/slide-toggle';
 import { LCUElementContext, LcuElementComponent } from '@lcu/common';
-import { IoTEnsembleState } from './../../state/iot-ensemble.state';
+import {
+  IoTEnsembleState,
+  IoTEnsembleDeviceInfo,
+  IoTEnsembleDeviceEnrollment,
+} from './../../state/iot-ensemble.state';
 import { IoTEnsembleStateContext } from './../../state/iot-ensemble-state.context';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var freeboard: any;
 
@@ -42,12 +47,11 @@ export class LcuSetupManageElementComponent
   //  Fields
 
   //  Properties
-  public ConnectedDevicesDisplayedColumns: string[] = [
-    'deviceId',
-    'enabled',
-    'lastUpdate',
-    'connStr',
-  ];
+  public AddDeviceFormGroup: FormGroup;
+
+  public AddingDevice: boolean;
+
+  public ConnectedDevicesDisplayedColumns: string[];
 
   public DashboardIFrameURL: SafeResourceUrl;
 
@@ -56,6 +60,12 @@ export class LcuSetupManageElementComponent
   @ViewChild('emulatedEnabled')
   public EmulatedEnabledToggle: MatSlideToggle;
 
+  @Output('enroll-device')
+  public EnrollDevice: EventEmitter<IoTEnsembleDeviceEnrollment>;
+
+  @Output('revoke-device-enrollment')
+  public RevokeDeviceEnrollment: EventEmitter<string>;
+
   @Input('state')
   public State: IoTEnsembleState;
 
@@ -63,8 +73,24 @@ export class LcuSetupManageElementComponent
   public ToggleEmulatedEnabled: EventEmitter<boolean>;
 
   //  Constructors
-  constructor(protected injector: Injector, protected sanitizer: DomSanitizer) {
+  constructor(
+    protected injector: Injector,
+    protected sanitizer: DomSanitizer,
+    protected formBldr: FormBuilder
+  ) {
     super(injector);
+
+    this.ConnectedDevicesDisplayedColumns = [
+      'deviceName',
+      'enabled',
+      'lastUpdate',
+      'connStr',
+      'actions',
+    ];
+
+    this.EnrollDevice = new EventEmitter();
+
+    this.RevokeDeviceEnrollment = new EventEmitter();
 
     this.ToggleEmulatedEnabled = new EventEmitter();
   }
@@ -87,10 +113,28 @@ export class LcuSetupManageElementComponent
   public ngOnInit() {
     super.ngOnInit();
 
+    this.setupAddDeviceForm();
+
     this.setDashboardIFrameURL();
   }
 
   //  API Methods
+  public EnrollDeviceSubmit() {
+    this.EnrollDevice.emit({
+      DeviceName: this.AddDeviceFormGroup.controls.deviceName.value,
+    });
+  }
+
+  public RevokeDeviceEnrollmentClick(device: IoTEnsembleDeviceInfo) {
+    if (confirm(`Are you sure you want to remove device '${device.DeviceName}'?`)) {
+      this.RevokeDeviceEnrollment.emit(device.DeviceID);
+    }
+  }
+
+  public ToggleAddingDevice() {
+    this.AddingDevice = !this.AddingDevice;
+  }
+
   public ToggleEmulatedEnabledChanged(event: MatSlideToggleChange) {
     this.ToggleEmulatedEnabled.emit(this.State.Emulated.Enabled);
 
@@ -119,10 +163,16 @@ export class LcuSetupManageElementComponent
   protected handleStateChanged() {
     this.establishEmulatedEnabledText();
 
+    this.setAddingDevice();
+
     this.setupFreeboard();
   }
 
-  public setDashboardIFrameURL() {
+  public setAddingDevice() {
+    this.AddingDevice = (this.State.Devices?.length || 0) <= 0;
+  }
+
+  protected setDashboardIFrameURL() {
     const source = this.State.Dashboard?.FreeboardConfig
       ? JSON.stringify(this.State.Dashboard?.FreeboardConfig)
       : '';
@@ -130,6 +180,12 @@ export class LcuSetupManageElementComponent
     this.DashboardIFrameURL = this.sanitizer.bypassSecurityTrustResourceUrl(
       `https://fathym.fathym-it.com/freeboard?source=${source}`
     );
+  }
+
+  protected setupAddDeviceForm() {
+    this.AddDeviceFormGroup = this.formBldr.group({
+      deviceName: ['', Validators.required],
+    });
   }
 
   protected setupFreeboard() {
