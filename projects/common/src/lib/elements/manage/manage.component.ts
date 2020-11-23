@@ -212,7 +212,7 @@ export class LcuSetupManageElementComponent
       : '';
 
     this.DashboardIFrameURL = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://fathym.fathym-it.com/freeboard#data=${source}`
+      `/freeboard#data=${source}`
     );
   }
 
