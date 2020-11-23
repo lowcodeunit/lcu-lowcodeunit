@@ -49,6 +49,10 @@ export class IoTEnsembleDeviceInfo {
 }
 
 export class IoTEnsembleDeviceTelemetry {
+  public Enabled?: boolean;
+
+  public PageSize?: number;
+
   public Payloads?: IoTEnsembleDeviceTelemetryPayload[];
 
   public RefreshRate?: number;

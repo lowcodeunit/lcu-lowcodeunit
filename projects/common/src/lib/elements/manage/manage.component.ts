@@ -55,6 +55,11 @@ export class LcuSetupManageElementComponent
 
   public DashboardIFrameURL: SafeResourceUrl;
 
+  public DeviceTelemetryEnabledText: string;
+
+  @ViewChild('devTelemEnabled')
+  public DeviceTelemetryEnabledToggle: MatSlideToggle;
+
   public EmulatedEnabledText: string;
 
   @ViewChild('emulatedEnabled')
@@ -68,6 +73,9 @@ export class LcuSetupManageElementComponent
 
   @Input('state')
   public State: IoTEnsembleState;
+
+  @Output('toggle-device-telemetry-enabled')
+  public ToggleDeviceTelemetryEnabled: EventEmitter<boolean>;
 
   @Output('toggle-emulated-enabled')
   public ToggleEmulatedEnabled: EventEmitter<boolean>;
@@ -91,6 +99,8 @@ export class LcuSetupManageElementComponent
     this.EnrollDevice = new EventEmitter();
 
     this.RevokeDeviceEnrollment = new EventEmitter();
+
+    this.ToggleDeviceTelemetryEnabled = new EventEmitter();
 
     this.ToggleEmulatedEnabled = new EventEmitter();
   }
@@ -135,6 +145,12 @@ export class LcuSetupManageElementComponent
     this.AddingDevice = !this.AddingDevice;
   }
 
+  public ToggleDeviceTelemetryEnabledChanged(event: MatSlideToggleChange) {
+    this.ToggleDeviceTelemetryEnabled.emit(this.State.DeviceTelemetry.Enabled);
+
+    this.establishDeviceTelemetryEnabledText();
+  }
+
   public ToggleEmulatedEnabledChanged(event: MatSlideToggleChange) {
     this.ToggleEmulatedEnabled.emit(this.State.Emulated.Enabled);
 
@@ -142,6 +158,24 @@ export class LcuSetupManageElementComponent
   }
 
   //  Helpers
+  protected establishDeviceTelemetryEnabledText() {
+    if (this.State.DeviceTelemetry) {
+      this.DeviceTelemetryEnabledText = this.State.DeviceTelemetry.Enabled
+        ? 'Enabled'
+        : 'Disabled';
+
+      if (
+        this.DeviceTelemetryEnabledToggle &&
+        ((this.DeviceTelemetryEnabledToggle.checked &&
+          this.DeviceTelemetryEnabledText !== 'Enabled') ||
+          (!this.DeviceTelemetryEnabledToggle.checked &&
+            this.DeviceTelemetryEnabledText !== 'Disabled'))
+      ) {
+        this.DeviceTelemetryEnabledText = 'Saving...';
+      }
+    }
+  }
+
   protected establishEmulatedEnabledText() {
     if (this.State.Emulated) {
       this.EmulatedEnabledText = this.State.Emulated.Enabled
@@ -161,6 +195,8 @@ export class LcuSetupManageElementComponent
   }
 
   protected handleStateChanged() {
+    this.establishDeviceTelemetryEnabledText();
+
     this.establishEmulatedEnabledText();
 
     this.setAddingDevice();
