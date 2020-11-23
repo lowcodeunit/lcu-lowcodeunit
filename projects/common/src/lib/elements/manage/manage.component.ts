@@ -30,9 +30,7 @@ declare var freeboard: any;
 
 export class LcuSetupManageElementState {}
 
-export class LcuSetupManageContext extends LCUElementContext<
-  LcuSetupManageElementState
-> {}
+export class LcuSetupManageContext extends LCUElementContext<LcuSetupManageElementState> {}
 
 export const SELECTOR_LCU_SETUP_MANAGE_ELEMENT = 'lcu-setup-manage-element';
 
@@ -124,8 +122,6 @@ export class LcuSetupManageElementComponent
     super.ngOnInit();
 
     this.setupAddDeviceForm();
-
-    this.setDashboardIFrameURL();
   }
 
   //  API Methods
@@ -136,7 +132,9 @@ export class LcuSetupManageElementComponent
   }
 
   public RevokeDeviceEnrollmentClick(device: IoTEnsembleDeviceInfo) {
-    if (confirm(`Are you sure you want to remove device '${device.DeviceName}'?`)) {
+    if (
+      confirm(`Are you sure you want to remove device '${device.DeviceName}'?`)
+    ) {
       this.RevokeDeviceEnrollment.emit(device.DeviceID);
     }
   }
@@ -214,7 +212,7 @@ export class LcuSetupManageElementComponent
       : '';
 
     this.DashboardIFrameURL = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `https://fathym.fathym-it.com/freeboard?source=${source}`
+      `https://fathym.fathym-it.com/freeboard#data=${source}`
     );
   }
 
@@ -225,6 +223,8 @@ export class LcuSetupManageElementComponent
   }
 
   protected setupFreeboard() {
+    this.setDashboardIFrameURL();
+
     // if (this.State.Dashboard && this.State.Dashboard.FreeboardConfig) {
     //   // debugger;
     //   // freeboard.initialize(true);
