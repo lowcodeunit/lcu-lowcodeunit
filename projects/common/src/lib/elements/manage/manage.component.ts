@@ -32,6 +32,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var freeboard: any;
 
+declare var window: any;
+
 export class LcuSetupManageElementState {}
 
 export class LcuSetupManageContext extends LCUElementContext<LcuSetupManageElementState> {}
@@ -222,7 +224,7 @@ export class LcuSetupManageElementComponent
       `${this.FreeboardURL}#data=${source}`
     );
 
-    this.FreeboardURL = (this.lcuSvcSettings.StateConfig as any)?.FreeboardURL || '/freeboard';
+    this.FreeboardURL = window.LCU.State.FreeboardURL || '/freeboard';
   }
 
   protected setupAddDeviceForm() {
