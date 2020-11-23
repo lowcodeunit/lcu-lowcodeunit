@@ -16,7 +16,11 @@ import {
   MatSlideToggle,
   MatSlideToggleChange,
 } from '@angular/material/slide-toggle';
-import { LCUElementContext, LcuElementComponent } from '@lcu/common';
+import {
+  LCUElementContext,
+  LcuElementComponent,
+  LCUServiceSettings,
+} from '@lcu/common';
 import {
   IoTEnsembleState,
   IoTEnsembleDeviceInfo,
@@ -66,6 +70,8 @@ export class LcuSetupManageElementComponent
   @Output('enroll-device')
   public EnrollDevice: EventEmitter<IoTEnsembleDeviceEnrollment>;
 
+  public FreeboardURL: string;
+
   @Output('revoke-device-enrollment')
   public RevokeDeviceEnrollment: EventEmitter<string>;
 
@@ -82,7 +88,8 @@ export class LcuSetupManageElementComponent
   constructor(
     protected injector: Injector,
     protected sanitizer: DomSanitizer,
-    protected formBldr: FormBuilder
+    protected formBldr: FormBuilder,
+    protected lcuSvcSettings: LCUServiceSettings
   ) {
     super(injector);
 
@@ -212,8 +219,10 @@ export class LcuSetupManageElementComponent
       : '';
 
     this.DashboardIFrameURL = this.sanitizer.bypassSecurityTrustResourceUrl(
-      `/freeboard#data=${source}`
+      `${this.FreeboardURL}#data=${source}`
     );
+
+    this.FreeboardURL = (this.lcuSvcSettings.StateConfig as any)?.FreeboardURL || '/freeboard';
   }
 
   protected setupAddDeviceForm() {
@@ -225,16 +234,16 @@ export class LcuSetupManageElementComponent
   protected setupFreeboard() {
     this.setDashboardIFrameURL();
 
-    // if (this.State.Dashboard && this.State.Dashboard.FreeboardConfig) {
-    //   // debugger;
-    //   // freeboard.initialize(true);
-    //   // const dashboard = freeboard.loadDashboard(
-    //   //   this.State.Dashboard.FreeboardConfig,
-    //   //   () => {
-    //   //     freeboard.setEditing(false);
-    //   //   }
-    //   // );
-    //   // console.log(dashboard);
-    // }
+    if (this.State.Dashboard && this.State.Dashboard.FreeboardConfig) {
+      //   // debugger;
+      //   // freeboard.initialize(true);
+      //   // const dashboard = freeboard.loadDashboard(
+      //   //   this.State.Dashboard.FreeboardConfig,
+      //   //   () => {
+      //   //     freeboard.setEditing(false);
+      //   //   }
+      //   // );
+      //   // console.log(dashboard);
+    }
   }
 }
