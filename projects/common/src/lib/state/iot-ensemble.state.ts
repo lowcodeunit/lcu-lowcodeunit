@@ -51,6 +51,10 @@ export class IoTEnsembleDeviceInfo {
 export class IoTEnsembleDeviceTelemetry {
   public Enabled?: boolean;
 
+  public Loading?: boolean;
+
+  public Page?: number;
+
   public PageSize?: number;
 
   public Payloads?: IoTEnsembleDeviceTelemetryPayload[];

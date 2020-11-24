@@ -13,6 +13,8 @@ import { LcuSetupSetupElementComponent } from './elements/setup/setup.component'
 import { IoTEnsembleStateContext } from './state/iot-ensemble-state.context';
 import { LoaderComponent } from './controls/loader/loader.component';
 import { TelemetryListComponent } from './elements/controls/telemetry-list/telemetry-list.component';
+import { EnabledToggleComponent } from './controls/enabled-toggle/enabled-toggle.component';
+import { DevicesTableComponent } from './elements/controls/devices-table/devices-table.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { TelemetryListComponent } from './elements/controls/telemetry-list/telem
     LcuSetupSetupElementComponent,
     LoaderComponent,
     TelemetryListComponent,
+    EnabledToggleComponent,
+    DevicesTableComponent,
   ],
   imports: [
     FathymSharedModule,
@@ -37,6 +41,8 @@ import { TelemetryListComponent } from './elements/controls/telemetry-list/telem
     LcuSetupSetupElementComponent,
     LoaderComponent,
     TelemetryListComponent,
+    EnabledToggleComponent,
+    DevicesTableComponent,
   ],
   entryComponents: [
     LcuSetupManageElementComponent,

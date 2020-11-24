@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./telemetry-list.component.scss']
 })
 export class TelemetryListComponent implements OnInit {
+  //  Fields
 
-  constructor() { }
+  //  Properties
 
-  ngOnInit(): void {
-  }
+  //  Constructors
+  constructor() {}
 
+  //  Life Cycle
+  public ngOnInit(): void {}
+
+  //  API Methods
+
+  //  Helpers
 }

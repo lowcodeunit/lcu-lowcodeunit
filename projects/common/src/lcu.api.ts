@@ -1,5 +1,6 @@
 export * from './lib/lcu-setup.module';
-// export * from '.lib/controls/loader.component';
+// export * from '.lib/controls/enabled-toggle/enabled-toggle.component';
+// export * from '.lib/controls/loader/loader.component';
 export * from './lib/elements/manage/manage.component';
 export * from './lib/elements/admin/admin.component';
 export * from './lib/elements/devices/devices.component';

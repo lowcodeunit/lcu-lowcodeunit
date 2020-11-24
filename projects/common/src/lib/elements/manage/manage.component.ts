@@ -59,16 +59,6 @@ export class LcuSetupManageElementComponent
 
   public DashboardIFrameURL: SafeResourceUrl;
 
-  public DeviceTelemetryEnabledText: string;
-
-  @ViewChild('devTelemEnabled')
-  public DeviceTelemetryEnabledToggle: MatSlideToggle;
-
-  public EmulatedEnabledText: string;
-
-  @ViewChild('emulatedEnabled')
-  public EmulatedEnabledToggle: MatSlideToggle;
-
   @Output('enroll-device')
   public EnrollDevice: EventEmitter<IoTEnsembleDeviceEnrollment>;
 
@@ -140,72 +130,25 @@ export class LcuSetupManageElementComponent
     });
   }
 
-  public RevokeDeviceEnrollmentClick(device: IoTEnsembleDeviceInfo) {
-    if (
-      confirm(`Are you sure you want to remove device '${device.DeviceName}'?`)
-    ) {
-      this.RevokeDeviceEnrollment.emit(device.DeviceID);
-    }
+  public RevokeDeviceEnrollmentClick(deviceId: string) {
+    this.RevokeDeviceEnrollment.emit(deviceId);
   }
 
   public ToggleAddingDevice() {
     this.AddingDevice = !this.AddingDevice;
   }
 
-  public ToggleDeviceTelemetryEnabledChanged(event: MatSlideToggleChange) {
-    this.ToggleDeviceTelemetryEnabled.emit(this.State.DeviceTelemetry.Enabled);
-
-    this.establishDeviceTelemetryEnabledText();
+  public ToggleDeviceTelemetryEnabledChanged(enabled: boolean) {
+    this.ToggleDeviceTelemetryEnabled.emit(enabled);
   }
 
-  public ToggleEmulatedEnabledChanged(event: MatSlideToggleChange) {
-    this.ToggleEmulatedEnabled.emit(this.State.Emulated.Enabled);
-
-    this.establishEmulatedEnabledText();
+  public ToggleEmulatedEnabledChanged(enabled: boolean) {
+    this.ToggleEmulatedEnabled.emit(enabled);
   }
 
   //  Helpers
-  protected establishDeviceTelemetryEnabledText() {
-    if (this.State.DeviceTelemetry) {
-      this.DeviceTelemetryEnabledText = this.State.DeviceTelemetry.Enabled
-        ? 'Enabled'
-        : 'Disabled';
-
-      if (
-        this.DeviceTelemetryEnabledToggle &&
-        ((this.DeviceTelemetryEnabledToggle.checked &&
-          this.DeviceTelemetryEnabledText !== 'Enabled') ||
-          (!this.DeviceTelemetryEnabledToggle.checked &&
-            this.DeviceTelemetryEnabledText !== 'Disabled'))
-      ) {
-        this.DeviceTelemetryEnabledText = 'Saving...';
-      }
-    }
-  }
-
-  protected establishEmulatedEnabledText() {
-    if (this.State.Emulated) {
-      this.EmulatedEnabledText = this.State.Emulated.Enabled
-        ? 'Enabled'
-        : 'Disabled';
-
-      if (
-        this.EmulatedEnabledToggle &&
-        ((this.EmulatedEnabledToggle.checked &&
-          this.EmulatedEnabledText !== 'Enabled') ||
-          (!this.EmulatedEnabledToggle.checked &&
-            this.EmulatedEnabledText !== 'Disabled'))
-      ) {
-        this.EmulatedEnabledText = 'Saving...';
-      }
-    }
-  }
 
   protected handleStateChanged() {
-    this.establishDeviceTelemetryEnabledText();
-
-    this.establishEmulatedEnabledText();
-
     this.setAddingDevice();
 
     this.setupFreeboard();
@@ -224,7 +167,7 @@ export class LcuSetupManageElementComponent
       `${this.FreeboardURL}#data=${source}`
     );
 
-    this.FreeboardURL = window.LCU.State.FreeboardURL || '/freeboard';
+    this.FreeboardURL = this.lcuSvcSettings.State.FreeboardURL || '/freeboard';
   }
 
   protected setupAddDeviceForm() {
