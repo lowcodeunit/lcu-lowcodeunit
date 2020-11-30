@@ -97,6 +97,8 @@ export class LcuSetupManageElementComponent
 
     this.RevokeDeviceEnrollment = new EventEmitter();
 
+    this.State = {};
+
     this.ToggleTelemetryEnabled = new EventEmitter();
 
     this.ToggleEmulatedEnabled = new EventEmitter();
