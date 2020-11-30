@@ -98,6 +98,10 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
     this.TelemetryDataSource.data.forEach((payloadAny: any) => {
       payloadAny.$IsExpanded = this.IsActivePayload(payloadAny);
+
+      if (payloadAny.$IsExpanded) {
+        console.log(payloadAny);
+      }
     });
   }
 }
