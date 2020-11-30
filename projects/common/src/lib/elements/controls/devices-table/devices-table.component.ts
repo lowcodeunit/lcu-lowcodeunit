@@ -38,7 +38,6 @@ export class DevicesTableComponent implements OnInit {
   public ngOnInit(): void {}
 
   //  API Methods
-
   public RevokeClick(device: IoTEnsembleDeviceInfo) {
     if (
       confirm(`Are you sure you want to remove device '${device.DeviceName}'?`)

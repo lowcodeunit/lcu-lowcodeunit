@@ -71,7 +71,7 @@ export class LcuSetupManageElementComponent
   public State: IoTEnsembleState;
 
   @Output('toggle-device-telemetry-enabled')
-  public ToggleDeviceTelemetryEnabled: EventEmitter<boolean>;
+  public ToggleTelemetryEnabled: EventEmitter<boolean>;
 
   @Output('toggle-emulated-enabled')
   public ToggleEmulatedEnabled: EventEmitter<boolean>;
@@ -97,7 +97,7 @@ export class LcuSetupManageElementComponent
 
     this.RevokeDeviceEnrollment = new EventEmitter();
 
-    this.ToggleDeviceTelemetryEnabled = new EventEmitter();
+    this.ToggleTelemetryEnabled = new EventEmitter();
 
     this.ToggleEmulatedEnabled = new EventEmitter();
   }
@@ -138,8 +138,8 @@ export class LcuSetupManageElementComponent
     this.AddingDevice = !this.AddingDevice;
   }
 
-  public ToggleDeviceTelemetryEnabledChanged(enabled: boolean) {
-    this.ToggleDeviceTelemetryEnabled.emit(enabled);
+  public ToggleTelemetryEnabledChanged(enabled: boolean) {
+    this.ToggleTelemetryEnabled.emit(enabled);
   }
 
   public ToggleEmulatedEnabledChanged(enabled: boolean) {

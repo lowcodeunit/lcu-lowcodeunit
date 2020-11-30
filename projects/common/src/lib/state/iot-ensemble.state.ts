@@ -5,8 +5,6 @@ export class IoTEnsembleState {
 
   public Devices?: IoTEnsembleDeviceInfo[];
 
-  public DeviceTelemetry?: IoTEnsembleDeviceTelemetry;
-
   public Drawers?: IoTEnsembleDrawersConfig;
 
   public Emulated?: EmulatedDeviceInfo;
@@ -16,6 +14,8 @@ export class IoTEnsembleState {
   public SelectedDeviceID?: string;
 
   public Storage?: IoTEnsembleStorageConfiguration[];
+
+  public Telemetry?: IoTEnsembleTelemetry;
 
   public UserEnterpriseLookup?: string;
 }
@@ -48,7 +48,7 @@ export class IoTEnsembleDeviceInfo {
   public LastStatusUpdate?: Status;
 }
 
-export class IoTEnsembleDeviceTelemetry {
+export class IoTEnsembleTelemetry {
   public Enabled?: boolean;
 
   public Loading?: boolean;
@@ -57,12 +57,12 @@ export class IoTEnsembleDeviceTelemetry {
 
   public PageSize?: number;
 
-  public Payloads?: IoTEnsembleDeviceTelemetryPayload[];
+  public Payloads?: IoTEnsembleTelemetryPayload[];
 
   public RefreshRate?: number;
 }
 
-export class IoTEnsembleDeviceTelemetryPayload {
+export class IoTEnsembleTelemetryPayload {
   [prop: string]: any;
 
   public DeviceData?: { [prop: string]: any };

@@ -48,7 +48,7 @@ export class DynamicComponent implements OnInit {
     this.iotEnsCtxt.RevokeDeviceEnrollment(deviceId);
   }
 
-  public ToggleDeviceTelemetryEnabled() {
+  public ToggleTelemetryEnabled() {
     this.iotEnsCtxt.ToggleTelemetrySync();
   }
 

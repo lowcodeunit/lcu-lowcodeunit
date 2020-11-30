@@ -15,6 +15,7 @@ import { LoaderComponent } from './controls/loader/loader.component';
 import { TelemetryListComponent } from './elements/controls/telemetry-list/telemetry-list.component';
 import { EnabledToggleComponent } from './controls/enabled-toggle/enabled-toggle.component';
 import { DevicesTableComponent } from './elements/controls/devices-table/devices-table.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DevicesTableComponent } from './elements/controls/devices-table/devices
   ],
   imports: [
     FathymSharedModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
