@@ -57,7 +57,7 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="payload">
+      <!-- <ng-container matColumnDef="payload">
         <td
           mat-cell
           [attr.colspan]="DisplayedColumns.length"
@@ -69,18 +69,18 @@
             </pre>
           </div>
         </td>
-      </ng-container>
+      </ng-container> -->
 
       <tr mat-header-row *matHeaderRowDef="DisplayedColumns"></tr>
-      <tr
+      <tr mat-row *matRowDef="let payload; columns: DisplayedColumns"></tr>
+      <!-- <tr
         mat-row
         *matRowDef="let row; columns: DisplayedColumns"
         matRipple
         class="element-row"
         [cdkDetailRow]="row"
         [cdkDetailRowTpl]="tpl"
-      ></tr>
-      <!-- <tr mat-row *matRowDef="let payload; columns: DisplayedColumns"></tr> -->
+      ></tr> -->
       <!-- <tr class="active-payload" mat-row *matRowDef="let payload; columns: ['payload']; when: (i, p) => p.$IsExpanded"></tr> -->
     </table>
 
