@@ -94,14 +94,16 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
   //  Helpers
   protected updateTelemetryDataSource() {
-    this.TelemetryDataSource.data = this.Telemetry.Payloads || [];
+    if (this.Telemetry) {
+      this.TelemetryDataSource.data = this.Telemetry.Payloads || [];
 
-    this.TelemetryDataSource.data.forEach((payloadAny: any) => {
-      payloadAny.$IsExpanded = this.IsActivePayload(payloadAny);
+      this.TelemetryDataSource.data.forEach((payloadAny: any) => {
+        payloadAny.$IsExpanded = this.IsActivePayload(payloadAny);
 
-      if (payloadAny.$IsExpanded) {
-        console.log(payloadAny);
-      }
-    });
+        if (payloadAny.$IsExpanded) {
+          console.log(payloadAny);
+        }
+      });
+    }
   }
 }
