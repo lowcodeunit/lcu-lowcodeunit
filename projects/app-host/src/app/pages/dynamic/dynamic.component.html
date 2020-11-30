@@ -1,4 +1,5 @@
 <lcu-setup-manage-element
+  *ngIf="State"
   [state]="State"
   (enroll-device)="EnrollDevice($event)"
   (revoke-device-enrollment)="RevokeDeviceEnrollment($event)"
