@@ -54,17 +54,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
 })
 export class LcuSetupModule {
-  static forRoot(env: {
-    production: boolean;
-  }): ModuleWithProviders<LcuSetupModule> {
+  static forRoot(): ModuleWithProviders<LcuSetupModule> {
     return {
       ngModule: LcuSetupModule,
       providers: [
         IoTEnsembleStateContext,
-        {
-          provide: LCUServiceSettings,
-          useValue: FathymSharedModule.DefaultServiceSettings(env),
-        },
       ],
     };
   }

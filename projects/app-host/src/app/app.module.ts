@@ -23,14 +23,19 @@ import { environment } from '../environments/environment';
     FooterComponent,
   ],
   imports: [
-    FathymSharedModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
-    LcuSetupModule.forRoot(environment),
+    FathymSharedModule.forRoot(),
+    LcuSetupModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: LCUServiceSettings,
+      useValue: FathymSharedModule.DefaultServiceSettings(environment),
+    },
+  ],
   bootstrap: [AppComponent],
   exports: [DynamicComponent, HeaderComponent, FooterComponent],
 })
