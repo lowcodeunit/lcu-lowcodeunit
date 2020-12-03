@@ -64,6 +64,8 @@ export class LcuSetupManageElementComponent
 
   public FreeboardURL: string;
 
+  public LastSyncedAt: Date;
+
   @Output('revoke-device-enrollment')
   public RevokeDeviceEnrollment: EventEmitter<string>;
 
@@ -75,6 +77,9 @@ export class LcuSetupManageElementComponent
 
   @Output('toggle-emulated-enabled')
   public ToggleEmulatedEnabled: EventEmitter<boolean>;
+
+  @Output('update-refresh-rate')
+  public UpdateRefreshRate: EventEmitter<number>;
 
   //  Constructors
   constructor(
@@ -100,6 +105,8 @@ export class LcuSetupManageElementComponent
     this.ToggleTelemetryEnabled = new EventEmitter();
 
     this.ToggleEmulatedEnabled = new EventEmitter();
+
+    this.UpdateRefreshRate = new EventEmitter();
   }
 
   //  Life Cycle
@@ -130,6 +137,11 @@ export class LcuSetupManageElementComponent
     });
   }
 
+  public RefreshRateChanged(event: any){
+    console.log("New refresh rate recieved: ", event);
+    this.UpdateRefreshRate.emit(event);
+  }
+
   public RevokeDeviceEnrollmentClick(deviceId: string) {
     this.RevokeDeviceEnrollment.emit(deviceId);
   }
@@ -152,10 +164,22 @@ export class LcuSetupManageElementComponent
     this.setAddingDevice();
 
     this.setupFreeboard();
+    
+    if(this.State.Telemetry){
+      this.convertToDate(this.State.Telemetry.LastSyncedAt)
+    }
+
   }
 
   public setAddingDevice() {
     this.AddingDevice = (this.State.Devices?.length || 0) <= 0;
+  }
+
+
+  protected convertToDate(syncDate: string){
+    if(syncDate){
+      this.LastSyncedAt = new Date(Date.parse(syncDate));
+    }
   }
 
   protected setDashboardIFrameURL() {

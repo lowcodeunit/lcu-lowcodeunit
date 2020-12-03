@@ -16,6 +16,7 @@ import { TelemetryListComponent } from './elements/controls/telemetry-list/telem
 import { EnabledToggleComponent } from './controls/enabled-toggle/enabled-toggle.component';
 import { DevicesTableComponent } from './elements/controls/devices-table/devices-table.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RefreshSelectComponent } from './controls/refresh-select/refresh-select.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TelemetryListComponent,
     EnabledToggleComponent,
     DevicesTableComponent,
+    RefreshSelectComponent,
   ],
   imports: [
     FathymSharedModule,
@@ -45,12 +47,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TelemetryListComponent,
     EnabledToggleComponent,
     DevicesTableComponent,
+    RefreshSelectComponent,
   ],
   entryComponents: [
     LcuSetupManageElementComponent,
     LcuSetupAdminElementComponent,
     LcuSetupDevicesElementComponent,
     LcuSetupSetupElementComponent,
+    RefreshSelectComponent,
   ],
 })
 export class LcuSetupModule {

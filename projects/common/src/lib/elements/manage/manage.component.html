@@ -120,15 +120,24 @@
         <div class="telemetry widget">
           <mat-card>
             <mat-card-header>
-              <mat-card-title>Device Telemetry</mat-card-title>
+              <div  fxLayout="column" fxLayoutAlign="start start">
+                <mat-card-title>Device Telemetry</mat-card-title>
+                <lcu-refresh-select 
+                  [state]="State"
+                  (refresh-rate-changed)="RefreshRateChanged($event)">
+                </lcu-refresh-select>  
+              </div>
 
               <div fxFlex></div>
+              <div fxLayout="column" fxLayoutAlign="start end">
+                <lcu-enabled-toggle
+                  [enabled]="State.Telemetry?.Enabled"
+                  enabled-text="Live"
+                  (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
+                ></lcu-enabled-toggle>
+                <div id="last-sync-text"*ngIf="LastSyncedAt && State.Telemetry?.Enabled">Last Updated: {{LastSyncedAt}}</div>
+            </div>
 
-              <lcu-enabled-toggle
-                [enabled]="State.Telemetry?.Enabled"
-                enabled-text="Live"
-                (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
-              ></lcu-enabled-toggle>
             </mat-card-header>
 
             <mat-card-content>
