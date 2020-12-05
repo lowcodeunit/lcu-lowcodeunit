@@ -16,6 +16,8 @@ import { TelemetryListComponent } from './elements/controls/telemetry-list/telem
 import { EnabledToggleComponent } from './controls/enabled-toggle/enabled-toggle.component';
 import { DevicesTableComponent } from './elements/controls/devices-table/devices-table.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PayloadComponent } from './elements/dynamic/payload/payload.component';
+import { DataGridModule } from '@lowcodeunit/data-grid';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TelemetryListComponent,
     EnabledToggleComponent,
     DevicesTableComponent,
+    PayloadComponent,
   ],
   imports: [
     FathymSharedModule,
@@ -35,6 +38,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     FlexLayoutModule,
     MaterialModule,
+    DataGridModule
   ],
   exports: [
     LcuSetupManageElementComponent,
@@ -45,12 +49,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TelemetryListComponent,
     EnabledToggleComponent,
     DevicesTableComponent,
+    PayloadComponent,
   ],
   entryComponents: [
     LcuSetupManageElementComponent,
     LcuSetupAdminElementComponent,
     LcuSetupDevicesElementComponent,
     LcuSetupSetupElementComponent,
+    PayloadComponent,
   ],
 })
 export class LcuSetupModule {

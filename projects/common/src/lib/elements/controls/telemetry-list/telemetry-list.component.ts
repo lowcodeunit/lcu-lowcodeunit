@@ -12,32 +12,50 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
-  ViewChild,
+  SimpleChanges
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { ColumnDefinitionModel, DataGridConfig, DataGridFeatures, DataGridPagination, DynamicComponentModel } from '@lowcodeunit/data-grid';
+import { of } from 'rxjs/internal/observable/of';
 import { IoTEnsembleTelemetry } from '../../../state/iot-ensemble.state';
+import { PayloadComponent } from '../../dynamic/payload/payload.component';
 import { IoTEnsembleTelemetryPayload } from './../../../state/iot-ensemble.state';
 
 @Component({
   selector: 'lcu-telemetry-list',
   templateUrl: './telemetry-list.component.html',
   styleUrls: ['./telemetry-list.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state(
-        'void',
-        style({ height: '0px', minHeight: '0', visibility: 'hidden' })
-      ),
-      state('*', style({ height: '*', visibility: 'visible' })),
-      transition('void <=> *', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 export class TelemetryListComponent implements OnChanges, OnInit {
   //  Fields
 
   //  Properties
+
+  protected _GridParameters: DataGridConfig;
+  public set GridParameters(val: DataGridConfig) {
+    this._GridParameters = val;
+  }
+
+  public get GridParameters(): DataGridConfig {
+    return this. _GridParameters;
+  }
+
+  protected _gridFeatures: DataGridFeatures;
+  public get gridFeatures(): DataGridFeatures {
+    return this._gridFeatures;
+  }
+
+  public set gridFeatures(val: DataGridFeatures) {
+    this._gridFeatures = val;
+  }
+
+  public DynamicComponents: Array<DynamicComponentModel>;
+
+  protected colunmDefsModel: Array<ColumnDefinitionModel>;
+
+
+
+
   public ActivePayloadID: string;
 
   @Input('displayed-columns')
@@ -70,7 +88,9 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   }
 
   public ngOnInit(): void {
-    this.updateTelemetryDataSource();
+    // this.updateTelemetryDataSource();
+    this.setupDynamicComponents();
+    this.setupGrid();
   }
 
   //  API Methods
@@ -88,8 +108,8 @@ export class TelemetryListComponent implements OnChanges, OnInit {
     } else {
       this.ActivePayloadID = payload.id;
     }
-
-    this.updateTelemetryDataSource();
+    payload.$IsExpanded = !payload.$IsExpanded;
+   this.updateTelemetryDataSource();
   }
 
   //  Helpers
@@ -97,13 +117,81 @@ export class TelemetryListComponent implements OnChanges, OnInit {
     if (this.Telemetry) {
       this.TelemetryDataSource.data = this.Telemetry.Payloads || [];
 
-      this.TelemetryDataSource.data.forEach((payloadAny: any) => {
-        payloadAny.$IsExpanded = this.IsActivePayload(payloadAny);
-
-        if (payloadAny.$IsExpanded) {
-          console.log(payloadAny);
-        }
-      });
+      // this.TelemetryDataSource.data.forEach((payloadAny: any) => {
+      //   payloadAny.$IsExpanded = this.IsActivePayload(payloadAny);
+      // });
     }
   }
+
+    /**
+     * Setup dynamic components to inject into datagrid
+     */
+    protected setupDynamicComponents(): void {
+      this.DynamicComponents = [
+        new DynamicComponentModel({ Component: PayloadComponent,
+                                    Data: {},
+                                    Label: 'JSON Payload' })
+      ];
+    }
+
+    /**
+     * Setup all features of the grid
+     */
+    protected setupGrid(): void {
+      this.setupGridParameters();
+      this.GridParameters = new DataGridConfig(
+        of(this.TelemetryDataSource.data),
+        this.colunmDefsModel,
+        this.gridFeatures
+      )
+    };
+
+    /**
+     * Create grid columns
+     */
+    protected setupGridParameters(): void {
+      this.colunmDefsModel = [
+        new ColumnDefinitionModel({ ColType: 'id', Title: 'ID', ShowValue: true}),
+        new ColumnDefinitionModel({ ColType: 'DeviceID', Title: 'Device ID', ShowValue: true}),
+        new ColumnDefinitionModel({ ColType: 'EventProcessedUtcTime', Title: 'Processed At', ShowValue: true}),
+        new ColumnDefinitionModel({ ColType: 'needtoallowfornocolumntypes', Title: '', ShowValue: false, ShowIcon: true,
+                                    IconConfigFunc: () => 'visibility',
+                                    Action:
+                                    {
+                                      ActionHandler: this.SetActivePayload.bind(this),
+                                      ActionType: 'button',
+                                      ActionTooltip: 'View Payload'
+                                    }
+                                  }),
+        new ColumnDefinitionModel({ ColType: 'd', Title: '', ShowValue: false, ShowIcon: true,
+                                    IconConfigFunc: () => 'download',
+                                    Action:
+                                    {
+                                      ActionHandler: this.DownloadClick.bind(this),
+                                      ActionType: 'button',
+                                      ActionTooltip: 'Download'
+                                    }
+                                  })
+      ];
+
+      this.setupGridFeatures();
+    }
+
+    /**
+     * Setup grid features, such as pagination, row colors, etc.
+     */
+    protected setupGridFeatures(): void {
+      const paginationDetails: DataGridPagination = new DataGridPagination();
+      paginationDetails.PageSize = 10;
+      paginationDetails.PageSizeOptions = [1, 5, 10, 20, 30];
+
+      const features: DataGridFeatures = new DataGridFeatures();
+      features.Paginator = paginationDetails;
+      features.Filter = false;
+      features.ShowLoader = true;
+      features.RowColorEven = 'gray';
+      features.RowColorOdd = 'light-gray';
+
+      this.gridFeatures = features;
+    }
 }
