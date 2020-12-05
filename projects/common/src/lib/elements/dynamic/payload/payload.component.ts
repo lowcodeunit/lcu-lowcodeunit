@@ -8,18 +8,19 @@ import { IoTEnsembleTelemetryPayload } from '../../../state/iot-ensemble.state';
 })
 export class PayloadComponent implements OnInit {
 
+  /**
+   * DataSource is required in order to show row data within this component
+   */
   private _datasource: IoTEnsembleTelemetryPayload;
   // tslint:disable-next-line:no-input-rename
   @Input('datasource')
   set DataSource(val: IoTEnsembleTelemetryPayload) {
-    debugger;
     this._datasource = val;
   }
 
   get DataSource(): IoTEnsembleTelemetryPayload {
     return this._datasource;
   }
-
 
   constructor() { }
 
