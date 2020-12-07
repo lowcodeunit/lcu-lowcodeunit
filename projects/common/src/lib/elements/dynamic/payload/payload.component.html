@@ -4,9 +4,6 @@
     fxLayoutAlign="start" 
     fxLayoutGap="10px"
     class="margin-5">
-    <span>ID: {{ DataSource.id }}</span>
-    <span>Device ID: {{ DataSource.DeviceID }}</span>
-    <span>Device Type: {{ DataSource.DeviceType }}</span>
-    <span>Enterprise Lookup: {{ DataSource.EnterpriseLookup }}</span>
+    <pre>{{ DataSource | json }}</pre>
 </div>
 
