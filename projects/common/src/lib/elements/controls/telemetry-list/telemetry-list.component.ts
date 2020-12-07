@@ -157,6 +157,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
         new ColumnDefinitionModel({ ColType: 'EventProcessedUtcTime', Title: 'Processed At', ShowValue: true}),
         new ColumnDefinitionModel({ ColType: 'needtoallowfornocolumntypes', Title: '', ShowValue: false, ShowIcon: true,
                                     IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
+                                      // toggle icon
                                       return rowData.$IsExpanded ? 'visibility' : 'visibility_off';
                                     },
                                     Action:
