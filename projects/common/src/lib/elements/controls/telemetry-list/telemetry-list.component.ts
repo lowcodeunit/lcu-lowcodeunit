@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ColumnDefinitionModel, DataGridConfig, DataGridFeatures, DataGridPagination, DynamicComponentModel } from '@lowcodeunit/data-grid';
+import { debug } from 'console';
 import { of } from 'rxjs/internal/observable/of';
 import { IoTEnsembleTelemetry } from '../../../state/iot-ensemble.state';
 import { PayloadComponent } from '../../dynamic/payload/payload.component';
@@ -155,7 +156,9 @@ export class TelemetryListComponent implements OnChanges, OnInit {
         new ColumnDefinitionModel({ ColType: 'DeviceID', Title: 'Device ID', ShowValue: true}),
         new ColumnDefinitionModel({ ColType: 'EventProcessedUtcTime', Title: 'Processed At', ShowValue: true}),
         new ColumnDefinitionModel({ ColType: 'needtoallowfornocolumntypes', Title: '', ShowValue: false, ShowIcon: true,
-                                    IconConfigFunc: () => 'visibility',
+                                    IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
+                                      return rowData.$IsExpanded ? 'visibility' : 'visibility_off';
+                                    },
                                     Action:
                                     {
                                       ActionHandler: this.SetActivePayload.bind(this),
