@@ -18,6 +18,7 @@ import { DevicesTableComponent } from './elements/controls/devices-table/devices
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PayloadComponent } from './elements/dynamic/payload/payload.component';
 import { DataGridModule } from '@lowcodeunit/data-grid';
+import { RefreshSelectComponent } from './controls/refresh-select/refresh-select.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { DataGridModule } from '@lowcodeunit/data-grid';
     EnabledToggleComponent,
     DevicesTableComponent,
     PayloadComponent,
+    RefreshSelectComponent,
   ],
   imports: [
     FathymSharedModule,
@@ -50,6 +52,7 @@ import { DataGridModule } from '@lowcodeunit/data-grid';
     EnabledToggleComponent,
     DevicesTableComponent,
     PayloadComponent,
+    RefreshSelectComponent,
   ],
   entryComponents: [
     LcuSetupManageElementComponent,
@@ -57,6 +60,7 @@ import { DataGridModule } from '@lowcodeunit/data-grid';
     LcuSetupDevicesElementComponent,
     LcuSetupSetupElementComponent,
     PayloadComponent,
+    RefreshSelectComponent,
   ],
 })
 export class LcuSetupModule {

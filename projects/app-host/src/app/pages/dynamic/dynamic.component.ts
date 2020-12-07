@@ -56,6 +56,13 @@ export class DynamicComponent implements OnInit {
     this.iotEnsCtxt.ToggleEmulatedEnabled();
   }
 
+  public UpdateRefreshRate(event: number){
+    
+    this.State.Loading = true;
+
+    this.iotEnsCtxt.UpdateTelemetrySync(event, this.State.Telemetry.PageSize);
+  }
+
   //  Helpers
   protected handleMobileObserver(result?: BreakpointState) {
     this.IsMobile = result.matches;
