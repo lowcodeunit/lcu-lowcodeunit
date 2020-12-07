@@ -138,7 +138,6 @@ export class LcuSetupManageElementComponent
   }
 
   public RefreshRateChanged(event: any){
-    console.log("New refresh rate recieved: ", event);
     this.UpdateRefreshRate.emit(event);
   }
 
@@ -164,7 +163,7 @@ export class LcuSetupManageElementComponent
     this.setAddingDevice();
 
     this.setupFreeboard();
-    
+
     if(this.State.Telemetry){
       this.convertToDate(this.State.Telemetry.LastSyncedAt)
     }

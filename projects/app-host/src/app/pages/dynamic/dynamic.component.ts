@@ -57,6 +57,9 @@ export class DynamicComponent implements OnInit {
   }
 
   public UpdateRefreshRate(event: number){
+    
+    this.State.Loading = true;
+
     this.iotEnsCtxt.UpdateTelemetrySync(event, this.State.Telemetry.PageSize);
   }
 

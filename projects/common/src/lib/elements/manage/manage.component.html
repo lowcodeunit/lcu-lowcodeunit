@@ -135,7 +135,7 @@
                   enabled-text="Live"
                   (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
                 ></lcu-enabled-toggle>
-                <div id="last-sync-text"*ngIf="LastSyncedAt && State.Telemetry?.Enabled">Last Updated: {{LastSyncedAt}}</div>
+                <div class="spread" *ngIf="LastSyncedAt && State.Telemetry?.Enabled">Last Updated: {{LastSyncedAt}}</div>
             </div>
 
             </mat-card-header>
