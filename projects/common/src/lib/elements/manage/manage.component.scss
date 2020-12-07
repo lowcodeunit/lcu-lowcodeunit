@@ -1,0 +1,39 @@
+:host {
+  .manage-header {
+  }
+
+  .manage {
+    .widget {
+      margin: 1em;
+    }
+
+    .devices {
+      .emulated {
+      }
+
+      .connected {
+        .deviceId, .connStr {
+          width: 300px;
+          margin: 0.5em;
+        }
+      }
+
+      .dashboard {
+        iframe {
+          width: 100%;
+        }
+      }
+
+      .telemetry {
+      }
+    }
+
+    .connected {
+      .device-list {
+      }
+    }
+
+    .storage-access {
+    }
+  }
+}
