@@ -44,12 +44,20 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
     });
   }
 
-  public ToggleTelemetrySync(pageSize: number = null) {
+  public ToggleTelemetrySync() {
+    this.Execute({
+      Arguments: {},
+      Type: 'ToggleTelemetrySync',
+    });
+  }
+
+  public UpdateTelemetrySync(refreshRate: number, pageSize: number) {
     this.Execute({
       Arguments: {
+        RefreshRate: refreshRate,
         PageSize: pageSize
       },
-      Type: 'ToggleTelemetrySync',
+      Type: 'UpdateTelemetrySync',
     });
   }
 

@@ -60,6 +60,8 @@ export class IoTEnsembleTelemetry {
   public Payloads?: IoTEnsembleTelemetryPayload[];
 
   public RefreshRate?: number;
+
+  public LastSyncedAt?: string;
 }
 
 export class IoTEnsembleTelemetryPayload {
