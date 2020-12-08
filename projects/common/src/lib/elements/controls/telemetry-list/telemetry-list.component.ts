@@ -91,7 +91,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   public ngOnInit(): void {
     // this.updateTelemetryDataSource();
     this.setupDynamicComponents();
-    this.setupGrid();
   }
 
   //  API Methods
@@ -118,6 +117,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
     if (this.Telemetry) {
       this.TelemetryDataSource.data = this.Telemetry.Payloads || [];
 
+      this.setupGrid();
       // this.TelemetryDataSource.data.forEach((payloadAny: any) => {
       //   payloadAny.$IsExpanded = this.IsActivePayload(payloadAny);
       // });

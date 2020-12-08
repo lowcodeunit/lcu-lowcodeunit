@@ -173,7 +173,7 @@ export class LcuSetupManageElementComponent
 
   }
 
-  public setAddingDevice() {
+  protected setAddingDevice() {
     this.AddingDevice = (this.State.Devices?.length || 0) <= 0;
   }
 
