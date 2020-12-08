@@ -51,13 +51,6 @@ export class LcuSetupManageElementComponent
   //  Fields
 
   //  Properties
-  public AddDeviceFormGroup: FormGroup;
-
-  public AddingDevice: boolean;
-
-  public ConnectedDevicesDisplayedColumns: string[];
-
-  public DashboardIFrameURL: SafeResourceUrl;
 
   @Output('enroll-device')
   public EnrollDevice: EventEmitter<IoTEnsembleDeviceEnrollment>;
@@ -77,6 +70,14 @@ export class LcuSetupManageElementComponent
 
   @Output('toggle-emulated-enabled')
   public ToggleEmulatedEnabled: EventEmitter<boolean>;
+
+  public AddDeviceFormGroup: FormGroup;
+
+  public AddingDevice: boolean;
+
+  public ConnectedDevicesDisplayedColumns: string[];
+
+  public DashboardIFrameURL: SafeResourceUrl;
 
   @Output('update-refresh-rate')
   public UpdateRefreshRate: EventEmitter<number>;
@@ -172,7 +173,7 @@ export class LcuSetupManageElementComponent
 
   }
 
-  public setAddingDevice() {
+  protected setAddingDevice() {
     this.AddingDevice = (this.State.Devices?.length || 0) <= 0;
   }
 

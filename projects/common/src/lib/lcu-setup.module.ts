@@ -16,6 +16,8 @@ import { TelemetryListComponent } from './elements/controls/telemetry-list/telem
 import { EnabledToggleComponent } from './controls/enabled-toggle/enabled-toggle.component';
 import { DevicesTableComponent } from './elements/controls/devices-table/devices-table.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PayloadComponent } from './elements/dynamic/payload/payload.component';
+import { DataGridModule } from '@lowcodeunit/data-grid';
 import { RefreshSelectComponent } from './controls/refresh-select/refresh-select.component';
 
 @NgModule({
@@ -28,6 +30,7 @@ import { RefreshSelectComponent } from './controls/refresh-select/refresh-select
     TelemetryListComponent,
     EnabledToggleComponent,
     DevicesTableComponent,
+    PayloadComponent,
     RefreshSelectComponent,
   ],
   imports: [
@@ -37,6 +40,7 @@ import { RefreshSelectComponent } from './controls/refresh-select/refresh-select
     ReactiveFormsModule,
     FlexLayoutModule,
     MaterialModule,
+    DataGridModule
   ],
   exports: [
     LcuSetupManageElementComponent,
@@ -47,6 +51,7 @@ import { RefreshSelectComponent } from './controls/refresh-select/refresh-select
     TelemetryListComponent,
     EnabledToggleComponent,
     DevicesTableComponent,
+    PayloadComponent,
     RefreshSelectComponent,
   ],
   entryComponents: [
@@ -54,6 +59,7 @@ import { RefreshSelectComponent } from './controls/refresh-select/refresh-select
     LcuSetupAdminElementComponent,
     LcuSetupDevicesElementComponent,
     LcuSetupSetupElementComponent,
+    PayloadComponent,
     RefreshSelectComponent,
   ],
 })
