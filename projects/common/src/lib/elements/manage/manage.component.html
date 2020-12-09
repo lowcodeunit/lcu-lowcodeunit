@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="device-adding" *ngIf="AddingDevice">
-                  <h2>Add a New Device</h2>
+                  <h2>Enroll a New Device</h2>
 
                   <mat-form-field>
                     <input
@@ -122,10 +122,10 @@
             <mat-card-header>
               <div  fxLayout="column" fxLayoutAlign="start start">
                 <mat-card-title>Device Telemetry</mat-card-title>
-                <lcu-refresh-select 
+                <lcu-refresh-select
                   [state]="State"
                   (refresh-rate-changed)="RefreshRateChanged($event)">
-                </lcu-refresh-select>  
+                </lcu-refresh-select>
               </div>
 
               <div fxFlex></div>
@@ -146,7 +146,7 @@
               <lcu-telemetry-list
                 [telemetry]="State.Telemetry"
               ></lcu-telemetry-list>
-              
+
             </mat-card-content>
 
             <mat-card-actions>
