@@ -19,6 +19,14 @@
         //   background: #f5f5f5;
         // }
 
+        .gray {
+          background-color: gray;
+        }
+
+        .light-gray {
+          background-color: rgb(212, 212, 212);
+        }
+
         &.expanded {
           border-bottom-color: transparent;
         }

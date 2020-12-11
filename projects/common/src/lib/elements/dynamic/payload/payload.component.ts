@@ -13,7 +13,7 @@ export class PayloadComponent implements OnInit {
    */
   private _datasource: IoTEnsembleTelemetryPayload;
   // tslint:disable-next-line:no-input-rename
-  @Input('datasource')
+  @Input('data-source')
   set DataSource(val: IoTEnsembleTelemetryPayload) {
     this._datasource = val;
   }
