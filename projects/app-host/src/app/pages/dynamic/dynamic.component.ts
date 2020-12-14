@@ -56,8 +56,14 @@ export class DynamicComponent implements OnInit {
     this.iotEnsCtxt.ToggleEmulatedEnabled();
   }
 
+  public UpdatePageSize(event: any){
+    this.State.Loading = true;
+
+    this.iotEnsCtxt.UpdateTelemetrySync(this.State.Telemetry.RefreshRate, event);
+
+  }
+
   public UpdateRefreshRate(event: number){
-    
     this.State.Loading = true;
 
     this.iotEnsCtxt.UpdateTelemetrySync(event, this.State.Telemetry.PageSize);
