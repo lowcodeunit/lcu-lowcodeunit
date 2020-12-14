@@ -197,8 +197,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
           Paginator: paginationDetails,
           Filter: false,
           ShowLoader: true,
-          RowColorEven: 'gray',
-          RowColorOdd: 'light-gray'
+          Highlight: 'rowHighlight'
         }
       );
 

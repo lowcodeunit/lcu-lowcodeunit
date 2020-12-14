@@ -1,204 +1,228 @@
-<div *ngIf="!State?.Loading">
-  <div class="manage-header"></div>
-
-  <div class="manage">
-    <div
-      class="devices spread"
-      fxLayout="row wrap"
-      fxLayoutAlign="center center"
-    >
-      <div fxFlex="30%" fxFlex.lt-md="100%">
-        <div class="emulated widget">
-          <mat-card>
-            <mat-card-header>
-              <mat-card-title>Welcome To your Fathym Dashboard</mat-card-title>
-            </mat-card-header>
-
-            <mat-card-content>
-              <p>
-                Emulate, Simulate, and Connect your devices to discover the
-                power of your IoT solution.
-              </p>
-            </mat-card-content>
-          </mat-card>
+<div fxFlexFill *ngIf="!State?.Loading">
+  <div fxFlexFill fxLayout="column" fxLayoutGap="5px">
+    <div fxLayout="row" fxLayoutGap="5px">
+      <div
+        fxFlex="75"
+        fxLayoutAlign="start end"
+        class="welcome-bg background-fill">
+        <div class="welcome-index" fxLayout="row" fxLayoutGap="30px">
+          <div fxFlex="30">
+            <h1 fxLayout="column">
+              <span class="plain-text theme-accent-text margin-bottom-2">Welcome to</span>
+              <span class="mat-display-1 plain-text">Your Fathym Dashboard</span>
+            </h1>
+          </div>
+          <div class="divider-fill-vert"></div>
+          <div fxLayout="column" fxLayoutAlign="end start">
+            <h2 class="plain-text theme-accent-text" fxFlex="100%">
+              Emulate Devices
+            </h2>
+            <p>
+              Emulate, Simulate, and Connect your devices to discover the
+              power of your IoT solution.
+            </p>
+          </div>
         </div>
       </div>
+      <div fxFlex class="background-fill blank-header"></div>
+    </div>
 
-      <div fxFlex="70%" fxFlex.lt-md="100%">
-        <div class="emulated widget">
-          <mat-card>
-            <mat-card-header>
-              <mat-card-title>Emulated Devices</mat-card-title>
 
-              <div fxFlex></div>
+    
+    <div fxFlexFill fxLayout="row">
+      <div fxFlex fxLayout="row" fxLayoutGap="5px">
+        <!-- left side -->
+        <div
+          fxFlex="25"
+          fxLayout="row"
+          fxFill
+          fxLayoutAlign="start start"
+          class="background-fill box-side-triangle padding-left-5 padding-right-5">
+          <div fxLayout="column" fxFlex="90" style="padding-top: 100px">
+            <div class="divider-fill-hor"></div>
 
-              <lcu-enabled-toggle
-                [enabled]="State.Emulated?.Enabled"
-                (enabled-toggled)="ToggleEmulatedEnabledChanged($event)"
-              ></lcu-enabled-toggle>
-            </mat-card-header>
+            <h3 class="mat-display-5 plain-text whats-next-text">
+              What's Next?
+            </h3>
+            <p>
+              Use the Journeys below to familiarize yourself with the rest of
+              what you can do with Fathym!
+            </p>
 
-            <mat-card-content>
-              <p>
-                When enabled, emulated device data will be provided in your data
-                queries. The emulated device, is for smart room detection and
-                provides temperature, humidity and occupancy of a room.
-              </p>
-            </mat-card-content>
+            <div class="divider-fill-hor"></div>
 
-            <mat-card-actions>
-            </mat-card-actions>
-          </mat-card>
+            <p>
+              <a mat-button href="https://www.fathym-it.com/framework" target="_blank" color="accent" class="padding-left-0">Documentation</a>
+            </p>
+
+            <div class="divider-fill-hor"></div>
+          </div>
         </div>
-      </div>
+        <!--^^^ Left Side ^^^-->
 
-      <div fxFlex="100%">
-        <div class="connected widget">
-          <form
-            [formGroup]="AddDeviceFormGroup"
-            (ngSubmit)="EnrollDeviceSubmit()"
-          >
+        <!-- Content -->
+        <div 
+          fxFlex 
+          fxLayout="column"
+          fxLayoutGap="10px" 
+          class="background-fill padding-left-2 padding-right-2 padding-top-2">
+
+          <!-- Connect Devices -->
+            <div class="connected">
+              <form
+                [formGroup]="AddDeviceFormGroup"
+                (ngSubmit)="EnrollDeviceSubmit()">
+                <mat-card>
+                  <mat-card-header>
+                    <mat-card-title>Connected Devices</mat-card-title>
+                  </mat-card-header>
+    
+                  <mat-card-content>
+                    <div class="device-list" *ngIf="!AddingDevice">
+                      <lcu-devices-table
+                        [devices]="State.Devices"
+                        [displayed-columns]="ConnectedDevicesDisplayedColumns"
+                        (revoked)="RevokeDeviceEnrollmentClick($event)"
+                      ></lcu-devices-table>
+                    </div>
+    
+                    <div class="device-adding" *ngIf="AddingDevice">
+                      <h2>Enroll a New Device</h2>
+    
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="deviceName"
+                          placeholder="The Name of your Device"
+                          required
+                        />
+                      </mat-form-field>
+                    </div>
+                  </mat-card-content>
+    
+                  <mat-card-actions>
+                    <div fxFlex></div>
+    
+                    <ng-container *ngIf="!AddingDevice">
+                      <a mat-raised-button (click)="ToggleAddingDevice()">
+                        Add New Device
+                      </a>
+                    </ng-container>
+    
+                    <ng-container *ngIf="AddingDevice">
+                      <button
+                        mat-raised-button
+                        type="submit"
+                        color="primary"
+                        [disabled]="!AddDeviceFormGroup.valid"
+                      >
+                        Enroll Device
+                      </button>
+    
+                      <a mat-button color="warn" (click)="ToggleAddingDevice()">
+                        <mat-icon>cancel</mat-icon>
+                        Cancel
+                      </a>
+                    </ng-container>
+                  </mat-card-actions>
+                </mat-card>
+              </form>
+            </div>
+          <!--^^^ Connect Devices ^^^-->
+
+          <!-- Dashboard / Telemetry -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <!-- Dashboard -->
+            <div fxFlex="50">
+              <div class="dashboard">
+                <mat-card>
+                  <mat-card-header>
+                    <mat-card-title>Devices Dashboard</mat-card-title>
+                  </mat-card-header>
+      
+                  <mat-card-content>
+                    <div class="freeboard-display">
+                      <iframe
+                        [src]="DashboardIFrameURL"
+                        width="100%"
+                        height="500px"
+                        frameborder="0"
+                      ></iframe>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+            <!--^^^ Dashboard ^^^-->
+
+            <!-- Telemetry -->
+            <div class="telemetry">
+              <mat-card>
+                <mat-card-header>
+                  <div  fxLayout="column" fxLayoutAlign="start start">
+                    <mat-card-title>Device Telemetry</mat-card-title>
+                    <lcu-refresh-select
+                      [state]="State"
+                      (refresh-rate-changed)="RefreshRateChanged($event)">
+                    </lcu-refresh-select>
+                  </div>
+    
+                  <div fxFlex></div>
+                  <div fxLayout="column" fxLayoutAlign="start end">
+                    <lcu-enabled-toggle
+                      [enabled]="State.Telemetry?.Enabled"
+                      enabled-text="Live"
+                      (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
+                    ></lcu-enabled-toggle>
+                    <div class="spread" *ngIf="LastSyncedAt && State.Telemetry?.Enabled">Last Updated: {{LastSyncedAt}}</div>
+                </div>
+    
+                </mat-card-header>
+    
+                <mat-card-content>
+                  <mat-progress-bar 
+                    mode="indeterminate" 
+                    *ngIf="State.Telemetry?.Loading">
+                  </mat-progress-bar>
+    
+                  <lcu-telemetry-list
+                    [telemetry]="State.Telemetry">
+                  </lcu-telemetry-list>
+                </mat-card-content>
+    
+                <mat-card-actions>
+                </mat-card-actions>
+              </mat-card>
+            </div>
+            <!--^^^ Telemetry ^^^-->
+            
+          </div>
+          <!--^^^ Dashboard / Telemetry ^^^-->
+
+          <!-- Device Reports -->
+          <div>
             <mat-card>
               <mat-card-header>
-                <mat-card-title>Connected Devices</mat-card-title>
+                <mat-card-title>Device Reports</mat-card-title>
               </mat-card-header>
-
-              <mat-card-content>
-                <div class="device-list" *ngIf="!AddingDevice">
-                  <lcu-devices-table
-                    [devices]="State.Devices"
-                    [displayed-columns]="ConnectedDevicesDisplayedColumns"
-                    (revoked)="RevokeDeviceEnrollmentClick($event)"
-                  ></lcu-devices-table>
-                </div>
-
-                <div class="device-adding" *ngIf="AddingDevice">
-                  <h2>Enroll a New Device</h2>
-
-                  <mat-form-field>
-                    <input
-                      matInput
-                      formControlName="deviceName"
-                      placeholder="The Name of your Device"
-                      required
-                    />
-                  </mat-form-field>
-                </div>
-              </mat-card-content>
-
-              <mat-card-actions>
-                <div fxFlex></div>
-
-                <ng-container *ngIf="!AddingDevice">
-                  <a mat-raised-button (click)="ToggleAddingDevice()">
-                    Add New Device
-                  </a>
-                </ng-container>
-
-                <ng-container *ngIf="AddingDevice">
-                  <button
-                    mat-raised-button
-                    type="submit"
-                    color="primary"
-                    [disabled]="!AddDeviceFormGroup.valid"
-                  >
-                    Enroll Device
-                  </button>
-
-                  <a mat-button color="warn" (click)="ToggleAddingDevice()">
-                    <mat-icon>cancel</mat-icon>
-                    Cancel
-                  </a>
-                </ng-container>
-              </mat-card-actions>
             </mat-card>
-          </form>
+          </div>
+          <!--^^^ Device Reports ^^-->
+           
+          <!-- Storage Access -->
+          <div>
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>Storage Access</mat-card-title>
+              </mat-card-header>
+            </mat-card>
+          </div>
+          <!--^^^ Storage Access ^^^-->
+
         </div>
+        <!--^^^ Content ^^^--> 
       </div>
-
-      <div fxFlex="100%">
-        <div class="telemetry widget">
-          <mat-card>
-            <mat-card-header>
-              <div  fxLayout="column" fxLayoutAlign="start start">
-                <mat-card-title>Device Telemetry</mat-card-title>
-                <lcu-refresh-select
-                  [state]="State"
-                  (refresh-rate-changed)="RefreshRateChanged($event)">
-                </lcu-refresh-select>
-              </div>
-
-              <div fxFlex></div>
-              <div fxLayout="column" fxLayoutAlign="start end">
-                <lcu-enabled-toggle
-                  [enabled]="State.Telemetry?.Enabled"
-                  enabled-text="Live"
-                  (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
-                ></lcu-enabled-toggle>
-                <div class="spread" *ngIf="LastSyncedAt && State.Telemetry?.Enabled">Last Updated: {{LastSyncedAt}}</div>
-            </div>
-
-            </mat-card-header>
-
-            <mat-card-content>
-              <mat-progress-bar mode="indeterminate" *ngIf="State.Telemetry?.Loading"></mat-progress-bar>
-
-              <lcu-telemetry-list
-                [telemetry]="State.Telemetry"
-              ></lcu-telemetry-list>
-
-            </mat-card-content>
-
-            <mat-card-actions>
-            </mat-card-actions>
-          </mat-card>
-        </div>
-      </div>
-
-      <div fxFlex="100%">
-        <div class="dashboard widget">
-          <mat-card>
-            <mat-card-header>
-              <mat-card-title>Devices Dashboard</mat-card-title>
-            </mat-card-header>
-
-            <mat-card-content>
-              <div class="freeboard-display">
-                <!-- <div id="main-header">
-
-                </div> -->
-
-                <iframe
-                  [src]="DashboardIFrameURL"
-                  width="100%"
-                  height="500px"
-                  frameborder="0"
-                ></iframe>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
-
-      <div fxFlex="100%">
-        <div class="reports widget">
-          <mat-card>
-            <mat-card-header>
-              <mat-card-title>Device Reports</mat-card-title>
-            </mat-card-header>
-          </mat-card>
-        </div>
-      </div>
-    </div>
-
-    <div class="storage-access">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Storage Access</mat-card-title>
-        </mat-card-header>
-      </mat-card>
     </div>
   </div>
-</div>
 
-<lcu-loader [loading]="State?.Loading"></lcu-loader>
+  <lcu-loader [loading]="State?.Loading"></lcu-loader>
