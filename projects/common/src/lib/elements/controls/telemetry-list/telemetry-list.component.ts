@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import { DataPipeConstants } from '@lcu/common';
+import { ClipboardCopyFunction, DataPipeConstants } from '@lcu/common';
 import { MatTableDataSource } from '@angular/material/table';
 import 
 { 
@@ -32,6 +32,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   //  Fields
 
   //  Properties
+
   protected colunmDefsModel: Array<ColumnDefinitionModel>;
 
   @Input('displayed-columns')
@@ -80,6 +81,24 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   }
 
   //  API Methods
+
+  /**
+   * Copies the json payload to the clipboard while temporarily setting the copy icon to
+   * a checkmark to display to the user that the content was succesfully copied
+   * @param payload 
+   */
+  public CopyClick(payload: IoTEnsembleTelemetryPayload){
+
+    ClipboardCopyFunction.ClipboardCopy(JSON.stringify(payload));
+
+    payload.$IsCopySuccessIcon = true;
+
+    setTimeout(() => {
+      payload.$IsCopySuccessIcon = false;
+    }, 2000);
+  }
+
+
   public DownloadClick(payload: IoTEnsembleTelemetryPayload) {
 
     this.Downloaded.emit(payload);
@@ -92,7 +111,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   }
 
   public HandlePageEvent(event: any): void{
-    console.log("page event t-list: ", event);
+    // console.log("page event t-list: ", event);
     this.PageSizeChanged.emit(event.pageSize)
 
   }
@@ -188,7 +207,24 @@ export class TelemetryListComponent implements OnChanges, OnInit {
               ActionType: 'button',
               ActionTooltip: 'Download'
             }
-          })
+          }),
+
+          new ColumnDefinitionModel(
+            {
+              ColType: 'copy',
+              Title: '',
+              ShowValue: false,
+              ShowIcon: true,
+              IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
+                return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
+              },
+              Action:
+              {
+                ActionHandler: this.CopyClick.bind(this),
+                ActionType: 'button',
+                ActionTooltip: 'Copy Payload'
+              }
+            })
       ];
 
       this.setupGridFeatures();
