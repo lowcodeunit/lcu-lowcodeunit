@@ -20,6 +20,9 @@ import {
   LCUElementContext,
   LcuElementComponent,
   LCUServiceSettings,
+  DataPipeConstants,
+  PipeModule,
+  DataPipes
 } from '@lcu/common';
 import {
   IoTEnsembleState,
@@ -79,6 +82,11 @@ export class LcuSetupManageElementComponent
 
   public DashboardIFrameURL: SafeResourceUrl;
 
+  public PipeDate: DataPipeConstants;
+
+  @Output('update-page-size')
+  public UpdatePageSize: EventEmitter<any>;
+
   @Output('update-refresh-rate')
   public UpdateRefreshRate: EventEmitter<number>;
 
@@ -101,6 +109,8 @@ export class LcuSetupManageElementComponent
 
     this.EnrollDevice = new EventEmitter();
 
+    this.PipeDate = DataPipeConstants.DATE_TIME_ZONE_FMT;
+
     this.RevokeDeviceEnrollment = new EventEmitter();
 
     this.State = {};
@@ -108,6 +118,8 @@ export class LcuSetupManageElementComponent
     this.ToggleTelemetryEnabled = new EventEmitter();
 
     this.ToggleEmulatedEnabled = new EventEmitter();
+
+    this.UpdatePageSize = new EventEmitter();
 
     this.UpdateRefreshRate = new EventEmitter();
   }
@@ -138,6 +150,10 @@ export class LcuSetupManageElementComponent
     this.EnrollDevice.emit({
       DeviceName: this.AddDeviceFormGroup.controls.deviceName.value,
     });
+  }
+
+  public HandlePageSizeChange(event: any){
+    this.UpdatePageSize.emit(event);
   }
 
   public RefreshRateChanged(event: any){

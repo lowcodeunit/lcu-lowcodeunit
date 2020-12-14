@@ -44,6 +44,7 @@
 		"@lcu/common": "^1.58.478",
 		"@lowcodeunit-devkit/ng-lcu": "^1.24.148",
 		"@lowcodeunit/data-grid": "^1.5.56",
+		"@lowcodeunit/clipboard-copy-common": "^1.0.1-integration",
 		"@lowcodeunit/lcu-documentation-common": "^1.5.34",
 		"@webcomponents/custom-elements": "^1.4.3",
 		"@webcomponents/webcomponentsjs": "^2.5.0",

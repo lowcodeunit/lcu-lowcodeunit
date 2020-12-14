@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
+import { DataPipeConstants } from '@lcu/common';
 import { MatTableDataSource } from '@angular/material/table';
 import 
 { 
@@ -44,6 +45,9 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   public GridFeatures: DataGridFeaturesModel;
 
   public GridParameters: DataGridConfigModel
+  
+  @Output('page-size-changed')
+  public PageSizeChanged: EventEmitter<any>;
 
   @Input('telemetry')
   public Telemetry: IoTEnsembleTelemetry;
@@ -54,6 +58,8 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   constructor() {
 
     this.Downloaded = new EventEmitter();
+
+    this.PageSizeChanged = new EventEmitter();
 
     this.Telemetry = { Payloads: [] };
 
@@ -83,6 +89,12 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
     payload.$IsExpanded = !payload.$IsExpanded;
    this.updateTelemetryDataSource();
+  }
+
+  public HandlePageEvent(event: any): void{
+    console.log("page event t-list: ", event);
+    this.PageSizeChanged.emit(event.pageSize)
+
   }
 
   //  Helpers
@@ -145,7 +157,8 @@ export class TelemetryListComponent implements OnChanges, OnInit {
           {
             ColType: 'EventProcessedUtcTime',
             Title: 'Processed At',
-            ShowValue: true
+            ShowValue: true,
+            Pipe: DataPipeConstants.DATE_TIME_ZONE_FMT
           }),
         new ColumnDefinitionModel({
           ColType: 'view', // TODO: allow no ColTypes, without setting some random value - shannon
