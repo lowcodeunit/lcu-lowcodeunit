@@ -8,3 +8,5 @@ export * from './lib/elements/setup/setup.component';
 export * from './lib/state/iot-ensemble.state';
 export * from './lib/state/iot-ensemble-state.context';
 export * from './lib/utils/breakpoint-utils.service';
+export * from './lib/animations/animations';
+export * from './lib/services/sidenav.service';

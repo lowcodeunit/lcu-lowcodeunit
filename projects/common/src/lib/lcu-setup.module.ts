@@ -1,3 +1,4 @@
+import { SideNavService } from './services/sidenav.service';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -69,6 +70,7 @@ export class LcuSetupModule {
       ngModule: LcuSetupModule,
       providers: [
         IoTEnsembleStateContext,
+        SideNavService
       ],
     };
   }
