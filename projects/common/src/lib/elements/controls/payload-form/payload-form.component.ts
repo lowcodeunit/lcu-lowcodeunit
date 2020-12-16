@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IoTEnsembleTelemetryPayload } from './../../../state/iot-ensemble.state';
 
@@ -13,6 +13,12 @@ export class PayloadFormComponent implements OnInit {
   //  Properties
   @Output('canceled')
   public Canceled: EventEmitter<any>;
+
+  @Input('device-name')
+  public DeviceName: string;
+
+  @Input('device-options')
+  public DeviceOptions: string[];
 
   public PayloadFormGroup: FormGroup;
 
@@ -44,12 +50,25 @@ export class PayloadFormComponent implements OnInit {
 
   //  Helpers
   protected buildPayload() {
-    return {} as IoTEnsembleTelemetryPayload;
+    return {
+      DeviceID: this.PayloadFormGroup.controls.deviceName.value,
+      DeviceType: this.PayloadFormGroup.controls.deviceType.value,
+      Timestamp: new Date(),
+      Version: this.PayloadFormGroup.controls.version.value || '0.0.1',
+      DeviceData: JSON.parse(this.PayloadFormGroup.controls.deviceData.value || '{}'),
+      SensorMetadata: JSON.parse(this.PayloadFormGroup.controls.sensorMetadata.value || '{}'),
+      SensorReadings: JSON.parse(this.PayloadFormGroup.controls.sensorReadings.value || '{}'),
+    } as IoTEnsembleTelemetryPayload;
   }
 
   protected setupPayloadForm() {
     this.PayloadFormGroup = this.formBldr.group({
-      deviceName: ['', Validators.required],
+      deviceName: [this.DeviceName || '', Validators.required],
+      deviceType: ['TestPayload', Validators.required],
+      version: ['0.0.1', Validators.required],
+      deviceData: ['{ "Room": 13 }', Validators.required],
+      sensorMetadata: ['{ "_": { "Power": 0.76 }, "Temperature": { "Power": 0.93 }, "Humidity": { "Power": 0.54 } }', Validators.required],
+      sensorReadings: ['{ "Temperature": 75, "Humidity": 102 }', Validators.required],
     });
   }
 }

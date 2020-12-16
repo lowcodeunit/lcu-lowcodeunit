@@ -4,7 +4,8 @@ import {
   IoTEnsembleState,
   IoTEnsembleStateContext,
   BreakpointUtils,
-  IoTEnsembleDeviceEnrollment
+  IoTEnsembleDeviceEnrollment,
+  IoTEnsembleTelemetryPayload
 } from '@iot-ensemble/lcu-setup-common';
 
 @Component({
@@ -53,6 +54,12 @@ export class DynamicComponent implements OnInit {
     this.State.Loading = true;
 
     this.iotEnsCtxt.RevokeDeviceEnrollment(deviceId);
+  }
+
+  public SendDeviceMessage(payload: IoTEnsembleTelemetryPayload) {
+    this.State.Loading = true;
+
+    this.iotEnsCtxt.SendDeviceMessage(payload.DeviceID, payload);
   }
 
   public ToggleTelemetryEnabled() {

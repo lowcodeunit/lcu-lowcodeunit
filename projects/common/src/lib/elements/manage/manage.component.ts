@@ -28,6 +28,7 @@ import {
   IoTEnsembleState,
   IoTEnsembleDeviceInfo,
   IoTEnsembleDeviceEnrollment,
+  IoTEnsembleTelemetryPayload,
 } from './../../state/iot-ensemble.state';
 import { IoTEnsembleStateContext } from './../../state/iot-ensemble-state.context';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -54,19 +55,33 @@ export class LcuSetupManageElementComponent
   //  Fields
 
   //  Properties
+  public AddDeviceFormGroup: FormGroup;
+
+  public AddingDevice: boolean;
+
+  public ConnectedDevicesDisplayedColumns: string[];
+
+  public DashboardIFrameURL: SafeResourceUrl;
+
+  public DeviceNames: string[];
 
   @Output('enroll-device')
   public EnrollDevice: EventEmitter<IoTEnsembleDeviceEnrollment>;
 
   public FreeboardURL: string;
 
-  public LastSyncedAt: Date;
-
   @Output('issued-device-sas-token')
   public IssuedDeviceSASToken: EventEmitter<string>;
 
+  public LastSyncedAt: Date;
+
+  public PipeDate: DataPipeConstants;
+
   @Output('revoke-device-enrollment')
   public RevokeDeviceEnrollment: EventEmitter<string>;
+
+  @Output('sent-device-message')
+  public SentDeviceMessage: EventEmitter<IoTEnsembleTelemetryPayload>;
 
   @Input('state')
   public State: IoTEnsembleState;
@@ -76,16 +91,6 @@ export class LcuSetupManageElementComponent
 
   @Output('toggle-emulated-enabled')
   public ToggleEmulatedEnabled: EventEmitter<boolean>;
-
-  public AddDeviceFormGroup: FormGroup;
-
-  public AddingDevice: boolean;
-
-  public ConnectedDevicesDisplayedColumns: string[];
-
-  public DashboardIFrameURL: SafeResourceUrl;
-
-  public PipeDate: DataPipeConstants;
 
   @Output('update-device-table-page-size')
   public UpdateDeviceTablePageSize: EventEmitter<any>;
@@ -120,6 +125,8 @@ export class LcuSetupManageElementComponent
     this.PipeDate = DataPipeConstants.DATE_TIME_ZONE_FMT;
 
     this.RevokeDeviceEnrollment = new EventEmitter();
+
+    this.SentDeviceMessage = new EventEmitter();
 
     this.State = {};
 
@@ -156,6 +163,10 @@ export class LcuSetupManageElementComponent
   }
 
   //  API Methods
+  public DeviceTablePageEvent(event: any) {
+    this.UpdateDeviceTablePageSize.emit(event);
+  }
+
   public EnrollDeviceSubmit() {
     this.EnrollDevice.emit({
       DeviceName: this.AddDeviceFormGroup.controls.deviceName.value,
@@ -170,16 +181,16 @@ export class LcuSetupManageElementComponent
     this.IssuedDeviceSASToken.emit(deviceName);
   }
 
-  public DeviceTablePageEvent(event: any) {
-    this.UpdateDeviceTablePageSize.emit(event);
-  }
-
   public RefreshRateChanged(event: any) {
     this.UpdateRefreshRate.emit(event);
   }
 
   public RevokeDeviceEnrollmentClick(deviceId: string) {
     this.RevokeDeviceEnrollment.emit(deviceId);
+  }
+
+  public SendDeviceMesaage(payload: IoTEnsembleTelemetryPayload) {
+    this.SentDeviceMessage.emit(payload);
   }
 
   public ToggleAddingDevice() {
@@ -195,6 +206,11 @@ export class LcuSetupManageElementComponent
   }
 
   //  Helpers
+  protected convertToDate(syncDate: string) {
+    if (syncDate) {
+      this.LastSyncedAt = new Date(Date.parse(syncDate));
+    }
+  }
 
   protected handleStateChanged() {
     this.setAddingDevice();
@@ -204,16 +220,12 @@ export class LcuSetupManageElementComponent
     if (this.State.Telemetry) {
       this.convertToDate(this.State.Telemetry.LastSyncedAt);
     }
+
+    this.DeviceNames = this.State.Devices?.map((d) => d.DeviceName) || [];
   }
 
   protected setAddingDevice() {
     this.AddingDevice = (this.State.Devices?.length || 0) <= 0;
-  }
-
-  protected convertToDate(syncDate: string) {
-    if (syncDate) {
-      this.LastSyncedAt = new Date(Date.parse(syncDate));
-    }
   }
 
   protected setDashboardIFrameURL() {

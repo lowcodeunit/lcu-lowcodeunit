@@ -153,6 +153,10 @@
                 (page-size-changed)="HandlePageSizeChange($event)"
               ></lcu-telemetry-list>
 
+              <lcu-payload-form
+                [device-options]="DeviceNames"
+                (sent)="SendDeviceMesaage($event)"
+              ></lcu-payload-form>
             </mat-card-content>
 
             <mat-card-actions>
