@@ -128,6 +128,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
      * Create grid columns
      */
     protected setupGridParameters(): void {
+
       this.colunmDefsModel = [
         new ColumnDefinitionModel(
           {
@@ -147,21 +148,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
             Title: 'Processed At',
             ShowValue: true
           }),
-        new ColumnDefinitionModel({
-          ColType: 'view', // TODO: allow no ColTypes, without setting some random value - shannon
-          Title: '', // TODO: allow no Titles, without setting '' - shannon
-          ShowValue: false,
-          ShowIcon: true,
-          IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
-            return rowData.$IsExpanded ? 'visibility' : 'visibility_off';
-          },
-          Action:
-          {
-            ActionHandler: this.SetActivePayload.bind(this),
-            ActionType: 'button',
-            ActionTooltip: 'View Payload'
-          }
-        }),
         new ColumnDefinitionModel(
           {
             ColType: 'download',
@@ -175,7 +161,22 @@ export class TelemetryListComponent implements OnChanges, OnInit {
               ActionType: 'button',
               ActionTooltip: 'Download'
             }
-          })
+          }),
+          new ColumnDefinitionModel({
+            ColType: 'view', // TODO: allow no ColTypes, without setting some random value - shannon
+            Title: '', // TODO: allow no Titles, without setting '' - shannon
+            ShowValue: false,
+            ShowIcon: true,
+            IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
+              return rowData.$IsExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
+            },
+            Action:
+            {
+              ActionHandler: this.SetActivePayload.bind(this),
+              ActionType: 'button',
+              ActionTooltip: 'View Payload'
+            }
+          }),
       ];
 
       this.setupGridFeatures();
@@ -185,6 +186,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
      * Setup grid features, such as pagination, row colors, etc.
      */
     protected setupGridFeatures(): void {
+
       const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
         {
           PageSize: 10,

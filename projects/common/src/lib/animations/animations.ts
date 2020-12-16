@@ -6,7 +6,7 @@ import {
     animate
    } from '@angular/animations';
 
-  export const onSideNavChange = trigger('onSideNavChange', [
+  export const onSideNavOpenClose = trigger('onSideNavOpenClose', [
     state('close',
       style({
         'max-width': '35px'
