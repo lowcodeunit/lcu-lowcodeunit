@@ -22,7 +22,7 @@ import {
   LCUServiceSettings,
   DataPipeConstants,
   PipeModule,
-  DataPipes
+  DataPipes,
 } from '@lcu/common';
 import {
   IoTEnsembleState,
@@ -61,6 +61,9 @@ export class LcuSetupManageElementComponent
   public FreeboardURL: string;
 
   public LastSyncedAt: Date;
+
+  @Output('issued-device-sas-token')
+  public IssuedDeviceSASToken: EventEmitter<string>;
 
   @Output('revoke-device-enrollment')
   public RevokeDeviceEnrollment: EventEmitter<string>;
@@ -112,6 +115,8 @@ export class LcuSetupManageElementComponent
 
     this.EnrollDevice = new EventEmitter();
 
+    this.IssuedDeviceSASToken = new EventEmitter();
+
     this.PipeDate = DataPipeConstants.DATE_TIME_ZONE_FMT;
 
     this.RevokeDeviceEnrollment = new EventEmitter();
@@ -157,15 +162,19 @@ export class LcuSetupManageElementComponent
     });
   }
 
-  public HandlePageSizeChange(event: any){
+  public HandlePageSizeChange(event: any) {
     this.UpdatePageSize.emit(event);
   }
 
-  public DeviceTablePageEvent(event: any){
+  public IssueDeviceSASToken(deviceName: string) {
+    this.IssuedDeviceSASToken.emit(deviceName);
+  }
+
+  public DeviceTablePageEvent(event: any) {
     this.UpdateDeviceTablePageSize.emit(event);
   }
 
-  public RefreshRateChanged(event: any){
+  public RefreshRateChanged(event: any) {
     this.UpdateRefreshRate.emit(event);
   }
 
@@ -192,19 +201,17 @@ export class LcuSetupManageElementComponent
 
     this.setupFreeboard();
 
-    if(this.State.Telemetry){
-      this.convertToDate(this.State.Telemetry.LastSyncedAt)
+    if (this.State.Telemetry) {
+      this.convertToDate(this.State.Telemetry.LastSyncedAt);
     }
-
   }
 
   protected setAddingDevice() {
     this.AddingDevice = (this.State.Devices?.length || 0) <= 0;
   }
 
-
-  protected convertToDate(syncDate: string){
-    if(syncDate){
+  protected convertToDate(syncDate: string) {
+    if (syncDate) {
       this.LastSyncedAt = new Date(Date.parse(syncDate));
     }
   }

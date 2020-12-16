@@ -68,6 +68,7 @@
                   <lcu-devices-table
                     [devices]="State.Devices"
                     [displayed-columns]="ConnectedDevicesDisplayedColumns"
+                    (issued-sas-token)="IssueDeviceSASToken($event)"
                     (page-size-changed)="DeviceTablePageEvent($event)"
                     (revoked)="RevokeDeviceEnrollmentClick($event)"
                   ></lcu-devices-table>
@@ -136,7 +137,7 @@
                   enabled-text="Live"
                   (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
                 ></lcu-enabled-toggle>
-                <div class="spread" 
+                <div class="spread"
                      *ngIf="LastSyncedAt && State.Telemetry?.Enabled">
                       Last Updated: {{ LastSyncedAt | dataPipes: PipeDate }}
                 </div>

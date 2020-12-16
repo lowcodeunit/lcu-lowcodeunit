@@ -42,6 +42,13 @@ export class DynamicComponent implements OnInit {
     this.iotEnsCtxt.EnrollDevice(device);
   }
 
+  public IssueDeviceSASToken(deviceName: string) {
+    this.State.Loading = true;
+
+    //  TODO:  Pass through expiry time in some way?
+    this.iotEnsCtxt.IssueDeviceSASToken(deviceName, 0);
+  }
+
   public RevokeDeviceEnrollment(deviceId: string) {
     this.State.Loading = true;
 

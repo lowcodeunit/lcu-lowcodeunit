@@ -1,0 +1,19 @@
+<form [formGroup]="PayloadFormGroup">
+  <div>
+    <div fxFlex></div>
+
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      [disabled]="!PayloadFormGroup.valid"
+    >
+      Send Message
+    </button>
+
+    <a mat-button color="warn" (click)="Cancel()">
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </a>
+  </div>
+</form>
