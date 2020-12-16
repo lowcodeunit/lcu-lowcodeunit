@@ -9,6 +9,8 @@ export class IoTEnsembleState {
 
   public Emulated?: EmulatedDeviceInfo;
 
+  public LatestDeviceSASTokens?: { [deviceName: string]: string };
+
   public Loading?: boolean;
 
   public SelectedDeviceID?: string;

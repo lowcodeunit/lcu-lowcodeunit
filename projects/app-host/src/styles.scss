@@ -1,4 +1,4 @@
-@import '../../common/src/assets/common';
+@import "../../common/src/assets/common";
 @include theme-setup($global-theme);
 
 /**
@@ -7,13 +7,31 @@
 * If this starts to get big, think about moving these to another stylesheet
 */
 .spinner-logo {
-    position: absolute;
-    background-image: fathym-logo(thinky-logo,black, 1 );
-    height: 50px !important;
-    width: 50px !important;
-    background-repeat:no-repeat;
+  position: absolute;
+  background-image: fathym-logo(thinky-logo, black, 1);
+  height: 50px !important;
+  width: 50px !important;
+  background-repeat: no-repeat;
 }
 
 .wrapperloading {
   display: none !important;
 }
+
+//TODO:  Move to common and out  of all default styles
+.mat-spinner {
+  margin: auto;
+}
+
+.filler {
+  flex: auto 1 1;
+}
+
+.mat-full-width {
+  width: 100%;
+}
+
+.spread {
+  margin: 2em;
+}
+
