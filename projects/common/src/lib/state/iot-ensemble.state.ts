@@ -1,13 +1,15 @@
 import { Status } from '@lcu/common';
 
 export class IoTEnsembleState {
-  public Dashboard?: IoTEnsembleDashboardConfiguration;
+  public ConnectedDevicesConfig?: IoTEnsembleConnectedDevicesConfig;
 
-  public Devices?: IoTEnsembleDeviceInfo[];
+  public Dashboard?: IoTEnsembleDashboardConfiguration;
 
   public Drawers?: IoTEnsembleDrawersConfig;
 
   public Emulated?: EmulatedDeviceInfo;
+
+  public LatestDeviceSASTokens?: { [deviceName: string]: string };
 
   public Loading?: boolean;
 
@@ -34,7 +36,16 @@ export class IoTEnsembleDeviceEnrollment {
   public DeviceName?: string;
 }
 
+
+export class IoTEnsembleConnectedDevicesConfig {
+  public Devices?: IoTEnsembleDeviceInfo[];
+
+  public PageSize?: number;
+}
+
 export class IoTEnsembleDeviceInfo {
+  [prop: string]: any;
+
   public AuthenticationType?: string;
 
   public CloudToDeviceMessageCount?: number;

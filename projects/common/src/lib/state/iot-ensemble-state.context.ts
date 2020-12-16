@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { StateContext } from '@lcu/common';
-import { IoTEnsembleDeviceEnrollment, IoTEnsembleState } from './iot-ensemble.state';
+import { IoTEnsembleDeviceEnrollment, IoTEnsembleState, IoTEnsembleTelemetryPayload } from './iot-ensemble.state';
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +21,32 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
     });
   }
 
+  public IssueDeviceSASToken(deviceName: string,  expiryInSeconds: number = 0): void {
+    this.Execute({
+      Arguments: {
+        DeviceName: deviceName,
+        ExpiryInSeconds: expiryInSeconds
+      },
+      Type: 'IssueDeviceSASToken',
+    });
+  }
+
   public RevokeDeviceEnrollment(deviceId: string): void {
     this.Execute({
       Arguments: {
         DeviceID: deviceId
       },
       Type: 'RevokeDeviceEnrollment',
+    });
+  }
+
+  public SendDeviceMessage(deviceName: string, payload: IoTEnsembleTelemetryPayload): void {
+    this.Execute({
+      Arguments: {
+        DeviceName: deviceName,
+        Payload: payload
+      },
+      Type: 'SendDeviceMessage',
     });
   }
 
@@ -58,6 +78,16 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
         PageSize: pageSize
       },
       Type: 'UpdateTelemetrySync',
+    });
+  }
+
+  public UpdateConnectedDevicesSync(pageSize: number) {
+    console.log("ITS MAKING IT HERE: ", pageSize)
+    this.Execute({
+      Arguments: {
+        PageSize: pageSize
+      },
+      Type: 'UpdateConnectedDevicesSync',
     });
   }
 

@@ -1,3 +1,4 @@
+import { SideNavService } from './services/sidenav.service';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -20,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PayloadComponent } from './elements/dynamic/payload/payload.component';
 import { DataGridModule } from '@lowcodeunit/data-grid';
 import { RefreshSelectComponent } from './controls/refresh-select/refresh-select.component';
+import { PayloadFormComponent } from './elements/controls/payload-form/payload-form.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { RefreshSelectComponent } from './controls/refresh-select/refresh-select
     DevicesTableComponent,
     PayloadComponent,
     RefreshSelectComponent,
+    PayloadFormComponent,
   ],
   imports: [
     FathymSharedModule,
@@ -55,6 +58,7 @@ import { RefreshSelectComponent } from './controls/refresh-select/refresh-select
     DevicesTableComponent,
     PayloadComponent,
     RefreshSelectComponent,
+    PayloadFormComponent,
   ],
   entryComponents: [
     LcuSetupManageElementComponent,
@@ -71,6 +75,7 @@ export class LcuSetupModule {
       ngModule: LcuSetupModule,
       providers: [
         IoTEnsembleStateContext,
+        SideNavService
       ],
     };
   }

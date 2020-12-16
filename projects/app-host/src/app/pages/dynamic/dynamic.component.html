@@ -2,9 +2,12 @@
   *ngIf="State"
   [state]="State"
   (enroll-device)="EnrollDevice($event)"
+  (issued-device-sas-token)="IssueDeviceSASToken($event)"
   (revoke-device-enrollment)="RevokeDeviceEnrollment($event)"
+  (sent-device-message)="SendDeviceMessage($event)"
   (toggle-device-telemetry-enabled)="ToggleTelemetryEnabled()"
   (toggle-emulated-enabled)="ToggleEmulatedEnabled()"
+  (update-device-table-page-size)="UpdateDeviceTablePageSize($event)"
   (update-page-size)="UpdatePageSize($event)"
   (update-refresh-rate)="UpdateRefreshRate($event)"
 ></lcu-setup-manage-element>
