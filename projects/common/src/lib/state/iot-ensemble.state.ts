@@ -34,7 +34,13 @@ export class IoTEnsembleDeviceEnrollment {
   public DeviceName?: string;
 }
 
+export class IoTEnsembleConnectedDevicesConfig {
+  public PageSize?: number;
+}
+
 export class IoTEnsembleDeviceInfo {
+  [prop: string]: any;
+
   public AuthenticationType?: string;
 
   public CloudToDeviceMessageCount?: number;

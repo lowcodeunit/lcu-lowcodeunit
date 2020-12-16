@@ -61,6 +61,16 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
     });
   }
 
+  public UpdateConnectedDevicesSync(pageSize: number) {
+    console.log("ITS MAKING IT HERE: ", pageSize)
+    this.Execute({
+      Arguments: {
+        PageSize: pageSize
+      },
+      Type: 'UpdateConnectedDevicesSync',
+    });
+  }
+
   //  Helpers
   protected defaultValue() {
     return { Loading: true } as IoTEnsembleState;

@@ -84,6 +84,9 @@ export class LcuSetupManageElementComponent
 
   public PipeDate: DataPipeConstants;
 
+  @Output('update-device-table-page-size')
+  public UpdateDeviceTablePageSize: EventEmitter<any>;
+
   @Output('update-page-size')
   public UpdatePageSize: EventEmitter<any>;
 
@@ -118,6 +121,8 @@ export class LcuSetupManageElementComponent
     this.ToggleTelemetryEnabled = new EventEmitter();
 
     this.ToggleEmulatedEnabled = new EventEmitter();
+
+    this.UpdateDeviceTablePageSize = new EventEmitter();
 
     this.UpdatePageSize = new EventEmitter();
 
@@ -154,6 +159,10 @@ export class LcuSetupManageElementComponent
 
   public HandlePageSizeChange(event: any){
     this.UpdatePageSize.emit(event);
+  }
+
+  public DeviceTablePageEvent(event: any){
+    this.UpdateDeviceTablePageSize.emit(event);
   }
 
   public RefreshRateChanged(event: any){

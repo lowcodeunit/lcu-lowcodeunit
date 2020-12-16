@@ -68,6 +68,7 @@
                   <lcu-devices-table
                     [devices]="State.Devices"
                     [displayed-columns]="ConnectedDevicesDisplayedColumns"
+                    (page-size-changed)="DeviceTablePageEvent($event)"
                     (revoked)="RevokeDeviceEnrollmentClick($event)"
                   ></lcu-devices-table>
                 </div>
