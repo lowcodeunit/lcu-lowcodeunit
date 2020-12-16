@@ -39,7 +39,7 @@ export class PayloadFormComponent implements OnInit {
 
   //  API Methods
   public Cancel() {
-    this.Canceled.emit();
+    this.Canceled.emit(true);
   }
 
   public Send() {
