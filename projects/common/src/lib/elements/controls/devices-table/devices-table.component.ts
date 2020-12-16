@@ -67,7 +67,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
     }
   }
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void { }
 
   //  API Methods
   /**
@@ -75,7 +75,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
    * a checkmark to display to the user that the content was succesfully copied
    * @param deviceInfo
    */
-  public CopyClick(deviceInfo: IoTEnsembleDeviceInfo): void {
+  public CopyClick(deviceInfo: IoTEnsembleDeviceInfo) {
     ClipboardCopyFunction.ClipboardCopy(deviceInfo.ConnectionString);
 
     deviceInfo.$IsCopySuccessIcon = true;
@@ -131,7 +131,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
         Title: 'Connection String',
         ShowValue: true,
         ShowIcon: true,
-        Pipe: DataPipeConstants.PIPE_STRING_SLICE_HUNDRED,
+        Pipe: DataPipeConstants.PIPE_STRING_SLICE_SEVENTY,
       }),
 
       new ColumnDefinitionModel({
@@ -202,8 +202,8 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
   protected updateTelemetryDataSource() {
     if (this.Devices) {
+
       console.log('DEVICES: ', this.Devices);
-      // this.DevicesDataSource = this.Devices;
 
       this.setupGrid();
     }
