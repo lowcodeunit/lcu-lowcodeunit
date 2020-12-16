@@ -75,6 +75,7 @@ export class LcuSetupManageElementComponent
   public LastSyncedAt: Date;
 
   public PipeDate: DataPipeConstants;
+
   public onSideNavOpenClose: boolean;
 
   public SideNavOpenCloseEvent: boolean;
@@ -259,12 +260,13 @@ export class LcuSetupManageElementComponent
       this.convertToDate(this.State.Telemetry.LastSyncedAt);
     }
 
-    this.DeviceNames = this.State.ConnectedDevicesConfig.Devices?.map((d) => d.DeviceName) || [];
+      this.DeviceNames = this.State.ConnectedDevicesConfig.Devices?.map((d) => d.DeviceName) || [];
   }
 
   protected setAddingDevice() {
 
     this.AddingDevice = (this.State.ConnectedDevicesConfig.Devices?.length || 0) <= 0;
+
   }
 
   protected setDashboardIFrameURL() {

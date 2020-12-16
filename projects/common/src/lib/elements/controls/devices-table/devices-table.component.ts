@@ -15,7 +15,7 @@ import {
   DataGridPaginationModel,
 } from '@lowcodeunit/data-grid';
 import { of } from 'rxjs';
-import { IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
+import { IoTEnsembleConnectedDevicesConfig, IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
 
 @Component({
   selector: 'lcu-devices-table',
@@ -28,8 +28,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   //  Properties
   protected colunmDefsModel: Array<ColumnDefinitionModel>;
 
-  @Input('devices')
-  public Devices?: IoTEnsembleDeviceInfo[];
+  @Input('connected-devices-config')
+  public ConnectedDevicesConfig: IoTEnsembleConnectedDevicesConfig;
+
+  // @Input('devices')
+  // public Devices?: IoTEnsembleDeviceInfo[];
 
   @Input('displayed-columns')
   public DisplayedColumns: string[];
@@ -49,7 +52,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
   //  Constructors
   constructor() {
-    this.Devices = [];
+    // this.Devices = [];
 
     this.IssuedSASToken = new EventEmitter();
 
@@ -109,7 +112,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
     this.setupGridParameters();
 
     this.GridParameters = new DataGridConfigModel(
-      of(this.Devices),
+      of(this.ConnectedDevicesConfig.Devices),
       this.colunmDefsModel,
       this.GridFeatures
     );
@@ -184,7 +187,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   protected setupGridFeatures(): void {
     const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
       {
-        PageSize: 10,
+        PageSize: this.ConnectedDevicesConfig.PageSize,
         PageSizeOptions: [5, 10, 25],
       }
     );
@@ -201,9 +204,8 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   }
 
   protected updateTelemetryDataSource() {
-    if (this.Devices) {
-
-      console.log('DEVICES: ', this.Devices);
+    if (this.ConnectedDevicesConfig.Devices) {
+      console.log('DEVICES: ', this.ConnectedDevicesConfig.Devices);
 
       this.setupGrid();
     }
