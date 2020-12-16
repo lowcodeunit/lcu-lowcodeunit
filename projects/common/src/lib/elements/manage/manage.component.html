@@ -27,33 +27,55 @@
       <div fxFlex class="background-fill blank-header"></div>
     </div>
 
+    <!-- <div style="height: 200px; width: 100px; background-color: rgb(192, 24, 24);"
+    [@onSideNavChange]="SideSlideNavService.SideNavToggleVal ? 'open' : 'close'">test
+    </div> -->
+
     <div fxFlexFill fxLayout="row">
       <div fxFlex fxLayout="row" fxLayoutGap="5px">
         <!-- left side -->
         <div
+          [@onSideNavChange]="SideSlideNavService.SideNavToggleVal ? 'open' : 'close'"
+          (@onSideNavChange.done)="OnSideNavChangeEnd($event)"
           fxFlex="25"
           fxLayout="row"
           fxFill
           fxLayoutAlign="start start"
-          class="background-fill box-side-triangle padding-left-5 padding-right-5">
-          <div fxLayout="column" fxFlex="90" style="padding-top: 100px">
-            <div class="divider-fill-hor"></div>
+          class="background-fill box-side-triangle">
 
-            <h3 class="mat-display-5 plain-text whats-next-text">
-              What's Next?
-            </h3>
-            <p>
-              Use the Journeys below to familiarize yourself with the rest of
-              what you can do with Fathym!
-            </p>
+          <div fxLayout="column">
 
-            <div class="divider-fill-hor"></div>
+            <div 
+              [@onSideNavChange]="SideSlideNavService.SideNavToggleVal ? 'open' : 'close'"
+              fxLayoutAlign="end">
+              <button mat-icon-button (click)="ToggleSideNav()">
+                <mat-icon *ngIf="SideSlideNavService.SideNavToggleVal">arrow_left</mat-icon>
+                <mat-icon *ngIf="!SideSlideNavService.SideNavToggleVal">arrow_right</mat-icon>
+              </button>
+            </div>
+<!-- [@animateText]="SideSlideNavService.SideNavToggleVal ? 'show' : 'hide'" -->
+            <div 
+              [ngStyle]="{'display' : OnSideNavChangeEvent === true ? 'none' : 'block'}"
+              fxLayout="column" fxFlex="90"
+              class="padding-left-5 padding-right-5 padding-top-5">
+              <div class="divider-fill-hor"></div>
 
-            <p>
-              <a mat-button href="https://www.fathym-it.com/framework" target="_blank" color="accent" class="padding-left-0">Documentation</a>
-            </p>
+              <h3 class="mat-display-5 plain-text whats-next-text">
+                What's Next?
+              </h3>
+              <p>
+                Use the Journeys below to familiarize yourself with the rest of
+                what you can do with Fathym!
+              </p>
 
-            <div class="divider-fill-hor"></div>
+              <div class="divider-fill-hor"></div>
+
+              <p>
+                <a mat-button href="https://www.fathym-it.com/framework" target="_blank" color="accent" class="padding-left-0">Documentation</a>
+              </p>
+
+              <div class="divider-fill-hor"></div>
+            </div>
           </div>
         </div>
         <!--^^^ Left Side ^^^-->
@@ -154,7 +176,7 @@
             <!--^^^ Dashboard ^^^-->
 
             <!-- Telemetry -->
-            <div class="telemetry">
+            <div fxFlex class="telemetry">
               <mat-card>
                 <mat-card-header>
                   <div  fxLayout="column" fxLayoutAlign="start start">

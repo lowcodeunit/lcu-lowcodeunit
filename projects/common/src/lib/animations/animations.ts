@@ -9,12 +9,12 @@ import {
   export const onSideNavChange = trigger('onSideNavChange', [
     state('close',
       style({
-        'min-width': '50px'
+        'max-width': '35px'
       })
     ),
     state('open',
       style({
-        'min-width': '200px'
+        'max-width': '400px'
       })
     ),
     transition('close => open', animate('250ms ease-in')),

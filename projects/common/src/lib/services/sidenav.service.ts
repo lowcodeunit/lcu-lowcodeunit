@@ -18,7 +18,7 @@ export class SideNavService {
 
     constructor() {
         this.SideNavToggleChanged = new Subject();
-        this.SideNavToggleVal = false;
+        this.SideNavToggleVal = true;
     }
 
     /**

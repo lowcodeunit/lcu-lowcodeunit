@@ -10,7 +10,6 @@ import {
   AfterViewInit,
   ViewChild,
   AfterContentInit,
-  SecurityContext,
 } from '@angular/core';
 import {
   MatSlideToggle,
@@ -29,6 +28,9 @@ import {
 import { IoTEnsembleStateContext } from './../../state/iot-ensemble-state.context';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SideNavService } from '../../services/sidenav.service';
+import { animateText, onSideNavChange } from '../../animations/animations';
+import { Subscription } from 'rxjs';
 
 declare var freeboard: any;
 
@@ -44,6 +46,7 @@ export const SELECTOR_LCU_SETUP_MANAGE_ELEMENT = 'lcu-setup-manage-element';
   selector: SELECTOR_LCU_SETUP_MANAGE_ELEMENT,
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.scss'],
+  animations: [onSideNavChange, animateText]
 })
 export class LcuSetupManageElementComponent
   extends LcuElementComponent<LcuSetupManageContext>
@@ -82,12 +85,18 @@ export class LcuSetupManageElementComponent
   @Output('update-refresh-rate')
   public UpdateRefreshRate: EventEmitter<number>;
 
+  public onSideNavChange: boolean;
+  public OnSideNavChangeEvent: boolean;
+
+  protected sideSlideSubscription: Subscription;
+
   //  Constructors
   constructor(
     protected injector: Injector,
     protected sanitizer: DomSanitizer,
     protected formBldr: FormBuilder,
-    protected lcuSvcSettings: LCUServiceSettings
+    protected lcuSvcSettings: LCUServiceSettings,
+    public SideSlideNavService: SideNavService
   ) {
     super(injector);
 
@@ -110,6 +119,10 @@ export class LcuSetupManageElementComponent
     this.ToggleEmulatedEnabled = new EventEmitter();
 
     this.UpdateRefreshRate = new EventEmitter();
+
+    this.sideSlideSubscription = this.SideSlideNavService.SideNavToggleChanged.subscribe((res: boolean) => {
+      this.onSideNavChange = res;
+    });
   }
 
   //  Life Cycle
@@ -158,6 +171,15 @@ export class LcuSetupManageElementComponent
 
   public ToggleEmulatedEnabledChanged(enabled: boolean) {
     this.ToggleEmulatedEnabled.emit(enabled);
+  }
+
+  public ToggleSideNav(): void {
+    this.SideSlideNavService.SideNavToggle();
+  }
+
+  public OnSideNavChangeEnd(evt: AnimationEvent): void {
+
+    this.OnSideNavChangeEvent = evt['fromState'] === 'open' ? true : false;
   }
 
   //  Helpers
