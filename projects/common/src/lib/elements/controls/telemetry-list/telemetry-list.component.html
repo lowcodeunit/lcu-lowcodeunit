@@ -2,7 +2,8 @@
     <lcu-data-grid
       expand
       [config]="GridParameters"
-      [dynamic-components]="DynamicComponents">
+      [dynamic-components]="DynamicComponents"
+      (page-event)="HandlePageEvent($event)">
     </lcu-data-grid>
 </div>
 

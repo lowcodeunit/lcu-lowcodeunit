@@ -6,6 +6,7 @@ import {
   FathymSharedModule,
   LCUServiceSettings,
   MaterialModule,
+  PipeModule
 } from '@lcu/common';
 import { LcuSetupManageElementComponent } from './elements/manage/manage.component';
 import { LcuSetupAdminElementComponent } from './elements/admin/admin.component';
@@ -41,7 +42,8 @@ import { RefreshSelectComponent } from './controls/refresh-select/refresh-select
     ReactiveFormsModule,
     FlexLayoutModule,
     MaterialModule,
-    DataGridModule
+    DataGridModule,
+    PipeModule
   ],
   exports: [
     LcuSetupManageElementComponent,
