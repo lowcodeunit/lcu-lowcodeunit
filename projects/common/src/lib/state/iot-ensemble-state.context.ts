@@ -21,6 +21,16 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
     });
   }
 
+  public IssueDeviceSASToken(deviceName: string,  expiryInSeconds: number = 0): void {
+    this.Execute({
+      Arguments: {
+        DeviceName: deviceName,
+        ExpiryInSeconds: expiryInSeconds
+      },
+      Type: 'IssueDeviceSASToken',
+    });
+  }
+
   public RevokeDeviceEnrollment(deviceId: string): void {
     this.Execute({
       Arguments: {
