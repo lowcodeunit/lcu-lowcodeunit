@@ -45,7 +45,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
   public GridFeatures: DataGridFeaturesModel;
 
-  public GridParameters: DataGridConfigModel
+  public GridParameters: DataGridConfigModel;
   
   @Output('page-size-changed')
   public PageSizeChanged: EventEmitter<any>;
@@ -121,7 +121,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
     if (this.Telemetry) {
       this.TelemetryDataSource.data = this.Telemetry.Payloads || [];
-
       this.setupGrid();
     }
   }
@@ -236,7 +235,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
     protected setupGridFeatures(): void {
       const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
         {
-          PageSize: 10,
+          PageSize: this.Telemetry.PageSize,
           PageSizeOptions: [1, 5, 10, 20, 30]
         }
       );

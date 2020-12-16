@@ -56,6 +56,12 @@ export class DynamicComponent implements OnInit {
     this.iotEnsCtxt.ToggleEmulatedEnabled();
   }
 
+  public UpdateDeviceTablePageSize(event: any){
+    this.State.Loading = true;
+
+    this.iotEnsCtxt.UpdateConnectedDevicesSync(event);
+  }
+
   public UpdatePageSize(event: any){
     this.State.Loading = true;
 
