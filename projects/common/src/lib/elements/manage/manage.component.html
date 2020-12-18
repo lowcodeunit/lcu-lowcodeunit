@@ -179,40 +179,48 @@
             <!-- Telemetry -->
             <div fxFlex class="telemetry">
               <mat-card>
-                <mat-card-header>
+                <mat-card-header class="border-bottom">
                   <mat-card-title>Device Telemetry</mat-card-title>
                   <mat-card-subtitle
                     fxLayout="row"
                     fxLayoutAlign="start center"
                     class="telemetry-update">
 
-                    <mat-spinner
-                    *ngIf="State.Telemetry?.Loading"
-                    [diameter]="10"></mat-spinner>
-                    <div
-                      matTooltip="Updates successful"
+                    <mat-spinner 
+                      *ngIf="State.Telemetry?.Loading" 
+                      [diameter]="10"></mat-spinner>
+                    <div 
+                      matTooltip="Updates successful" 
                       *ngIf="!State.Telemetry?.Loading"
                       class="success-dot">
                     </div>
 
                     Last Updated: {{ LastSyncedAt }}
                   </mat-card-subtitle>
+                  <div 
+                    fxFlex 
+                    fxLayout="row" 
+                    fxLayoutGap="20px" 
+                    fxLayoutAlign="end center">
+                    <lcu-refresh-select
+                    [state]="State"
+                    (refresh-rate-changed)="RefreshRateChanged($event)">
+                  </lcu-refresh-select>
                   <lcu-enabled-toggle
-                    fxFlex
-                    fxLayoutAlign="end"
                     [enabled]="State.Telemetry?.Enabled"
                     enabled-text="Live"
-                    (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
-                  >
+                    (enabled-toggled)="ToggleTelemetryEnabledChanged($event)">
                   </lcu-enabled-toggle>
+                  </div>
+                 
                 </mat-card-header>
-                <div fxLayout="column" fxLayoutAlign="end end">
+                <!-- <div fxLayout="column" fxLayoutAlign="end end">
                   <lcu-refresh-select
                     [state]="State"
                     (refresh-rate-changed)="RefreshRateChanged($event)"
                   >
                   </lcu-refresh-select>
-                </div>
+                </div> -->
 
                 <mat-card-content>
                   <!-- <mat-progress-bar
@@ -226,10 +234,10 @@
                     (page-size-changed)="HandlePageSizeChange($event)"
                   ></lcu-telemetry-list>
 
-                  <lcu-payload-form
+                  <!-- <lcu-payload-form
                     [device-options]="DeviceNames"
                     (sent)="SendDeviceMesaage($event)"
-                  ></lcu-payload-form>
+                  ></lcu-payload-form> -->
                 </mat-card-content>
 
                 <mat-card-actions> </mat-card-actions>
@@ -287,4 +295,5 @@
   </div>
 </div>
 
+<ng-template #ModalContainer></ng-template>
 <lcu-loader [loading]="State?.Loading"></lcu-loader>

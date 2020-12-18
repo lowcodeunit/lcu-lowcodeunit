@@ -21,9 +21,9 @@
       }
 
       .dashboard {
-        iframe {
-          width: 100%;
-        }
+        // iframe {
+        //   width: 100%;
+        // }
       }
 
       .telemetry {
@@ -37,10 +37,16 @@
 
     .storage-access {
     }
+
+    
+  }
+
+  .border-bottom {
+    // border-bottom: 1px solid set-opacity(grey, .25);
   }
 
   .telemetry-update {
-    @include text-opacity(white, .25);
+    color: set-opacity(white, .25);
 
     .success-dot {
       height: 10px;

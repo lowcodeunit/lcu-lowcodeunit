@@ -1,3 +1,4 @@
+import { GenericModalService } from './services/generic-modal.service';
 import { SideNavService } from './services/sidenav.service';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +23,7 @@ import { PayloadComponent } from './elements/dynamic/payload/payload.component';
 import { DataGridModule } from '@lowcodeunit/data-grid';
 import { RefreshSelectComponent } from './controls/refresh-select/refresh-select.component';
 import { PayloadFormComponent } from './elements/controls/payload-form/payload-form.component';
+import { GenericModalComponent } from './elements/generic/generic-modal/generic-modal.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { PayloadFormComponent } from './elements/controls/payload-form/payload-f
     PayloadComponent,
     RefreshSelectComponent,
     PayloadFormComponent,
+    GenericModalComponent
   ],
   imports: [
     FathymSharedModule,
@@ -59,6 +62,7 @@ import { PayloadFormComponent } from './elements/controls/payload-form/payload-f
     PayloadComponent,
     RefreshSelectComponent,
     PayloadFormComponent,
+    GenericModalComponent
   ],
   entryComponents: [
     LcuSetupManageElementComponent,
@@ -67,6 +71,7 @@ import { PayloadFormComponent } from './elements/controls/payload-form/payload-f
     LcuSetupSetupElementComponent,
     PayloadComponent,
     RefreshSelectComponent,
+    GenericModalComponent
   ],
 })
 export class LcuSetupModule {
@@ -75,7 +80,8 @@ export class LcuSetupModule {
       ngModule: LcuSetupModule,
       providers: [
         IoTEnsembleStateContext,
-        SideNavService
+        SideNavService,
+        GenericModalService
       ],
     };
   }

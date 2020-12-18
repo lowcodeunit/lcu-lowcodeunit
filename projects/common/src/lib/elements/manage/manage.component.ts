@@ -10,6 +10,12 @@ import {
   AfterViewInit,
   AfterContentInit,
   OnDestroy,
+  ElementRef,
+  ComponentFactory,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  ViewChild,
+  ComponentRef,
 } from '@angular/core';
 import {
   LCUElementContext,
@@ -30,6 +36,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SideNavService } from '../../services/sidenav.service';
 import { animateText, onSideNavOpenClose } from '../../animations/animations';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { GenericModalService } from '../../services/generic-modal.service';
+import { GenericModalModel } from '../../models/generice-modal.model';
+import { PayloadFormComponent } from '../controls/payload-form/payload-form.component';
 
 declare var freeboard: any;
 
@@ -58,6 +68,8 @@ export class LcuSetupManageElementComponent
 
   public AddingDevice: boolean;
 
+  protected componentRef: ComponentRef<any>;
+
   public ConnectedDevicesDisplayedColumns: string[];
 
   public DashboardIFrameURL: SafeResourceUrl;
@@ -73,6 +85,12 @@ export class LcuSetupManageElementComponent
   public IssuedDeviceSASToken: EventEmitter<string>;
 
   public LastSyncedAt: Date;
+
+  /**
+   * Access the component passed into the modal
+   */
+  @ViewChild('ModalContainer', { read: ViewContainerRef })
+  public ModalContainer: ViewContainerRef;
 
   public PipeDate: DataPipeConstants;
   public onSideNavOpenClose: boolean;
@@ -107,11 +125,14 @@ export class LcuSetupManageElementComponent
 
   //  Constructors
   constructor(
+    protected dialog: MatDialog,
+    protected genericModalService: GenericModalService,
     protected injector: Injector,
     protected sanitizer: DomSanitizer,
     protected formBldr: FormBuilder,
     protected lcuSvcSettings: LCUServiceSettings,
-    public SideNavSrvc: SideNavService
+    public SideNavSrvc: SideNavService,
+    protected resolver: ComponentFactoryResolver,
   ) {
     super(injector);
 
@@ -243,6 +264,18 @@ export class LcuSetupManageElementComponent
   }
 
   //  Helpers
+ 
+ 
+  /**
+   *
+   * @param val value(s) being returned on confirmation action
+   *
+   * Callback function passed into the modal configuration
+   */
+  protected confirmCallback(val: any): void {
+    debugger;
+  }
+
   protected convertToDate(syncDate: string) {
     if (syncDate) {
       this.LastSyncedAt = new Date(Date.parse(syncDate));
@@ -250,11 +283,13 @@ export class LcuSetupManageElementComponent
   }
 
   protected handleStateChanged() {
+
     this.setAddingDevice();
 
     this.setupFreeboard();
 
     if (this.State.Telemetry) {
+      debugger;
       this.convertToDate(this.State.Telemetry.LastSyncedAt);
     }
 
