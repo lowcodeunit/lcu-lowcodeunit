@@ -46,7 +46,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   public GridFeatures: DataGridFeaturesModel;
 
   public GridParameters: DataGridConfigModel;
-  
+
   @Output('page-size-changed')
   public PageSizeChanged: EventEmitter<any>;
 
@@ -106,7 +106,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
   public SetActivePayload(payload: IoTEnsembleTelemetryPayload) {
 
-    payload.$IsExpanded = !payload.$IsExpanded;
+   payload.$IsExpanded = !payload.$IsExpanded;
    this.updateTelemetryDataSource();
   }
 
@@ -162,12 +162,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
       this.colunmDefsModel = [
         new ColumnDefinitionModel(
           {
-            ColType: 'id',
-            Title: 'ID',
-            ShowValue: true
-          }),
-        new ColumnDefinitionModel(
-          {
             ColType: 'DeviceID',
             Title: 'Device ID',
             ShowValue: true
@@ -182,9 +176,11 @@ export class TelemetryListComponent implements OnChanges, OnInit {
         new ColumnDefinitionModel(
           {
             ColType: 'download',
+            ColWidth: '10px',
             Title: '',
             ShowValue: false,
             ShowIcon: true,
+            IconColor: 'yellow-accent-text',
             IconConfigFunc: () => 'download',
             Action:
             {
@@ -193,40 +189,50 @@ export class TelemetryListComponent implements OnChanges, OnInit {
               ActionTooltip: 'Download'
             }
           }),
-          new ColumnDefinitionModel(
+        new ColumnDefinitionModel(
+          {
+            ColType: 'copy',
+            ColWidth: '10px',
+            Title: '',
+            ShowValue: false,
+            ShowIcon: true,
+            IconColor: 'orange-accent-text',
+            IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
+              return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
+            },
+            Action:
             {
-              ColType: 'copy',
-              Title: '',
-              ShowValue: false,
-              ShowIcon: true,
-              IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
-                return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
-              },
-              Action:
-              {
-                ActionHandler: this.CopyClick.bind(this),
-                ActionType: 'button',
-                ActionTooltip: 'Copy Payload'
-              }
-            }),
-            new ColumnDefinitionModel({
+              ActionHandler: this.CopyClick.bind(this),
+              ActionType: 'button',
+              ActionTooltip: 'Copy Payload'
+            }
+          }),
+          new ColumnDefinitionModel(
+          {
             ColType: 'view', // TODO: allow no ColTypes, without setting some random value - shannon
+            ColWidth: '10px',
+            ColBGColor: 'rgba(111,222,333,0.00)',
             Title: '', // TODO: allow no Titles, without setting '' - shannon
             ShowValue: false,
             ShowIcon: true,
+            IconColor: 'green-accent-text',
             IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
-              return rowData.$IsExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
+              return rowData.$IsExpanded ? 'expand_less' : 'expand_more';
             },
             Action:
             {
               ActionHandler: this.SetActivePayload.bind(this),
               ActionType: 'button',
-              ActionTooltip: 'View Payload'
+              ActionTooltip: 'Payload'
             }
           })
       ];
 
       this.setupGridFeatures();
+    }
+
+    protected ColTooltip(rowData: IoTEnsembleTelemetryPayload): string {
+      return rowData.$IsExpanded ? 'Close Payload' : 'View Payload';
     }
 
     /**
