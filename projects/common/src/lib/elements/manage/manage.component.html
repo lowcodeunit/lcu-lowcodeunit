@@ -225,14 +225,13 @@
                     fxLayoutAlign="start center"
                     class="telemetry-update"
                   >
-                    <mat-spinner
+                    <!-- <mat-spinner
                       *ngIf="State.Telemetry?.Loading"
                       [diameter]="10"
                     >
-                    </mat-spinner>
+                    </mat-spinner> -->
                     <div
                       matTooltip="Updates successful"
-                      *ngIf="!State.Telemetry?.Loading"
                       [class.success-dot]="State.Telemetry?.Enabled"
                       [class.error-dot]="!State.Telemetry?.Enabled"
                     ></div>
