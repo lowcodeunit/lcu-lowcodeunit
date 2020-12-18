@@ -71,7 +71,8 @@ import { GenericModalComponent } from './elements/generic/generic-modal/generic-
     LcuSetupSetupElementComponent,
     PayloadComponent,
     RefreshSelectComponent,
-    GenericModalComponent
+    GenericModalComponent,
+    PayloadFormComponent
   ],
 })
 export class LcuSetupModule {

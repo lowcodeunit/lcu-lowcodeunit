@@ -207,6 +207,7 @@
 
           <!-- Dashboard / Telemetry -->
           <div fxLayout="column" fxLayoutGap="10px">
+
             <!-- Telemetry -->
             <div fxFlex class="telemetry">
               <mat-card>
@@ -215,17 +216,16 @@
                   <mat-card-subtitle
                     fxLayout="row"
                     fxLayoutAlign="start center"
-                    class="telemetry-update"
-                  >
+                    class="telemetry-update">
                     <mat-spinner
                       *ngIf="State.Telemetry?.Loading"
-                      [diameter]="10"
-                    ></mat-spinner>
+                      [diameter]="10">
+                    </mat-spinner>
                     <div
                       matTooltip="Updates successful"
                       *ngIf="!State.Telemetry?.Loading"
-                      class="success-dot"
-                    ></div>
+                      class="success-dot">
+                    </div>
 
                     Last Updated: {{ LastSyncedAt }}
                   </mat-card-subtitle>
@@ -234,42 +234,35 @@
                     fxLayout="row" 
                     fxLayoutGap="20px" 
                     fxLayoutAlign="end center">
+                    <button 
+                      mat-flat-button 
+                      color="accent"
+                      (click)="PayloadFormModal()">
+                      Payload Form
+                    </button>
                     <lcu-refresh-select
-                    [state]="State"
-                    (refresh-rate-changed)="RefreshRateChanged($event)">
-                  </lcu-refresh-select>
-                  <lcu-enabled-toggle
-                    [enabled]="State.Telemetry?.Enabled"
-                    enabled-text="Live"
-                    (enabled-toggled)="ToggleTelemetryEnabledChanged($event)">
-                  </lcu-enabled-toggle>
+                      [state]="State"
+                      (refresh-rate-changed)="RefreshRateChanged($event)">
+                    </lcu-refresh-select>
+                    <lcu-enabled-toggle
+                      [enabled]="State.Telemetry?.Enabled"
+                      enabled-text="Live"
+                      (enabled-toggled)="ToggleTelemetryEnabledChanged($event)">
+                    </lcu-enabled-toggle>
                   </div>
                  
                 </mat-card-header>
-                <!-- <div fxLayout="column" fxLayoutAlign="end end">
-                  <lcu-refresh-select
-                    [state]="State"
-                    (refresh-rate-changed)="RefreshRateChanged($event)"
-                  >
-                  </lcu-refresh-select>
-                </div> -->
-
                 <mat-card-content>
-                  <!-- <mat-progress-bar
-                    mode="indeterminate"
-                    *ngIf="State.Telemetry?.Loading"
-                  >
-                  </mat-progress-bar> -->
-
                   <lcu-telemetry-list
                     [telemetry]="State.Telemetry"
                     (page-size-changed)="HandlePageSizeChange($event)"
                   ></lcu-telemetry-list>
-
+  
                   <!-- <lcu-payload-form
                     [device-options]="DeviceNames"
                     (sent)="SendDeviceMesaage($event)"
                   ></lcu-payload-form> -->
+                  <ng-template #ModalContainer></ng-template>
                 </mat-card-content>
 
                 <mat-card-actions> </mat-card-actions>
@@ -331,5 +324,5 @@
   </div>
 </div>
 
-<ng-template #ModalContainer></ng-template>
+
 <lcu-loader [loading]="State?.Loading"></lcu-loader>

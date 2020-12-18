@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { take } from 'rxjs/internal/operators/take';
 import { map } from 'rxjs/internal/operators/map';
@@ -16,17 +16,17 @@ import { GenericModalComponent } from '../elements/generic/generic-modal/generic
 /**
  * Service that handles generic modal instantiation and functionality
  */
-export class GenericModalService {
+export class GenericModalService<T> {
 
   /**
    * Instance of the modal (exposes modal properties)
    */
-  public ModalInstance: GenericModalComponent;
+  public ModalInstance: T;
 
   /**
    * Reference to the modal
    */
-  public ModalComponent: MatDialogRef<GenericModalComponent, any>;
+  public ModalComponent: MatDialogRef<T, any>;
 
   constructor(protected dialog: MatDialog) { }
 
@@ -36,8 +36,8 @@ export class GenericModalService {
    *
    * open the modal
    */
-  public Open(modalConfig: GenericModalModel): void {
-    this.ModalComponent = this.dialog.open(GenericModalComponent, {
+  public Open(modalConfig: GenericModalModel, component:any): void {
+    this.ModalComponent = this.dialog.open(component, {
       data: modalConfig,
       width: modalConfig.Width
     });
