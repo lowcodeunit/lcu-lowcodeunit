@@ -90,7 +90,7 @@ export class LcuSetupManageElementComponent
    * Access the component passed into the modal
    */
   @ViewChild('ModalContainer', { read: ViewContainerRef })
-  public ModalContainer: ViewContainerRef;
+  public ModalContainerBrah: ViewContainerRef;
 
   public PipeDate: DataPipeConstants;
   public onSideNavOpenClose: boolean;
@@ -126,7 +126,7 @@ export class LcuSetupManageElementComponent
   //  Constructors
   constructor(
     protected dialog: MatDialog,
-    protected genericModalService: GenericModalService,
+    protected genericModalService: GenericModalService<PayloadFormComponent>,
     protected injector: Injector,
     protected sanitizer: DomSanitizer,
     protected formBldr: FormBuilder,
@@ -268,14 +268,15 @@ export class LcuSetupManageElementComponent
   /**
    * Modal configuration
    */
-  protected configureModal(): void {
+  public PayloadFormModal(): void {
+    debugger;
     let el: ElementRef;
     const payloadForm: PayloadFormComponent = new PayloadFormComponent(el);
     const modalCompFactory: ComponentFactory<PayloadFormComponent> = this.resolver.resolveComponentFactory(
       PayloadFormComponent
     );
 
-    this.componentRef = this.ModalContainer.createComponent<PayloadFormComponent>(
+    this.componentRef = this.ModalContainerBrah.createComponent<PayloadFormComponent>(
       modalCompFactory
     );
     // ksdfe.ActiveDAFApplicationID = this.State.ActiveDAFAppID;
@@ -343,7 +344,7 @@ export class LcuSetupManageElementComponent
     this.setupFreeboard();
 
     if (this.State.Telemetry) {
-      debugger;
+
       this.convertToDate(this.State.Telemetry.LastSyncedAt);
     }
 

@@ -11,3 +11,4 @@ export * from './lib/services/sidenav.service';
 export * from './lib/services/generic-modal.service';
 export * from './lib/models/generice-modal.model';
 export * from './lib/elements/generic/generic-modal/generic-modal.component';
+export * from './lib/elements/controls/payload-form/payload-form.component';
