@@ -250,7 +250,6 @@ export class LcuSetupManageElementComponent
   }
 
   protected handleStateChanged() {
-
     this.setAddingDevice();
 
     this.setupFreeboard();
@@ -259,12 +258,11 @@ export class LcuSetupManageElementComponent
       this.convertToDate(this.State.Telemetry.LastSyncedAt);
     }
 
-    this.DeviceNames = this.State.ConnectedDevicesConfig.Devices?.map((d) => d.DeviceName) || [];
+    this.DeviceNames = this.State.ConnectedDevicesConfig?.Devices?.map((d) => d.DeviceName) || [];
   }
 
   protected setAddingDevice() {
-
-    this.AddingDevice = (this.State.ConnectedDevicesConfig.Devices?.length || 0) <= 0;
+    this.AddingDevice = (this.State.ConnectedDevicesConfig?.Devices?.length || 0) <= 0;
   }
 
   protected setDashboardIFrameURL() {
