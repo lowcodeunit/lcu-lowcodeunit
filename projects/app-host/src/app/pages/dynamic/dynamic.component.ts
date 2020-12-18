@@ -5,7 +5,7 @@ import {
   IoTEnsembleStateContext,
   BreakpointUtils,
   IoTEnsembleDeviceEnrollment,
-  IoTEnsembleTelemetryPayload
+  IoTEnsembleTelemetryPayload,
 } from '@iot-ensemble/lcu-setup-common';
 
 @Component({
@@ -70,23 +70,28 @@ export class DynamicComponent implements OnInit {
     this.iotEnsCtxt.ToggleEmulatedEnabled();
   }
 
-  public UpdateDeviceTablePageSize(event: any){
+  public UpdateDeviceTablePageSize(pageSize: number) {
     this.State.Loading = true;
 
-    this.iotEnsCtxt.UpdateConnectedDevicesSync(event);
+    this.iotEnsCtxt.UpdateConnectedDevicesSync(pageSize);
   }
 
-  public UpdatePageSize(event: any){
-    this.State.Loading = true;
+  public UpdatePageSize(pageSize: number) {
+    this.State.Telemetry.Loading = true;
 
-    this.iotEnsCtxt.UpdateTelemetrySync(this.State.Telemetry.RefreshRate, event);
-
+    this.iotEnsCtxt.UpdateTelemetrySync(
+      this.State.Telemetry.RefreshRate,
+      pageSize
+    );
   }
 
-  public UpdateRefreshRate(event: number){
-    this.State.Loading = true;
+  public UpdateRefreshRate(refreshRate: number) {
+    this.State.Telemetry.Loading = true;
 
-    this.iotEnsCtxt.UpdateTelemetrySync(event, this.State.Telemetry.PageSize);
+    this.iotEnsCtxt.UpdateTelemetrySync(
+      refreshRate,
+      this.State.Telemetry.PageSize
+    );
   }
 
   //  Helpers
