@@ -57,7 +57,7 @@ export class DynamicComponent implements OnInit {
   }
 
   public SendDeviceMessage(payload: IoTEnsembleTelemetryPayload) {
-    this.State.Loading = true;
+    this.State.Telemetry.Loading = true;
 
     this.iotEnsCtxt.SendDeviceMessage(payload.DeviceID, payload);
   }

@@ -1,4 +1,4 @@
-:host {
+:host ::ng-deep {
   .table-container {
     .mat-table {
       width: 100%;
@@ -30,6 +30,10 @@
         &.expanded {
           border-bottom-color: transparent;
         }
+      }
+
+      lcu-dynamic-container {
+        width: 100%;
       }
     }
   }
