@@ -67,7 +67,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
     }
   }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {}
 
   //  API Methods
   /**
@@ -136,9 +136,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
       new ColumnDefinitionModel({
         ColType: 'copy',
+        ColWidth: '10px',
         Title: '',
         ShowValue: false,
         ShowIcon: true,
+        IconColor: 'yellow-accent-text',
         IconConfigFunc: (rowData: IoTEnsembleDeviceInfo) => {
           return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
         },
@@ -151,9 +153,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
       new ColumnDefinitionModel({
         ColType: 'issue-sas-token',
+        ColWidth: '10px',
         Title: '',
         ShowValue: false,
         ShowIcon: true,
+        IconColor: 'orange-accent-text',
         IconConfigFunc: () => 'build_circle',
         Action: {
           ActionHandler: this.IssueSASToken.bind(this),
@@ -164,9 +168,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
       new ColumnDefinitionModel({
         ColType: 'actions',
+        ColWidth: '10px',
         Title: '',
         ShowValue: false,
         ShowIcon: true,
+        IconColor: 'red-accent-text',
         IconConfigFunc: () => 'delete',
         Action: {
           ActionHandler: this.RevokeClick.bind(this),
@@ -202,7 +208,6 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
   protected updateTelemetryDataSource() {
     if (this.Devices) {
-
       console.log('DEVICES: ', this.Devices);
 
       this.setupGrid();
