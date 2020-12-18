@@ -24,8 +24,8 @@ $foreground: map-get(map-get($global-theme, 'foreground'), 'base');
 $primary-text: mat-color($primary);
 $secondary-text: map-get(map-get($global-theme, 'foreground'), 'secondary-text');
 
-@mixin text-opacity($color, $opacity) {
-    color: rgba($color, $opacity);
+@function set-opacity($color, $opacity) {
+    @return rgba($color, $opacity);
 }
 
 html, body {
