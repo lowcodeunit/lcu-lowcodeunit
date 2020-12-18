@@ -301,7 +301,7 @@ export class LcuSetupManageElementComponent
       /**
        * Pass modal config to service open function
        */
-      this.genericModalService.Open(modalConfig, PayloadFormComponent);
+      this.genericModalService.Open(modalConfig);
 
       this.genericModalService.ModalComponent.afterOpened().subscribe(
         (res: any) => {

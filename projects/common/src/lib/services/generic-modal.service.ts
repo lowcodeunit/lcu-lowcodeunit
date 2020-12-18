@@ -1,5 +1,6 @@
+import { PayloadFormComponent } from './../elements/controls/payload-form/payload-form.component';
 import { Observable } from 'rxjs';
-import { ElementRef, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { take } from 'rxjs/internal/operators/take';
 import { map } from 'rxjs/internal/operators/map';
@@ -21,12 +22,12 @@ export class GenericModalService<T> {
   /**
    * Instance of the modal (exposes modal properties)
    */
-  public ModalInstance: T;
+  public ModalInstance: PayloadFormComponent;
 
   /**
    * Reference to the modal
    */
-  public ModalComponent: MatDialogRef<T, any>;
+  public ModalComponent: MatDialogRef<PayloadFormComponent, any>;
 
   constructor(protected dialog: MatDialog) { }
 
@@ -36,8 +37,8 @@ export class GenericModalService<T> {
    *
    * open the modal
    */
-  public Open(modalConfig: GenericModalModel, component:any): void {
-    this.ModalComponent = this.dialog.open(component, {
+  public Open(modalConfig: GenericModalModel): void {
+    this.ModalComponent = this.dialog.open(PayloadFormComponent, {
       data: modalConfig,
       width: modalConfig.Width
     });
