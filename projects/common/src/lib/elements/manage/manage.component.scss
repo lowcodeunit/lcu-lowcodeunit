@@ -14,7 +14,8 @@
       }
 
       .connected {
-        .deviceId, .connStr {
+        .deviceId,
+        .connStr {
           // width: 300px;
           // margin: 0.5em;
         }
@@ -37,8 +38,6 @@
 
     .storage-access {
     }
-
-    
   }
 
   .border-bottom {
@@ -46,7 +45,7 @@
   }
 
   .telemetry-update {
-    color: set-opacity(white, .25);
+    color: set-opacity(white, 0.25);
 
     .success-dot {
       height: 10px;
@@ -56,10 +55,13 @@
       display: inline-block;
       margin-right: 10px;
     }
-    .mat-spinner {
-      ::ng-deep circle {
-          stroke: $success;
-      }
+
+    .error-dot {
+      height: 10px;
+      width: 10px;
+      background-color: red; // TODO:  Where frm theme to get this
+      border-radius: 50%;
+      display: inline-block;
       margin-right: 10px;
     }
   }
@@ -87,4 +89,3 @@
 //   -webkit-clip-path: $path;
 //   clip-path: $path;
 // }
-
