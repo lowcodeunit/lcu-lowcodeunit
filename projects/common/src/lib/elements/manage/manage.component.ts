@@ -265,7 +265,61 @@ export class LcuSetupManageElementComponent
 
   //  Helpers
  
- 
+  /**
+   * Modal configuration
+   */
+  protected configureModal(): void {
+    let el: ElementRef;
+    const payloadForm: PayloadFormComponent = new PayloadFormComponent(el);
+    const modalCompFactory: ComponentFactory<PayloadFormComponent> = this.resolver.resolveComponentFactory(
+      PayloadFormComponent
+    );
+
+    this.componentRef = this.ModalContainer.createComponent<PayloadFormComponent>(
+      modalCompFactory
+    );
+    // ksdfe.ActiveDAFApplicationID = this.State.ActiveDAFAppID;
+    // ksdfe.Application = this.ActiveApp;
+    // ksdfe.ApplicationPaths = this.ApplicationPaths;
+    // ksdfe.CurrentApplicationTab = this.State.CurrentApplicationTab;
+    // ksdfe.DAFAppOptions = this.State.DAFAppOptions;
+    // ksdfe.DAFApplications = this.State.DAFApplications;
+    // payloadForm.Loading = this.State.Loading;
+
+    setTimeout(() => {
+      const modalConfig: GenericModalModel = new GenericModalModel({
+        ModalType: 'data', // type of modal we want (data, confirm, info)
+        CallbackAction: this.confirmCallback, // function exposed to the modal
+        Component: payloadForm, // set component to be used inside the modal
+        LabelCancel: 'Cancel',
+        LabelAction: 'OK',
+        Title: 'Settings',
+        Width: '100%',
+      });
+
+      /**
+       * Pass modal config to service open function
+       */
+      this.genericModalService.Open(modalConfig);
+
+      this.genericModalService.ModalComponent.afterOpened().subscribe(
+        (res: any) => {
+          this.State.Loading = false;
+          console.log('MODAL OPEN', res);
+        }
+      );
+
+      this.genericModalService.ModalComponent.afterClosed().subscribe(
+        (res: any) => {
+          console.log('MODAL CLOSED', res);
+        }
+      );
+
+      this.genericModalService.OnAction().subscribe((res: any) => {
+        console.log('ONAction', res);
+      });
+    }, 1000);
+  }
   /**
    *
    * @param val value(s) being returned on confirmation action
