@@ -4,7 +4,8 @@
       <div
         fxFlex="75"
         fxLayoutAlign="start end"
-        class="welcome-bg background-fill">
+        class="welcome-bg background-fill"
+      >
         <div class="welcome-index" fxLayout="row" fxLayoutGap="30px">
           <div fxFlex="30">
             <h1 fxLayout="column">
@@ -37,7 +38,9 @@
       <div fxFlex fxLayout="row" fxLayoutGap="5px">
         <!-- left side -->
         <div
-          [@onSideNavOpenClose]="SideNavSrvc.SideNavToggleVal ? 'open' : 'close'"
+          [@onSideNavOpenClose]="
+            SideNavSrvc.SideNavToggleVal ? 'open' : 'close'
+          "
           (@onSideNavOpenClose.done)="OnSideNavOpenCloseDoneEvent($event)"
           fxFlex="25"
           fxLayout="row"
@@ -75,10 +78,7 @@
               <h3 class="mat-display-5 plain-text whats-next-text">
                 What's Here?
               </h3>
-              <p>
-                Ummmmmm, pick you up sometime around eight,
-                eight-thirty?
-              </p>
+              <p>Ummmmmm, pick you up sometime around eight, eight-thirty?</p>
 
               <div class="divider-fill-hor"></div>
             </div>
@@ -93,32 +93,63 @@
           fxLayoutGap="10px"
           class="background-fill padding-left-2 padding-right-2 padding-top-2"
         >
+          <!-- Emulated Devices -->
+          <div>
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>Emulated Devices</mat-card-title>
+
+                <div fxFlex></div>
+
+                <lcu-enabled-toggle
+                  [enabled]="State.Emulated?.Enabled"
+                  (enabled-toggled)="ToggleEmulatedEnabledChanged($event)"
+                ></lcu-enabled-toggle>
+              </mat-card-header>
+
+              <mat-card-content>
+                <p>
+                  When enabled, emulated device data will be provided in your
+                  data queries. The emulated device, is for smart room detection
+                  and provides temperature, humidity and occupancy of a room.
+                </p>
+              </mat-card-content>
+
+              <mat-card-actions> </mat-card-actions>
+            </mat-card>
+          </div>
+          <!--^^^ Emulated Devices ^^^-->
+
           <!-- Connect Devices -->
           <div
             fxLayout="row"
             fxLayout.lt-md="column"
             fxLayoutGap="10px"
-            class="connected">
+            class="connected"
+          >
             <mat-card fxFlex="50" *ngIf="AddingDevice">
               <mat-card-header>
                 <div
                   mat-card-avatar
                   fxLayoutAlign="center center"
-                  class="orange-accent">
+                  class="orange-accent"
+                >
                   <mat-icon>loop</mat-icon>
                 </div>
                 <mat-card-title>Connect a new Device</mat-card-title>
               </mat-card-header>
               <mat-card-content class="margin-left-5">
                 <span class="paragraph-text">
-                  Say something about what we're doing here. Some sort of image in the background.
+                  Say something about what we're doing here. Some sort of image
+                  in the background.
                 </span>
               </mat-card-content>
             </mat-card>
             <form
               fxFlex
               [formGroup]="AddDeviceFormGroup"
-              (ngSubmit)="EnrollDeviceSubmit()">
+              (ngSubmit)="EnrollDeviceSubmit()"
+            >
               <mat-card>
                 <mat-card-content>
                   <div class="device-list" *ngIf="!AddingDevice">
@@ -184,16 +215,17 @@
                   <mat-card-subtitle
                     fxLayout="row"
                     fxLayoutAlign="start center"
-                    class="telemetry-update">
-
+                    class="telemetry-update"
+                  >
                     <mat-spinner
-                    *ngIf="State.Telemetry?.Loading"
-                    [diameter]="10"></mat-spinner>
+                      *ngIf="State.Telemetry?.Loading"
+                      [diameter]="10"
+                    ></mat-spinner>
                     <div
                       matTooltip="Updates successful"
                       *ngIf="!State.Telemetry?.Loading"
-                      class="success-dot">
-                    </div>
+                      class="success-dot"
+                    ></div>
 
                     Last Updated: {{ LastSyncedAt }}
                   </mat-card-subtitle>
