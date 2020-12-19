@@ -165,9 +165,19 @@
 
               <mat-card-content class="margin-left-5">
                 <div *ngIf="AddingDevice">
-                  <span class="paragraph-text">
-                    We'll start you off some simple security practices and help you get your devices connected.
-                  </span>
+                  <p class="paragraph-text">
+                    We'll start you off some simple security practices and help
+                    you get your devices connected.
+                  </p>
+
+                  <a
+                    mat-raised-button
+                    href="https://www.iot-ensemble.com/docs/getting-started/connecting-your-first-device"
+                    target="_blank"
+                    *ngIf="AddingDevice"
+                  >
+                    Read Documentation
+                  </a>
                 </div>
 
                 <div class="device-list" *ngIf="!AddingDevice">
@@ -181,13 +191,14 @@
                 </div>
               </mat-card-content>
 
-              <mat-card-actions *ngIf="!AddingDevice">
+              <mat-card-actions>
                 <div fxFlex></div>
 
                 <a
                   mat-raised-button
                   color="accent"
                   (click)="ToggleAddingDevice()"
+                  *ngIf="!AddingDevice"
                 >
                   Enroll New Device
                 </a>
@@ -302,19 +313,13 @@
                   [telemetry]="State.Telemetry"
                   (page-size-changed)="HandlePageSizeChange($event)"
                 ></lcu-telemetry-list>
-
-                <!-- <lcu-payload-form
-                    [device-options]="DeviceNames"
-                    (sent)="SendDeviceMesaage($event)"
-                  ></lcu-payload-form> -->
-                <!-- <ng-template #ModalContainer></ng-template> -->
               </mat-card-content>
 
               <mat-card-actions>
                 <div fxFlex></div>
 
-                <button mat-flat-button (click)="PayloadFormModal()">
-                  Payload Form
+                <button mat-raised-button (click)="PayloadFormModal()">
+                  Send Device Message
                 </button>
               </mat-card-actions>
             </mat-card>

@@ -24,6 +24,7 @@ import { DataGridModule } from '@lowcodeunit/data-grid';
 import { RefreshSelectComponent } from './controls/refresh-select/refresh-select.component';
 import { PayloadFormComponent } from './elements/controls/payload-form/payload-form.component';
 import { GenericModalComponent } from './elements/generic/generic-modal/generic-modal.component';
+import { SendMessageDialogComponent } from './elements/manage/controls/send-message-dialog/send-message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { GenericModalComponent } from './elements/generic/generic-modal/generic-
     PayloadComponent,
     RefreshSelectComponent,
     PayloadFormComponent,
-    GenericModalComponent
+    GenericModalComponent,
+    SendMessageDialogComponent
   ],
   imports: [
     FathymSharedModule,
@@ -62,7 +64,8 @@ import { GenericModalComponent } from './elements/generic/generic-modal/generic-
     PayloadComponent,
     RefreshSelectComponent,
     PayloadFormComponent,
-    GenericModalComponent
+    GenericModalComponent,
+    SendMessageDialogComponent
   ],
   entryComponents: [
     LcuSetupManageElementComponent,
@@ -72,7 +75,8 @@ import { GenericModalComponent } from './elements/generic/generic-modal/generic-
     PayloadComponent,
     RefreshSelectComponent,
     GenericModalComponent,
-    PayloadFormComponent
+    PayloadFormComponent,
+    SendMessageDialogComponent
   ],
 })
 export class LcuSetupModule {

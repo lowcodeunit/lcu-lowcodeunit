@@ -24,6 +24,11 @@ export class GenericModalModel {
     public Component?: any;
 
     /**
+     * The data to pass into the Component
+     */
+    public Data?: any;
+
+    /**
      * Lable for action button
      */
     public LabelAction?: string;

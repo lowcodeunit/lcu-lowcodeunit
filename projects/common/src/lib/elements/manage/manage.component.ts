@@ -40,6 +40,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { GenericModalService } from '../../services/generic-modal.service';
 import { GenericModalModel } from '../../models/generice-modal.model';
 import { PayloadFormComponent } from '../controls/payload-form/payload-form.component';
+import { SendMessageDialogComponent } from './controls/send-message-dialog/send-message-dialog.component';
 
 declare var freeboard: any;
 
@@ -271,7 +272,10 @@ export class LcuSetupManageElementComponent
     const modalConfig: GenericModalModel = new GenericModalModel({
       ModalType: 'data', // type of modal we want (data, confirm, info)
       CallbackAction: this.confirmCallback, // function exposed to the modal
-      Component: PayloadFormComponent, // set component to be used inside the modal
+      Component: SendMessageDialogComponent, // set component to be used inside the modal
+      Data: {
+        DeviceNames: this.DeviceNames,
+      },
       LabelCancel: 'Cancel',
       LabelAction: 'OK',
       Title: 'Settings',
@@ -285,7 +289,6 @@ export class LcuSetupManageElementComponent
 
     this.genericModalService.ModalComponent.afterOpened().subscribe(
       (res: any) => {
-        this.State.Loading = false;
         console.log('MODAL OPEN', res);
       }
     );
@@ -296,8 +299,12 @@ export class LcuSetupManageElementComponent
       }
     );
 
-    this.genericModalService.OnAction().subscribe((res: any) => {
-      console.log('ONAction', res);
+    this.genericModalService.OnAction().subscribe((payload: IoTEnsembleTelemetryPayload) => {
+      console.log('ONAction', payload);
+
+      if (payload) {
+        this.SendDeviceMesaage(payload);
+      }
     });
     // }, 1000);
   }
@@ -332,10 +339,8 @@ export class LcuSetupManageElementComponent
   }
 
   protected setAddingDevice() {
-    if (!this.AddingDevice) {
-      this.AddingDevice =
-        (this.State.ConnectedDevicesConfig?.Devices?.length || 0) <= 0;
-    }
+    this.AddingDevice =
+      (this.State.ConnectedDevicesConfig?.Devices?.length || 0) <= 0;
   }
 
   protected setDashboardIFrameURL() {
