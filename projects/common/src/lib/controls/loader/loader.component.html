@@ -3,10 +3,11 @@
     <mat-spinner [diameter]="Diameter"></mat-spinner>
 
     <div
-      class="spinner-logo"
+      [class.spinner-logo]="true"
       logo-alt="Fathym Logo"
       [style.height]="LogoDiameter"
       [style.width]="LogoDiameter"
-    ></div>
+      *ngIf="!HideInner"
+      ></div>
   </div>
 </div>

@@ -12,12 +12,15 @@ export class LoaderComponent implements OnInit {
   @Input('diameter')
   public Diameter: number;
 
-  public get LogoDiameter(): string {
-    return (this.Diameter - (this.Diameter / 3)) + 'px';
-  }
+  @Input('hide-inner')
+  public HideInner: boolean;
 
   @Input('loading')
   public Loading: boolean;
+
+  public get LogoDiameter(): string {
+    return (this.Diameter - (this.Diameter / 3)) + 'px';
+  }
 
   //  Constructors
   constructor() {

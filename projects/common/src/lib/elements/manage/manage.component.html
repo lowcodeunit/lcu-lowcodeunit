@@ -109,6 +109,14 @@
           <div>
             <mat-card>
               <mat-card-header>
+                <div
+                  mat-card-avatar
+                  fxLayoutAlign="center center"
+                  class="orange-accent"
+                >
+                  <mat-icon>contactless</mat-icon>
+                </div>
+
                 <mat-card-title>Emulated Devices</mat-card-title>
 
                 <div fxFlex></div>
@@ -119,7 +127,7 @@
                 ></lcu-enabled-toggle>
               </mat-card-header>
 
-              <mat-card-content>
+              <mat-card-content class="margin-left-5">
                 <p>
                   When enabled, emulated device data will be provided in your
                   data queries. The emulated device, is for smart room detection
@@ -234,6 +242,14 @@
           <div class="telemetry">
             <mat-card>
               <mat-card-header class="border-bottom">
+                <div
+                  mat-card-avatar
+                  fxLayoutAlign="center center"
+                  class="orange-accent"
+                >
+                  <mat-icon>compare_arrows</mat-icon>
+                </div>
+
                 <mat-card-title>Device Telemetry</mat-card-title>
 
                 <mat-card-subtitle
@@ -242,16 +258,16 @@
                   class="telemetry-update"
                 >
                   <lcu-loader
-                    [loading]="true"
-                    [diameter]="10"
+                    [loading]="State.Telemetry?.Loading"
+                    [diameter]="20"
                   ></lcu-loader>
 
-                  <!-- <div
+                  <div
                     matTooltip="Updates successful"
                     *ngIf="!State.Telemetry?.Loading"
                     [class.success-dot]="State.Telemetry?.Enabled"
                     [class.error-dot]="!State.Telemetry?.Enabled"
-                  ></div> -->
+                  ></div>
 
                   Last Updated: {{ LastSyncedAt }}
                 </mat-card-subtitle>
@@ -307,11 +323,19 @@
           <div class="dashboard">
             <mat-card>
               <mat-card-header>
+                <div
+                  mat-card-avatar
+                  fxLayoutAlign="center center"
+                  class="orange-accent"
+                >
+                  <mat-icon>dashboard</mat-icon>
+                </div>
+
                 <mat-card-title>Devices Dashboard</mat-card-title>
               </mat-card-header>
 
               <mat-card-content>
-                <div class="freeboard-display">
+                <div class="freeboard-display padding-top-2">
                   <iframe
                     [src]="DashboardIFrameURL"
                     width="100%"
@@ -337,6 +361,14 @@
           <div>
             <mat-card>
               <mat-card-header>
+                <div
+                  mat-card-avatar
+                  fxLayoutAlign="center center"
+                  class="orange-accent"
+                >
+                  <mat-icon>storage</mat-icon>
+                </div>
+
                 <mat-card-title>Storage Access</mat-card-title>
               </mat-card-header>
 
