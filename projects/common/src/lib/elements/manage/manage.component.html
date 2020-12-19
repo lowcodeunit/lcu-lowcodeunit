@@ -163,7 +163,7 @@
                 <mat-card-title>Connected Devices</mat-card-title>
               </mat-card-header>
 
-              <mat-card-content class="margin-left-5">
+              <mat-card-content [class.margin-left-5]="AddingDevice">
                 <div *ngIf="AddingDevice">
                   <p class="paragraph-text">
                     We'll start you off some simple security practices and help
