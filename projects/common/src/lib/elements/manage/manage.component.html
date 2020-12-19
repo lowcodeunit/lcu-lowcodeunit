@@ -141,59 +141,66 @@
           <!--^^^ Emulated Devices ^^^-->
 
           <!-- Connected Devices -->
-          <div class="connected">
+          <div
+            fxLayout="row"
+            fxLayout.lt-md="column"
+            fxLayoutGap="1em"
+            class="connected"
+          >
+            <mat-card
+              [fxFlex]="AddingDevice ? '50%' : '100%'"
+              fxFlex.lt-md="100%"
+            >
+              <mat-card-header>
+                <div
+                  mat-card-avatar
+                  fxLayoutAlign="center center"
+                  class="orange-accent"
+                >
+                  <mat-icon>loop</mat-icon>
+                </div>
+
+                <mat-card-title>Connected Devices</mat-card-title>
+              </mat-card-header>
+
+              <mat-card-content class="margin-left-5">
+                <div *ngIf="AddingDevice">
+                  <span class="paragraph-text">
+                    Say something about what we're doing here. Some sort of
+                    image in the background.
+                  </span>
+                </div>
+
+                <div class="device-list" *ngIf="!AddingDevice">
+                  <lcu-devices-table
+                    [devices]="State.ConnectedDevicesConfig?.Devices"
+                    [displayed-columns]="ConnectedDevicesDisplayedColumns"
+                    (issued-sas-token)="IssueDeviceSASToken($event)"
+                    (page-size-changed)="DeviceTablePageEvent($event)"
+                    (revoked)="RevokeDeviceEnrollmentClick($event)"
+                  ></lcu-devices-table>
+                </div>
+              </mat-card-content>
+
+              <mat-card-actions *ngIf="!AddingDevice">
+                <div fxFlex></div>
+
+                <a mat-raised-button (click)="ToggleAddingDevice()">
+                  Add New Device
+                </a>
+              </mat-card-actions>
+            </mat-card>
+
             <form
+              fxFlex="50%"
               [formGroup]="AddDeviceFormGroup"
               (ngSubmit)="EnrollDeviceSubmit()"
+              *ngIf="AddingDevice"
             >
               <mat-card>
-                <mat-card-header>
-                  <div
-                    mat-card-avatar
-                    fxLayoutAlign="center center"
-                    class="orange-accent"
-                  >
-                    <mat-icon>loop</mat-icon>
-                  </div>
-
-                  <mat-card-title *ngIf="!AddingDevice"
-                    >Connected Devices</mat-card-title
-                  >
-
-                  <mat-card-title *ngIf="AddingDevice"
-                    >Connect a new Device</mat-card-title
-                  >
-                </mat-card-header>
-
-                <mat-card-content [class.margin-left-5]="AddingDevice">
-                  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
-                    <div
-                      fxFlex="100%"
-                      class="device-list"
-                      *ngIf="!AddingDevice"
-                    >
-                      <lcu-devices-table
-                        [devices]="State.ConnectedDevicesConfig?.Devices"
-                        [displayed-columns]="ConnectedDevicesDisplayedColumns"
-                        (issued-sas-token)="IssueDeviceSASToken($event)"
-                        (page-size-changed)="DeviceTablePageEvent($event)"
-                        (revoked)="RevokeDeviceEnrollmentClick($event)"
-                      ></lcu-devices-table>
-                    </div>
-
-                    <div fxFlex="50%" fxFlex.lt-md="100%" *ngIf="AddingDevice">
-                      <span class="paragraph-text">
-                        Say something about what we're doing here. Some sort of
-                        image in the background.
-                      </span>
-                    </div>
-
-                    <div
-                      fxFlex="50%"
-                      fxFlex.lt-md="100%"
-                      class="device-adding"
-                      *ngIf="AddingDevice"
-                    >
+                <mat-card-content>
+                  <div>
+                    <div class="device-adding">
                       <h2>Enroll a New Device</h2>
 
                       <mat-form-field>
@@ -211,13 +218,7 @@
                 <mat-card-actions>
                   <div fxFlex></div>
 
-                  <ng-container *ngIf="!AddingDevice">
-                    <a mat-raised-button (click)="ToggleAddingDevice()">
-                      Add New Device
-                    </a>
-                  </ng-container>
-
-                  <ng-container *ngIf="AddingDevice">
+                  <ng-container>
                     <button
                       mat-raised-button
                       type="submit"
