@@ -246,7 +246,7 @@ export class LcuSetupManageElementComponent
    *
    * @param evt Animation event for open and closing side nav
    */
-  public OnSideNavOpenCloseDoneEvent(evt: AnimationEvent): void {
+  public OnSideNavOpenCloseDoneEvent(evt: any): void {
     this.SideNavOpenCloseEvent = evt.fromState === 'open' ? true : false;
   }
 

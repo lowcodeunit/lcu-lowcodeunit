@@ -166,8 +166,7 @@
               <mat-card-content class="margin-left-5">
                 <div *ngIf="AddingDevice">
                   <span class="paragraph-text">
-                    Say something about what we're doing here. Some sort of
-                    image in the background.
+                    We'll start you off some simple security practices and help you get your devices connected.
                   </span>
                 </div>
 
@@ -185,8 +184,12 @@
               <mat-card-actions *ngIf="!AddingDevice">
                 <div fxFlex></div>
 
-                <a mat-raised-button (click)="ToggleAddingDevice()">
-                  Add New Device
+                <a
+                  mat-raised-button
+                  color="accent"
+                  (click)="ToggleAddingDevice()"
+                >
+                  Enroll New Device
                 </a>
               </mat-card-actions>
             </mat-card>
@@ -279,14 +282,6 @@
                   fxLayoutGap="20px"
                   fxLayoutAlign="end center"
                 >
-                  <button
-                    mat-flat-button
-                    color="accent"
-                    (click)="PayloadFormModal()"
-                  >
-                    Payload Form
-                  </button>
-
                   <lcu-refresh-select
                     [state]="State"
                     (refresh-rate-changed)="RefreshRateChanged($event)"
@@ -315,7 +310,13 @@
                 <!-- <ng-template #ModalContainer></ng-template> -->
               </mat-card-content>
 
-              <mat-card-actions> </mat-card-actions>
+              <mat-card-actions>
+                <div fxFlex></div>
+
+                <button mat-flat-button (click)="PayloadFormModal()">
+                  Payload Form
+                </button>
+              </mat-card-actions>
             </mat-card>
           </div>
           <!--^^^ Telemetry ^^^-->
