@@ -90,7 +90,7 @@ export class LcuSetupManageElementComponent
    * Access the component passed into the modal
    */
   @ViewChild('ModalContainer', { read: ViewContainerRef })
-  public ModalContainerBrah: ViewContainerRef;
+  public ModalContainer: ViewContainerRef;
 
   public PipeDate: DataPipeConstants;
   public onSideNavOpenClose: boolean;
@@ -269,33 +269,27 @@ export class LcuSetupManageElementComponent
    * Modal configuration
    */
   public PayloadFormModal(): void {
-    debugger;
-    let el: ElementRef;
+
+    let el: ElementRef<PayloadFormComponent>;
     const payloadForm: PayloadFormComponent = new PayloadFormComponent(el);
-    const modalCompFactory: ComponentFactory<PayloadFormComponent> = this.resolver.resolveComponentFactory(
-      PayloadFormComponent
-    );
 
-    this.componentRef = this.ModalContainerBrah.createComponent<PayloadFormComponent>(
-      modalCompFactory
-    );
-    // ksdfe.ActiveDAFApplicationID = this.State.ActiveDAFAppID;
-    // ksdfe.Application = this.ActiveApp;
-    // ksdfe.ApplicationPaths = this.ApplicationPaths;
-    // ksdfe.CurrentApplicationTab = this.State.CurrentApplicationTab;
-    // ksdfe.DAFAppOptions = this.State.DAFAppOptions;
-    // ksdfe.DAFApplications = this.State.DAFApplications;
-    // payloadForm.Loading = this.State.Loading;
+    /**
+     * Acces component properties not working - shannon
+     *
+     * TODO: get this working
+     */
+    // const tt = el.nativeElement.DeviceName;
+    // payloadForm.DeviceName = 'blah;
 
-    setTimeout(() => {
+    // setTimeout(() => {
       const modalConfig: GenericModalModel = new GenericModalModel({
         ModalType: 'data', // type of modal we want (data, confirm, info)
         CallbackAction: this.confirmCallback, // function exposed to the modal
-        Component: payloadForm, // set component to be used inside the modal
+        Component: PayloadFormComponent, // set component to be used inside the modal
         LabelCancel: 'Cancel',
         LabelAction: 'OK',
         Title: 'Settings',
-        Width: '100%',
+        Width: '50%',
       });
 
       /**
@@ -319,7 +313,7 @@ export class LcuSetupManageElementComponent
       this.genericModalService.OnAction().subscribe((res: any) => {
         console.log('ONAction', res);
       });
-    }, 1000);
+   // }, 1000);
   }
   /**
    *
