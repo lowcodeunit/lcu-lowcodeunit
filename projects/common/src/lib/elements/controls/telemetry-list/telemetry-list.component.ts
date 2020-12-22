@@ -157,20 +157,21 @@ export class TelemetryListComponent implements OnChanges, OnInit {
         ShowValue: true,
         Pipe: DataPipeConstants.DATE_TIME_ZONE_FMT,
       }),
-      new ColumnDefinitionModel({
-        ColType: 'download',
-        ColWidth: '10px',
-        Title: '',
-        ShowValue: false,
-        ShowIcon: true,
-        IconColor: 'yellow-accent-text',
-        IconConfigFunc: () => 'download',
-        Action: {
-          ActionHandler: this.DownloadClick.bind(this),
-          ActionType: 'button',
-          ActionTooltip: 'Download',
-        },
-      }),
+      //  TODO:  Move to header?
+      // new ColumnDefinitionModel({
+      //   ColType: 'download',
+      //   ColWidth: '10px',
+      //   Title: '',
+      //   ShowValue: false,
+      //   ShowIcon: true,
+      //   IconColor: 'yellow-accent-text',
+      //   IconConfigFunc: () => 'download',
+      //   Action: {
+      //     ActionHandler: this.DownloadClick.bind(this),
+      //     ActionType: 'button',
+      //     ActionTooltip: 'Download',
+      //   },
+      // }),
       new ColumnDefinitionModel({
         ColType: 'copy',
         ColWidth: '10px',
