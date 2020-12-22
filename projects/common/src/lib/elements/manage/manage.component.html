@@ -148,7 +148,7 @@
             class="connected"
           >
             <mat-card
-              [fxFlex]="AddingDevice ? '50%' : '100%'"
+              [fxFlex]="ConnectedDevicesInfoCardFlex"
               fxFlex.lt-md="100%"
             >
               <mat-card-header>
@@ -209,7 +209,7 @@
               fxFlex="50%"
               [formGroup]="AddDeviceFormGroup"
               (ngSubmit)="EnrollDeviceSubmit()"
-              *ngIf="AddingDevice"
+              *ngIf="AddingDevice && !MaxDevicesReached"
             >
               <mat-card>
                 <mat-card-content>
@@ -229,8 +229,8 @@
                   </div>
                 </mat-card-content>
 
-                <mat-card-actions>
-                  <div fxFlex></div>
+                <div fxFlex></div>
+                  <mat-card-actions>
 
                   <ng-container>
                     <button
