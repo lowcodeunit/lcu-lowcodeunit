@@ -1,6 +1,10 @@
 import { Status } from '@lcu/common';
 
 export class IoTEnsembleState {
+  public AccessLicenseType?: string;
+
+  public AccessPlanGroup?: string;
+
   public ConnectedDevicesConfig?: IoTEnsembleConnectedDevicesConfig;
 
   public Dashboard?: IoTEnsembleDashboardConfiguration;
@@ -8,6 +12,10 @@ export class IoTEnsembleState {
   public Drawers?: IoTEnsembleDrawersConfig;
 
   public Emulated?: EmulatedDeviceInfo;
+
+  public Error?: ErrorContext;
+
+  public HasAccess?: boolean;
 
   public LatestDeviceSASTokens?: { [deviceName: string]: string };
 
@@ -32,13 +40,28 @@ export class IoTEnsembleDashboardConfiguration {
   public PowerBIConfig?: any;
 }
 
+export class ErrorContext {
+  public ActionPath?: string;
+
+  public ActionTarget?: string;
+
+  public ActionText?: string;
+
+  public Message?: string;
+
+  public Title?: string;
+}
+
 export class IoTEnsembleDeviceEnrollment {
   public DeviceName?: string;
 }
 
-
 export class IoTEnsembleConnectedDevicesConfig {
   public Devices?: IoTEnsembleDeviceInfo[];
+
+  public MaxDevicesCount?: number;
+
+  public Page?: number;
 
   public PageSize?: number;
 }
