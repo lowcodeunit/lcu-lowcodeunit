@@ -37,6 +37,7 @@ import { SideNavService } from '../../services/sidenav.service';
 import { animateText, onSideNavOpenClose } from '../../animations/animations';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenericModalService } from '../../services/generic-modal.service';
 import { GenericModalModel } from '../../models/generice-modal.model';
 import { PayloadFormComponent } from '../controls/payload-form/payload-form.component';
@@ -72,6 +73,12 @@ export class LcuSetupManageElementComponent
 
   public ConnectedDevicesDisplayedColumns: string[];
 
+  public get ConnectedDevicesInfoCardFlex(): string{
+    const maxDeviceFlex =  this.MaxDevicesReached ? '100%': '50%';
+
+    return this.AddingDevice ? maxDeviceFlex: '100%';
+  }
+
   public DashboardIFrameURL: SafeResourceUrl;
 
   public DeviceNames: string[];
@@ -85,6 +92,10 @@ export class LcuSetupManageElementComponent
   public IssuedDeviceSASToken: EventEmitter<string>;
 
   public LastSyncedAt: Date;
+
+  public get MaxDevicesReached(): boolean{
+    return this.State.ConnectedDevicesConfig.Devices.length >= this.State.ConnectedDevicesConfig.MaxDevicesCount;
+  }
 
   /**
    * Access the component passed into the modal
@@ -131,6 +142,7 @@ export class LcuSetupManageElementComponent
     protected sanitizer: DomSanitizer,
     protected formBldr: FormBuilder,
     protected lcuSvcSettings: LCUServiceSettings,
+    protected snackBar: MatSnackBar,
     public SideNavSrvc: SideNavService,
     protected resolver: ComponentFactoryResolver
   ) {
