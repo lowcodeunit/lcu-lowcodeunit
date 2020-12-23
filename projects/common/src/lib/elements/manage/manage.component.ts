@@ -108,6 +108,9 @@ export class LcuSetupManageElementComponent
 
   public SideNavOpenCloseEvent: boolean;
 
+  @Output('regenerated-api-key')
+  public RegeneratedAPIKey: EventEmitter<string>;
+
   @Output('revoke-device-enrollment')
   public RevokeDeviceEnrollment: EventEmitter<string>;
 
@@ -161,6 +164,8 @@ export class LcuSetupManageElementComponent
     this.IssuedDeviceSASToken = new EventEmitter();
 
     this.PipeDate = DataPipeConstants.DATE_TIME_ZONE_FMT;
+
+    this.RegeneratedAPIKey = new EventEmitter();
 
     this.RevokeDeviceEnrollment = new EventEmitter();
 
@@ -229,6 +234,10 @@ export class LcuSetupManageElementComponent
 
   public RefreshRateChanged(event: any) {
     this.UpdateRefreshRate.emit(event);
+  }
+
+  public RegenerateAPIKey(keyName: string) {
+    this.RegeneratedAPIKey.emit(keyName);
   }
 
   public RevokeDeviceEnrollmentClick(deviceId: string) {

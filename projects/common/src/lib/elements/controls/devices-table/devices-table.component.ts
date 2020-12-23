@@ -24,10 +24,9 @@ import { IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
 })
 export class DevicesTableComponent implements OnInit, OnChanges {
   //  Fields
-
-  //  Properties
   protected colunmDefsModel: Array<ColumnDefinitionModel>;
 
+  //  Properties
   @Input('devices')
   public Devices?: IoTEnsembleDeviceInfo[];
 

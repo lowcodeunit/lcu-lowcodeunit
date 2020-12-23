@@ -25,6 +25,7 @@ import { RefreshSelectComponent } from './controls/refresh-select/refresh-select
 import { PayloadFormComponent } from './elements/controls/payload-form/payload-form.component';
 import { GenericModalComponent } from './elements/generic/generic-modal/generic-modal.component';
 import { SendMessageDialogComponent } from './elements/manage/controls/send-message-dialog/send-message-dialog.component';
+import { ApiAccessComponent } from './controls/api-access/api-access.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SendMessageDialogComponent } from './elements/manage/controls/send-mess
     RefreshSelectComponent,
     PayloadFormComponent,
     GenericModalComponent,
-    SendMessageDialogComponent
+    SendMessageDialogComponent,
+    ApiAccessComponent
   ],
   imports: [
     FathymSharedModule,
@@ -65,7 +67,8 @@ import { SendMessageDialogComponent } from './elements/manage/controls/send-mess
     RefreshSelectComponent,
     PayloadFormComponent,
     GenericModalComponent,
-    SendMessageDialogComponent
+    SendMessageDialogComponent,
+    ApiAccessComponent
   ],
   entryComponents: [
     LcuSetupManageElementComponent,

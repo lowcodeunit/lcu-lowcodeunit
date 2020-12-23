@@ -23,7 +23,7 @@ export class IoTEnsembleState {
 
   public SelectedDeviceID?: string;
 
-  public Storage?: IoTEnsembleStorageConfiguration[];
+  public Storage?: IoTEnsembleStorageConfiguration;
 
   public Telemetry?: IoTEnsembleTelemetry;
 
@@ -127,5 +127,23 @@ export class IoTEnsembleDrawersConfig {
 }
 
 export class IoTEnsembleStorageConfiguration {
-  public APIKeys: { [keyName: string]: string };
+  public APIKeys: IoTEnsembleAPIKeyData[];
+
+  public APIOptions: IoTEnsembleAPIOption[];
+}
+
+export class IoTEnsembleAPIKeyData {
+  public Key: string;
+
+  public KeyName: string;
+}
+
+export class IoTEnsembleAPIOption {
+  public Description: string;
+
+  public Method: string;
+
+  public Name: string;
+
+  public Path: string;
 }
