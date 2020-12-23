@@ -50,6 +50,13 @@ export class DynamicComponent implements OnInit {
     this.iotEnsCtxt.IssueDeviceSASToken(deviceName, 0);
   }
 
+  public RegenerateAPIKey(keyName: string) {
+    // this.State.Loading = true;
+
+    alert('Implement regenerate: ' + keyName)
+    // this.iotEnsCtxt.RegenerateAPIKey(keyName);
+  }
+
   public RevokeDeviceEnrollment(deviceId: string) {
     this.State.Loading = true;
 

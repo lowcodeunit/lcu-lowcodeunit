@@ -139,7 +139,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
         Title: '',
         ShowValue: false,
         ShowIcon: true,
-        IconColor: 'yellow-accent-text',
+        IconColor: 'orange-accent-text',
         IconConfigFunc: (rowData: IoTEnsembleDeviceInfo) => {
           return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
         },
@@ -156,7 +156,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
         Title: '',
         ShowValue: false,
         ShowIcon: true,
-        IconColor: 'orange-accent-text',
+        IconColor: 'yellow-accent-text',
         IconConfigFunc: () => 'build_circle',
         Action: {
           ActionHandler: this.IssueSASToken.bind(this),

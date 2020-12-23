@@ -69,7 +69,9 @@ export class ApiAccessComponent implements OnChanges, OnInit {
   }
 
   public Regenerate(keyData: IoTEnsembleAPIKeyData) {
-    this.Regenerated.emit(keyData.KeyName);
+    if (confirm(`Are you sure you want to regenerate the key: ${keyData.KeyName}?`)) {
+      this.Regenerated.emit(keyData.KeyName);
+    }
   }
 
   //  Helpers
@@ -106,7 +108,7 @@ export class ApiAccessComponent implements OnChanges, OnInit {
         Title: '',
         ShowValue: false,
         ShowIcon: true,
-        IconColor: 'yellow-accent-text',
+        IconColor: 'orange-accent-text',
         IconConfigFunc: (keyData: any) => {
           return keyData.$IsCopySuccessIcon ? 'done' : 'content_copy';
         },
@@ -123,7 +125,7 @@ export class ApiAccessComponent implements OnChanges, OnInit {
         Title: '',
         ShowValue: false,
         ShowIcon: true,
-        IconColor: 'orange-accent-text',
+        IconColor: 'yellow-accent-text',
         IconConfigFunc: (keyData: any) => {
           return keyData.$ShowKey ? 'visibility_off' : 'visibility';
         },
