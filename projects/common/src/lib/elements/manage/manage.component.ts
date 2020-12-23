@@ -10,6 +10,12 @@ import {
   AfterViewInit,
   AfterContentInit,
   OnDestroy,
+  ElementRef,
+  ComponentFactory,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  ViewChild,
+  ComponentRef,
 } from '@angular/core';
 import {
   LCUElementContext,
@@ -30,6 +36,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SideNavService } from '../../services/sidenav.service';
 import { animateText, onSideNavOpenClose } from '../../animations/animations';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericModalService } from '../../services/generic-modal.service';
+import { GenericModalModel } from '../../models/generice-modal.model';
+import { PayloadFormComponent } from '../controls/payload-form/payload-form.component';
+import { SendMessageDialogComponent } from './controls/send-message-dialog/send-message-dialog.component';
 
 declare var freeboard: any;
 
@@ -45,9 +57,8 @@ export const SELECTOR_LCU_SETUP_MANAGE_ELEMENT = 'lcu-setup-manage-element';
   selector: SELECTOR_LCU_SETUP_MANAGE_ELEMENT,
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.scss'],
-  animations: [onSideNavOpenClose, animateText]
+  animations: [onSideNavOpenClose, animateText],
 })
-
 export class LcuSetupManageElementComponent
   extends LcuElementComponent<LcuSetupManageContext>
   implements OnChanges, OnInit, AfterViewInit, AfterContentInit, OnDestroy {
@@ -58,7 +69,15 @@ export class LcuSetupManageElementComponent
 
   public AddingDevice: boolean;
 
+  protected componentRef: ComponentRef<any>;
+
   public ConnectedDevicesDisplayedColumns: string[];
+
+  public get ConnectedDevicesInfoCardFlex(): string{
+    const maxDeviceFlex =  this.MaxDevicesReached ? '100%': '50%';
+
+    return this.AddingDevice ? maxDeviceFlex: '100%';
+  }
 
   public DashboardIFrameURL: SafeResourceUrl;
 
@@ -73,6 +92,16 @@ export class LcuSetupManageElementComponent
   public IssuedDeviceSASToken: EventEmitter<string>;
 
   public LastSyncedAt: Date;
+
+  public get MaxDevicesReached(): boolean{
+    return this.State.ConnectedDevicesConfig.Devices.length >= this.State.ConnectedDevicesConfig.MaxDevicesCount;
+  }
+
+  /**
+   * Access the component passed into the modal
+   */
+  @ViewChild('ModalContainer', { read: ViewContainerRef })
+  public ModalContainer: ViewContainerRef;
 
   public PipeDate: DataPipeConstants;
   public onSideNavOpenClose: boolean;
@@ -107,11 +136,15 @@ export class LcuSetupManageElementComponent
 
   //  Constructors
   constructor(
+    protected dialog: MatDialog,
+    protected genericModalService: GenericModalService<PayloadFormComponent>,
     protected injector: Injector,
     protected sanitizer: DomSanitizer,
     protected formBldr: FormBuilder,
     protected lcuSvcSettings: LCUServiceSettings,
-    public SideNavSrvc: SideNavService
+    protected snackBar: MatSnackBar,
+    public SideNavSrvc: SideNavService,
+    protected resolver: ComponentFactoryResolver
   ) {
     super(injector);
 
@@ -145,35 +178,31 @@ export class LcuSetupManageElementComponent
 
     this.UpdateRefreshRate = new EventEmitter();
 
-    this.sideSlideSubscription = this.SideNavSrvc.SideNavToggleChanged.subscribe((res: boolean) => {
-      this.onSideNavOpenClose = res;
-    });
+    this.sideSlideSubscription = this.SideNavSrvc.SideNavToggleChanged.subscribe(
+      (res: boolean) => {
+        this.onSideNavOpenClose = res;
+      }
+    );
   }
 
   //  Life Cycle
   public ngAfterContentInit(): void {
-
     // this.setupFreeboard();
   }
 
-  public ngOnDestroy(): void {
-
-  }
+  public ngOnDestroy(): void {}
 
   public ngAfterViewInit(): void {
-
     // this.setupFreeboard();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-
     if (changes.State) {
       this.handleStateChanged();
     }
   }
 
   public ngOnInit() {
-
     super.ngOnInit();
 
     this.setupAddDeviceForm();
@@ -185,7 +214,6 @@ export class LcuSetupManageElementComponent
   }
 
   public EnrollDeviceSubmit() {
-
     this.EnrollDevice.emit({
       DeviceName: this.AddDeviceFormGroup.controls.deviceName.value,
     });
@@ -199,13 +227,11 @@ export class LcuSetupManageElementComponent
     this.IssuedDeviceSASToken.emit(deviceName);
   }
 
-  public RefreshRateChanged(event: any){
-
+  public RefreshRateChanged(event: any) {
     this.UpdateRefreshRate.emit(event);
   }
 
   public RevokeDeviceEnrollmentClick(deviceId: string) {
-
     this.RevokeDeviceEnrollment.emit(deviceId);
   }
 
@@ -214,22 +240,18 @@ export class LcuSetupManageElementComponent
   }
 
   public ToggleAddingDevice() {
-
     this.AddingDevice = !this.AddingDevice;
   }
 
   public ToggleTelemetryEnabledChanged(enabled: boolean) {
-
     this.ToggleTelemetryEnabled.emit(enabled);
   }
 
   public ToggleEmulatedEnabledChanged(enabled: boolean) {
-
     this.ToggleEmulatedEnabled.emit(enabled);
   }
 
   public ToggleSideNav(): void {
-
     this.SideNavSrvc.SideNavToggle();
   }
 
@@ -237,12 +259,77 @@ export class LcuSetupManageElementComponent
    *
    * @param evt Animation event for open and closing side nav
    */
-  public OnSideNavOpenCloseDoneEvent(evt: AnimationEvent): void {
-
-    this.SideNavOpenCloseEvent = evt['fromState'] === 'open' ? true : false;
+  public OnSideNavOpenCloseDoneEvent(evt: any): void {
+    this.SideNavOpenCloseEvent = evt.fromState === 'open' ? true : false;
   }
 
   //  Helpers
+
+  /**
+   * Modal configuration
+   */
+  public PayloadFormModal(): void {
+    let el: ElementRef<PayloadFormComponent>;
+    const payloadForm: PayloadFormComponent = new PayloadFormComponent(el);
+
+    /**
+     * Acces component properties not working - shannon
+     *
+     * TODO: get this working
+     */
+    // const tt = el.nativeElement.DeviceName;
+    // payloadForm.DeviceName = 'blah;
+
+    // setTimeout(() => {
+    const modalConfig: GenericModalModel = new GenericModalModel({
+      ModalType: 'data', // type of modal we want (data, confirm, info)
+      CallbackAction: this.confirmCallback, // function exposed to the modal
+      Component: SendMessageDialogComponent, // set component to be used inside the modal
+      Data: {
+        DeviceNames: this.DeviceNames,
+      },
+      LabelCancel: 'Cancel',
+      LabelAction: 'OK',
+      Title: 'Settings',
+      Width: '50%',
+    });
+
+    /**
+     * Pass modal config to service open function
+     */
+    this.genericModalService.Open(modalConfig);
+
+    this.genericModalService.ModalComponent.afterOpened().subscribe(
+      (res: any) => {
+        console.log('MODAL OPEN', res);
+      }
+    );
+
+    this.genericModalService.ModalComponent.afterClosed().subscribe(
+      (res: any) => {
+        console.log('MODAL CLOSED', res);
+      }
+    );
+
+    this.genericModalService.OnAction().subscribe((payload: IoTEnsembleTelemetryPayload) => {
+      console.log('ONAction', payload);
+
+      if (payload) {
+        this.SendDeviceMesaage(payload);
+      }
+    });
+    // }, 1000);
+  }
+  /**
+   *
+   * @param val value(s) being returned on confirmation action
+   *
+   * Callback function passed into the modal configuration
+   */
+  protected confirmCallback(val: any): void {
+    debugger;
+  }
+
   protected convertToDate(syncDate: string) {
     if (syncDate) {
       this.LastSyncedAt = new Date(Date.parse(syncDate));
@@ -250,7 +337,6 @@ export class LcuSetupManageElementComponent
   }
 
   protected handleStateChanged() {
-
     this.setAddingDevice();
 
     this.setupFreeboard();
@@ -259,16 +345,17 @@ export class LcuSetupManageElementComponent
       this.convertToDate(this.State.Telemetry.LastSyncedAt);
     }
 
-    this.DeviceNames = this.State.ConnectedDevicesConfig.Devices?.map((d) => d.DeviceName) || [];
+    this.DeviceNames =
+      this.State.ConnectedDevicesConfig?.Devices?.map((d) => d.DeviceName) ||
+      [];
   }
 
   protected setAddingDevice() {
-
-    this.AddingDevice = (this.State.ConnectedDevicesConfig.Devices?.length || 0) <= 0;
+    this.AddingDevice =
+      (this.State.ConnectedDevicesConfig?.Devices?.length || 0) <= 0;
   }
 
   protected setDashboardIFrameURL() {
-
     const source = this.State.Dashboard?.FreeboardConfig
       ? JSON.stringify(this.State.Dashboard?.FreeboardConfig)
       : '';
@@ -281,14 +368,12 @@ export class LcuSetupManageElementComponent
   }
 
   protected setupAddDeviceForm() {
-
     this.AddDeviceFormGroup = this.formBldr.group({
       deviceName: ['', Validators.required],
     });
   }
 
   protected setupFreeboard() {
-
     this.setDashboardIFrameURL();
 
     if (this.State.Dashboard && this.State.Dashboard.FreeboardConfig) {
