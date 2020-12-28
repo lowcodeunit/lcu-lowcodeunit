@@ -50,8 +50,9 @@
           fxLayoutAlign="start start"
           class="background-fill box-side-triangle"
         >
-          <div fxLayout="column">
+          <div fxLayout="column side-column">
             <div
+              class="side-toggle-container"
               [@onSideNavOpenClose]="
                 SideNavSrvc.SideNavToggleVal ? 'open' : 'close'
               "
@@ -232,7 +233,7 @@
                 </a>
 
                 <ng-container *ngIf="AddingDevice && MaxDevicesReached">
-                  <a mat-raised-button href="/billing/iot" color="accent">
+                  <a mat-raised-button href="/billing/iot" color="accent" target="_blank">
                     Upgrade now
                   </a>
 
@@ -360,6 +361,10 @@
                 <button mat-raised-button (click)="PayloadFormModal()">
                   Send Device Message
                 </button>
+
+                <!-- <button mat-raised-button (click)="DownloadData()">
+                  Download Data
+                </button> -->
               </mat-card-actions>
             </mat-card>
           </div>
