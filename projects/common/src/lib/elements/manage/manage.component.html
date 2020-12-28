@@ -176,15 +176,6 @@
                       We'll start you off some simple security practices and
                       help you get your devices connected.
                     </p>
-
-                    <a
-                      mat-raised-button
-                      href="https://www.iot-ensemble.com/docs/getting-started/connecting-your-first-device"
-                      target="_blank"
-                      *ngIf="AddingDevice"
-                    >
-                      Read Documentation
-                    </a>
                   </ng-container>
 
                   <ng-container *ngIf="MaxDevicesReached">
@@ -215,10 +206,10 @@
                 <div fxFlex></div>
 
                 <a
-                  mat-link-button
-                  href="https://www.iot-ensemble.com/docs/getting-started/buy-and-scale"
+                  mat-raised-button
+                  href="https://www.iot-ensemble.com/docs/getting-started/connecting-your-first-device"
                   target="_blank"
-                  *ngIf="AddingDevice"
+                  *ngIf="AddingDevice && !MaxDevicesReached"
                 >
                   Read Documentation
                 </a>
@@ -233,6 +224,15 @@
                 </a>
 
                 <ng-container *ngIf="AddingDevice && MaxDevicesReached">
+                  <a
+                    mat-button
+                    href="https://www.iot-ensemble.com/docs/getting-started/buy-and-scale"
+                    target="_blank"
+                    *ngIf="AddingDevice"
+                  >
+                    Read Documentation
+                  </a>
+
                   <a
                     mat-raised-button
                     href="/billing/iot"
@@ -353,7 +353,7 @@
                 </div>
               </mat-card-header>
 
-              <mat-card-content>
+              <mat-card-content [class.margin-left-5]="State.Telemetry?.Payloads?.length <= 0">
                 <lcu-telemetry-list
                   [telemetry]="State.Telemetry"
                   (page-size-changed)="HandlePageSizeChange($event)"
