@@ -5,7 +5,7 @@ export class IoTEnsembleState {
 
   public AccessPlanGroup?: string;
 
-  public ConnectedDevicesConfig?: IoTEnsembleConnectedDevicesConfig;
+  public Devices?: IoTEnsembleConnectedDevicesConfig;
 
   public Dashboard?: IoTEnsembleDashboardConfiguration;
 
@@ -16,8 +16,6 @@ export class IoTEnsembleState {
   public Error?: ErrorContext;
 
   public HasAccess?: boolean;
-
-  public LatestDeviceSASTokens?: { [deviceName: string]: string };
 
   public Loading?: boolean;
 
@@ -64,6 +62,8 @@ export class IoTEnsembleConnectedDevicesConfig {
   public Page?: number;
 
   public PageSize?: number;
+
+  public SASTokens?: { [deviceName: string]: string };
 }
 
 export class IoTEnsembleDeviceInfo {

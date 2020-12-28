@@ -3,6 +3,7 @@
   [state]="State"
   (enroll-device)="EnrollDevice($event)"
   (issued-device-sas-token)="IssueDeviceSASToken($event)"
+  (refreshed)="Refresh()"
   (revoke-device-enrollment)="RevokeDeviceEnrollment($event)"
   (regenerated-api-key)="RegenerateAPIKey($event)"
   (sent-device-message)="SendDeviceMessage($event)"

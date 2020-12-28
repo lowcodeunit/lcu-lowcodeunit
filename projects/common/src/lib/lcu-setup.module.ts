@@ -26,6 +26,7 @@ import { PayloadFormComponent } from './elements/controls/payload-form/payload-f
 import { GenericModalComponent } from './elements/generic/generic-modal/generic-modal.component';
 import { SendMessageDialogComponent } from './elements/manage/controls/send-message-dialog/send-message-dialog.component';
 import { ApiAccessComponent } from './controls/api-access/api-access.component';
+import { SasTokenDialogComponent } from './elements/manage/controls/sas-token-dialog/sas-token-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ApiAccessComponent } from './controls/api-access/api-access.component';
     PayloadFormComponent,
     GenericModalComponent,
     SendMessageDialogComponent,
-    ApiAccessComponent
+    ApiAccessComponent,
+    SasTokenDialogComponent
   ],
   imports: [
     FathymSharedModule,
@@ -68,7 +70,8 @@ import { ApiAccessComponent } from './controls/api-access/api-access.component';
     PayloadFormComponent,
     GenericModalComponent,
     SendMessageDialogComponent,
-    ApiAccessComponent
+    ApiAccessComponent,
+    SasTokenDialogComponent
   ],
   entryComponents: [
     LcuSetupManageElementComponent,
@@ -79,7 +82,8 @@ import { ApiAccessComponent } from './controls/api-access/api-access.component';
     RefreshSelectComponent,
     GenericModalComponent,
     PayloadFormComponent,
-    SendMessageDialogComponent
+    SendMessageDialogComponent,
+    SasTokenDialogComponent
   ],
 })
 export class LcuSetupModule {

@@ -42,6 +42,7 @@ import { GenericModalService } from '../../services/generic-modal.service';
 import { GenericModalModel } from '../../models/generice-modal.model';
 import { PayloadFormComponent } from '../controls/payload-form/payload-form.component';
 import { SendMessageDialogComponent } from './controls/send-message-dialog/send-message-dialog.component';
+import { SasTokenDialogComponent } from './controls/sas-token-dialog/sas-token-dialog.component';
 
 declare var freeboard: any;
 
@@ -63,6 +64,7 @@ export class LcuSetupManageElementComponent
   extends LcuElementComponent<LcuSetupManageContext>
   implements OnChanges, OnInit, AfterViewInit, AfterContentInit, OnDestroy {
   //  Fields
+  protected devicesSasTokensOpened: boolean;
 
   //  Properties
   public AddDeviceFormGroup: FormGroup;
@@ -73,10 +75,10 @@ export class LcuSetupManageElementComponent
 
   public ConnectedDevicesDisplayedColumns: string[];
 
-  public get ConnectedDevicesInfoCardFlex(): string{
-    const maxDeviceFlex =  this.MaxDevicesReached ? '100%': '50%';
+  public get ConnectedDevicesInfoCardFlex(): string {
+    const maxDeviceFlex = this.MaxDevicesReached ? '100%' : '50%';
 
-    return this.AddingDevice ? maxDeviceFlex: '100%';
+    return this.AddingDevice ? maxDeviceFlex : '100%';
   }
 
   public DashboardIFrameURL: SafeResourceUrl;
@@ -93,8 +95,10 @@ export class LcuSetupManageElementComponent
 
   public LastSyncedAt: Date;
 
-  public get MaxDevicesReached(): boolean{
-    return this.State.ConnectedDevicesConfig.Devices.length >= this.State.ConnectedDevicesConfig.MaxDevicesCount;
+  public get MaxDevicesReached(): boolean {
+    return (
+      this.State.Devices?.Devices?.length >= this.State.Devices?.MaxDevicesCount
+    );
   }
 
   /**
@@ -103,10 +107,12 @@ export class LcuSetupManageElementComponent
   @ViewChild('ModalContainer', { read: ViewContainerRef })
   public ModalContainer: ViewContainerRef;
 
-  public PipeDate: DataPipeConstants;
   public onSideNavOpenClose: boolean;
 
-  public SideNavOpenCloseEvent: boolean;
+  public PipeDate: DataPipeConstants;
+
+  @Output('refreshed')
+  public Refreshed: EventEmitter<any>;
 
   @Output('regenerated-api-key')
   public RegeneratedAPIKey: EventEmitter<string>;
@@ -116,6 +122,8 @@ export class LcuSetupManageElementComponent
 
   @Output('sent-device-message')
   public SentDeviceMessage: EventEmitter<IoTEnsembleTelemetryPayload>;
+
+  public SideNavOpenCloseEvent: boolean;
 
   @Input('state')
   public State: IoTEnsembleState;
@@ -164,6 +172,8 @@ export class LcuSetupManageElementComponent
     this.IssuedDeviceSASToken = new EventEmitter();
 
     this.PipeDate = DataPipeConstants.DATE_TIME_ZONE_FMT;
+
+    this.Refreshed = new EventEmitter();
 
     this.RegeneratedAPIKey = new EventEmitter();
 
@@ -214,6 +224,43 @@ export class LcuSetupManageElementComponent
   }
 
   //  API Methods
+  public DeviceSASTokensModal(): void {
+    if (!this.devicesSasTokensOpened && !!this.State.Devices?.SASTokens) {
+      /**
+       * Acces component properties not working - shannon
+       *
+       * TODO: get this working
+       */
+      // const tt = el.nativeElement.DeviceName;
+      // payloadForm.DeviceName = 'blah;
+
+      const modalConfig: GenericModalModel = new GenericModalModel({
+        ModalType: 'data', // type of modal we want (data, confirm, info)
+        CallbackAction: (val: any) => {}, // function exposed to the modal
+        Component: SasTokenDialogComponent, // set component to be used inside the modal
+        Data: {
+          SASTokens: this.State.Devices?.SASTokens,
+        },
+        LabelCancel: 'Close',
+        // LabelAction: 'OK',
+        Title: 'Device SAS Tokens',
+        Width: '50%',
+      });
+
+      this.genericModalService.Open(modalConfig);
+
+      this.genericModalService.ModalComponent.afterClosed().subscribe(
+        (res: any) => {
+          this.Refreshed.emit(true);
+
+          this.devicesSasTokensOpened = false;
+        }
+      );
+
+      this.devicesSasTokensOpened = true;
+    }
+  }
+
   public DeviceTablePageEvent(event: any) {
     this.UpdateDeviceTablePageSize.emit(event);
   }
@@ -230,6 +277,66 @@ export class LcuSetupManageElementComponent
 
   public IssueDeviceSASToken(deviceName: string) {
     this.IssuedDeviceSASToken.emit(deviceName);
+  }
+
+  /**
+   *
+   * @param evt Animation event for open and closing side nav
+   */
+  public OnSideNavOpenCloseDoneEvent(evt: any): void {
+    this.SideNavOpenCloseEvent = evt.fromState === 'open' ? true : false;
+  }
+
+  public PayloadFormModal(): void {
+    /**
+     * Acces component properties not working - shannon
+     *
+     * TODO: get this working
+     */
+    // const tt = el.nativeElement.DeviceName;
+    // payloadForm.DeviceName = 'blah;
+
+    // setTimeout(() => {
+    const modalConfig: GenericModalModel = new GenericModalModel({
+      ModalType: 'data', // type of modal we want (data, confirm, info)
+      CallbackAction: (val: any) => {}, // function exposed to the modal
+      Component: SendMessageDialogComponent, // set component to be used inside the modal
+      Data: {
+        DeviceNames: this.DeviceNames,
+      },
+      LabelCancel: 'Cancel',
+      LabelAction: 'OK',
+      Title: 'Settings',
+      Width: '50%',
+    });
+
+    /**
+     * Pass modal config to service open function
+     */
+    this.genericModalService.Open(modalConfig);
+
+    this.genericModalService.ModalComponent.afterOpened().subscribe(
+      (res: any) => {
+        console.log('MODAL OPEN', res);
+      }
+    );
+
+    this.genericModalService.ModalComponent.afterClosed().subscribe(
+      (res: any) => {
+        console.log('MODAL CLOSED', res);
+      }
+    );
+
+    this.genericModalService
+      .OnAction()
+      .subscribe((payload: IoTEnsembleTelemetryPayload) => {
+        console.log('ONAction', payload);
+
+        if (payload) {
+          this.SendDeviceMesaage(payload);
+        }
+      });
+    // }, 1000);
   }
 
   public RefreshRateChanged(event: any) {
@@ -264,81 +371,7 @@ export class LcuSetupManageElementComponent
     this.SideNavSrvc.SideNavToggle();
   }
 
-  /**
-   *
-   * @param evt Animation event for open and closing side nav
-   */
-  public OnSideNavOpenCloseDoneEvent(evt: any): void {
-    this.SideNavOpenCloseEvent = evt.fromState === 'open' ? true : false;
-  }
-
   //  Helpers
-
-  /**
-   * Modal configuration
-   */
-  public PayloadFormModal(): void {
-    let el: ElementRef<PayloadFormComponent>;
-    const payloadForm: PayloadFormComponent = new PayloadFormComponent(el);
-
-    /**
-     * Acces component properties not working - shannon
-     *
-     * TODO: get this working
-     */
-    // const tt = el.nativeElement.DeviceName;
-    // payloadForm.DeviceName = 'blah;
-
-    // setTimeout(() => {
-    const modalConfig: GenericModalModel = new GenericModalModel({
-      ModalType: 'data', // type of modal we want (data, confirm, info)
-      CallbackAction: this.confirmCallback, // function exposed to the modal
-      Component: SendMessageDialogComponent, // set component to be used inside the modal
-      Data: {
-        DeviceNames: this.DeviceNames,
-      },
-      LabelCancel: 'Cancel',
-      LabelAction: 'OK',
-      Title: 'Settings',
-      Width: '50%',
-    });
-
-    /**
-     * Pass modal config to service open function
-     */
-    this.genericModalService.Open(modalConfig);
-
-    this.genericModalService.ModalComponent.afterOpened().subscribe(
-      (res: any) => {
-        console.log('MODAL OPEN', res);
-      }
-    );
-
-    this.genericModalService.ModalComponent.afterClosed().subscribe(
-      (res: any) => {
-        console.log('MODAL CLOSED', res);
-      }
-    );
-
-    this.genericModalService.OnAction().subscribe((payload: IoTEnsembleTelemetryPayload) => {
-      console.log('ONAction', payload);
-
-      if (payload) {
-        this.SendDeviceMesaage(payload);
-      }
-    });
-    // }, 1000);
-  }
-  /**
-   *
-   * @param val value(s) being returned on confirmation action
-   *
-   * Callback function passed into the modal configuration
-   */
-  protected confirmCallback(val: any): void {
-    debugger;
-  }
-
   protected convertToDate(syncDate: string) {
     if (syncDate) {
       this.LastSyncedAt = new Date(Date.parse(syncDate));
@@ -346,6 +379,8 @@ export class LcuSetupManageElementComponent
   }
 
   protected handleStateChanged() {
+    this.DeviceSASTokensModal();
+
     this.setAddingDevice();
 
     this.setupFreeboard();
@@ -355,13 +390,11 @@ export class LcuSetupManageElementComponent
     }
 
     this.DeviceNames =
-      this.State.ConnectedDevicesConfig?.Devices?.map((d) => d.DeviceName) ||
-      [];
+      this.State.Devices?.Devices?.map((d) => d.DeviceName) || [];
   }
 
   protected setAddingDevice() {
-    this.AddingDevice =
-      (this.State.ConnectedDevicesConfig?.Devices?.length || 0) <= 0;
+    this.AddingDevice = (this.State.Devices?.Devices?.length || 0) <= 0;
   }
 
   protected setDashboardIFrameURL() {

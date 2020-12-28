@@ -181,9 +181,9 @@
                   <ng-container *ngIf="MaxDevicesReached">
                     <p class="paragraph-text">
                       To connect more than
-                      {{ State.ConnectedDevicesConfig.MaxDevicesCount }}
+                      {{ State.Devices.MaxDevicesCount }}
                       {{
-                        State.ConnectedDevicesConfig.MaxDevicesCount > 1
+                        State.Devices.MaxDevicesCount > 1
                           ? "devices"
                           : "device"
                       }}, please see our purchasable plans.
@@ -193,7 +193,7 @@
 
                 <div class="device-list" *ngIf="!AddingDevice">
                   <lcu-devices-table
-                    [devices]="State.ConnectedDevicesConfig?.Devices"
+                    [devices]="State.Devices?.Devices"
                     [displayed-columns]="ConnectedDevicesDisplayedColumns"
                     (issued-sas-token)="IssueDeviceSASToken($event)"
                     (page-size-changed)="DeviceTablePageEvent($event)"
