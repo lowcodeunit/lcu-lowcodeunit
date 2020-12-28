@@ -170,6 +170,8 @@
               </mat-card-header>
 
               <mat-card-content [class.margin-left-5]="AddingDevice">
+                <mat-progress-bar class="margin-top-2" mode="indeterminate" *ngIf="State.Devices?.Loading"></mat-progress-bar>
+
                 <div *ngIf="AddingDevice">
                   <ng-container *ngIf="!MaxDevicesReached">
                     <p class="paragraph-text">

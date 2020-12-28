@@ -44,20 +44,22 @@ export class DynamicComponent implements OnInit {
   }
 
   public EnrollDevice(device: IoTEnsembleDeviceEnrollment) {
-    this.State.Loading = true;
+    this.State.Devices.Loading = true;
 
     this.iotEnsCtxt.EnrollDevice(device);
   }
 
   public IssueDeviceSASToken(deviceName: string) {
-    this.State.Loading = true;
+    this.State.Devices.Loading = true;
 
     //  TODO:  Pass through expiry time in some way?
     this.iotEnsCtxt.IssueDeviceSASToken(deviceName, 0);
   }
 
-  public Refresh() {
-    this.State.Loading = true;
+  public Refresh(ctxt: string) {
+    const loadingCtxt = this.State[ctxt] || this.State;
+
+    loadingCtxt.Loading = true;
 
     this.iotEnsCtxt.$Refresh();
   }
@@ -65,12 +67,12 @@ export class DynamicComponent implements OnInit {
   public RegenerateAPIKey(keyName: string) {
     // this.State.Loading = true;
 
-    alert('Implement regenerate: ' + keyName)
+    alert('Implement regenerate: ' + keyName);
     // this.iotEnsCtxt.RegenerateAPIKey(keyName);
   }
 
   public RevokeDeviceEnrollment(deviceId: string) {
-    this.State.Loading = true;
+    this.State.Devices.Loading = true;
 
     this.iotEnsCtxt.RevokeDeviceEnrollment(deviceId);
   }
@@ -90,7 +92,7 @@ export class DynamicComponent implements OnInit {
   }
 
   public UpdateDeviceTablePageSize(pageSize: number) {
-    this.State.Loading = true;
+    this.State.Devices.Loading = true;
 
     this.iotEnsCtxt.UpdateConnectedDevicesSync(pageSize);
   }

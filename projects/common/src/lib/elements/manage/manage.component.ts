@@ -112,7 +112,7 @@ export class LcuSetupManageElementComponent
   public PipeDate: DataPipeConstants;
 
   @Output('refreshed')
-  public Refreshed: EventEmitter<any>;
+  public Refreshed: EventEmitter<string>;
 
   @Output('regenerated-api-key')
   public RegeneratedAPIKey: EventEmitter<string>;
@@ -251,7 +251,7 @@ export class LcuSetupManageElementComponent
 
       this.genericModalService.ModalComponent.afterClosed().subscribe(
         (res: any) => {
-          this.Refreshed.emit(true);
+          this.Refreshed.emit('Devices');
 
           this.devicesSasTokensOpened = false;
         }

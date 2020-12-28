@@ -57,6 +57,8 @@ export class IoTEnsembleDeviceEnrollment {
 export class IoTEnsembleConnectedDevicesConfig {
   public Devices?: IoTEnsembleDeviceInfo[];
 
+  public Loading?: boolean;
+
   public MaxDevicesCount?: number;
 
   public Page?: number;
