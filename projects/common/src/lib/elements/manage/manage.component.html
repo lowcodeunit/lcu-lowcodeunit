@@ -1,4 +1,4 @@
-<div fxFlexFill *ngIf="!State?.Loading">
+<div fxFlexFill class="manage" *ngIf="!State?.Loading">
   <div fxFlexFill fxLayout="column" fxLayoutGap="5px">
     <div fxLayout="row" fxLayoutGap="5px">
       <div
@@ -50,7 +50,7 @@
           fxLayoutAlign="start start"
           class="background-fill box-side-triangle"
         >
-          <div fxLayout="column side-column">
+          <div fxLayout="column"class="side-column">
             <div
               class="side-toggle-container"
               [@onSideNavOpenClose]="
