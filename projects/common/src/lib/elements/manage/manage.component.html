@@ -50,7 +50,7 @@
           fxLayoutAlign="start start"
           class="background-fill box-side-triangle"
         >
-          <div fxLayout="column"class="side-column">
+          <div fxLayout="column" class="side-column">
             <div
               class="side-toggle-container"
               [@onSideNavOpenClose]="
@@ -233,7 +233,12 @@
                 </a>
 
                 <ng-container *ngIf="AddingDevice && MaxDevicesReached">
-                  <a mat-raised-button href="/billing/iot" color="accent" target="_blank">
+                  <a
+                    mat-raised-button
+                    href="/billing/iot"
+                    color="accent"
+                    target="_blank"
+                  >
                     Upgrade now
                   </a>
 
@@ -269,8 +274,9 @@
                   </div>
                 </mat-card-content>
 
-                <div fxFlex></div>
                 <mat-card-actions>
+                  <div fxFlex></div>
+
                   <ng-container>
                     <button
                       mat-raised-button
