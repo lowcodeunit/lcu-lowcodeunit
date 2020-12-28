@@ -197,15 +197,6 @@
                           : "device"
                       }}, please see our purchasable plans.
                     </p>
-
-                    <a
-                      mat-raised-button
-                      href="https://www.iot-ensemble.com/docs/getting-started/buy-and-scale"
-                      target="_blank"
-                      *ngIf="AddingDevice"
-                    >
-                      Read Documentation
-                    </a>
                   </ng-container>
                 </div>
 
@@ -222,6 +213,15 @@
 
               <mat-card-actions>
                 <div fxFlex></div>
+
+                <a
+                  mat-link-button
+                  href="https://www.iot-ensemble.com/docs/getting-started/buy-and-scale"
+                  target="_blank"
+                  *ngIf="AddingDevice"
+                >
+                  Read Documentation
+                </a>
 
                 <a
                   mat-raised-button
