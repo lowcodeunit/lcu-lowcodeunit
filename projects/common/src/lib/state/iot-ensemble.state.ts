@@ -147,3 +147,15 @@ export class IoTEnsembleAPIOption {
 
   public Path: string;
 }
+
+export enum ColdQueryDataTypes {
+  Telemetry = 'Telemetry',
+  Observations = 'Observations',
+  SensorMetadata = 'SensorMetadata',
+}
+
+export enum ColdQueryResultTypes {
+  CSV = 'CSV',
+  JSON = 'JSON',
+  JSONLines = 'JSONLines',
+}

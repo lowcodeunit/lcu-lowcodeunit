@@ -37,6 +37,12 @@ export class DynamicComponent implements OnInit {
   }
 
   //  API Methods
+  public ColdQuery() {
+    this.State.Loading = true;
+
+    this.iotEnsCtxt.ColdQuery();
+  }
+
   public EnrollDevice(device: IoTEnsembleDeviceEnrollment) {
     this.State.Loading = true;
 
@@ -99,6 +105,12 @@ export class DynamicComponent implements OnInit {
       refreshRate,
       this.State.Telemetry.PageSize
     );
+  }
+
+  public WarmQuery() {
+    this.State.Loading = true;
+
+    this.iotEnsCtxt.WarmQuery(null, null, null, null, null, true);
   }
 
   //  Helpers
