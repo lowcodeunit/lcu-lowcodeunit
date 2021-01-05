@@ -26,7 +26,11 @@ import {
   DataPipes,
 } from '@lcu/common';
 import {
-  IoTEnsembleState,
+  IoTEnsembleConnectedDevicesConfig,
+  IoTEnsembleDashboardConfiguration,
+  EmulatedDeviceInfo,
+  IoTEnsembleStorageConfiguration,
+  IoTEnsembleTelemetry,
   IoTEnsembleDeviceInfo,
   IoTEnsembleDeviceEnrollment,
   IoTEnsembleTelemetryPayload,
@@ -81,9 +85,18 @@ export class LcuSetupManageElementComponent
     return this.AddingDevice ? maxDeviceFlex : '100%';
   }
 
+  @Input('dashboard')
+  public Dashboard: IoTEnsembleDashboardConfiguration;
+
   public DashboardIFrameURL: SafeResourceUrl;
 
   public DeviceNames: string[];
+
+  @Input('devices')
+  public Devices: IoTEnsembleConnectedDevicesConfig;
+
+  @Input('emulated')
+  public Emulated: EmulatedDeviceInfo;
 
   @Output('enroll-device')
   public EnrollDevice: EventEmitter<IoTEnsembleDeviceEnrollment>;
@@ -95,9 +108,12 @@ export class LcuSetupManageElementComponent
 
   public LastSyncedAt: Date;
 
+  @Input('loading')
+  public Loading: boolean;
+
   public get MaxDevicesReached(): boolean {
     return (
-      this.State.Devices?.Devices?.length >= this.State.Devices?.MaxDevicesCount
+      this.Devices?.Devices?.length >= this.Devices?.MaxDevicesCount
     );
   }
 
@@ -125,8 +141,11 @@ export class LcuSetupManageElementComponent
 
   public SideNavOpenCloseEvent: boolean;
 
-  @Input('state')
-  public State: IoTEnsembleState;
+  @Input('storage')
+  public Storage: IoTEnsembleStorageConfiguration;
+
+  @Input('telemetry')
+  public Telemetry: IoTEnsembleTelemetry;
 
   @Output('toggle-device-telemetry-enabled')
   public ToggleTelemetryEnabled: EventEmitter<boolean>;
@@ -181,8 +200,6 @@ export class LcuSetupManageElementComponent
 
     this.SentDeviceMessage = new EventEmitter();
 
-    this.State = {};
-
     this.ToggleTelemetryEnabled = new EventEmitter();
 
     this.ToggleEmulatedEnabled = new EventEmitter();
@@ -212,9 +229,7 @@ export class LcuSetupManageElementComponent
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.State) {
-      this.handleStateChanged();
-    }
+    this.handleStateChanged(changes);
   }
 
   public ngOnInit() {
@@ -225,7 +240,7 @@ export class LcuSetupManageElementComponent
 
   //  API Methods
   public DeviceSASTokensModal(): void {
-    if (!this.devicesSasTokensOpened && !!this.State.Devices?.SASTokens) {
+    if (!this.devicesSasTokensOpened && !!this.Devices?.SASTokens) {
       /**
        * Acces component properties not working - shannon
        *
@@ -239,7 +254,7 @@ export class LcuSetupManageElementComponent
         CallbackAction: (val: any) => {}, // function exposed to the modal
         Component: SasTokenDialogComponent, // set component to be used inside the modal
         Data: {
-          SASTokens: this.State.Devices?.SASTokens,
+          SASTokens: this.Devices?.SASTokens,
         },
         LabelCancel: 'Close',
         // LabelAction: 'OK',
@@ -378,28 +393,28 @@ export class LcuSetupManageElementComponent
     }
   }
 
-  protected handleStateChanged() {
+  protected handleStateChanged(changes: SimpleChanges) {
     this.DeviceSASTokensModal();
 
     this.setAddingDevice();
 
     this.setupFreeboard();
 
-    if (this.State.Telemetry) {
-      this.convertToDate(this.State.Telemetry.LastSyncedAt);
+    if (this.Telemetry) {
+      this.convertToDate(this.Telemetry.LastSyncedAt);
     }
 
     this.DeviceNames =
-      this.State.Devices?.Devices?.map((d) => d.DeviceName) || [];
+      this.Devices?.Devices?.map((d) => d.DeviceName) || [];
   }
 
   protected setAddingDevice() {
-    this.AddingDevice = (this.State.Devices?.Devices?.length || 0) <= 0;
+    this.AddingDevice = (this.Devices?.Devices?.length || 0) <= 0;
   }
 
   protected setDashboardIFrameURL() {
-    const source = this.State.Dashboard?.FreeboardConfig
-      ? JSON.stringify(this.State.Dashboard?.FreeboardConfig)
+    const source = this.Dashboard?.FreeboardConfig
+      ? JSON.stringify(this.Dashboard?.FreeboardConfig)
       : '';
 
     this.DashboardIFrameURL = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -418,7 +433,7 @@ export class LcuSetupManageElementComponent
   protected setupFreeboard() {
     this.setDashboardIFrameURL();
 
-    if (this.State.Dashboard && this.State.Dashboard.FreeboardConfig) {
+    if (this.Dashboard && this.Dashboard.FreeboardConfig) {
       //   // debugger;
       //   // freeboard.initialize(true);
       //   // const dashboard = freeboard.loadDashboard(

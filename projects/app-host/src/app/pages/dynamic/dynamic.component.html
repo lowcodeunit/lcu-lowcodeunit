@@ -1,6 +1,11 @@
 <lcu-setup-manage-element
   *ngIf="State"
-  [state]="State"
+  [dashboard]="State.Dashboard"
+  [devices]="State.Devices"
+  [emulated]="State.Emulated"
+  [loading]="State.Loading"
+  [storage]="State.Storage"
+  [telemetry]="State.Telemetry"
   (enroll-device)="EnrollDevice($event)"
   (issued-device-sas-token)="IssueDeviceSASToken($event)"
   (refreshed)="Refresh($event)"

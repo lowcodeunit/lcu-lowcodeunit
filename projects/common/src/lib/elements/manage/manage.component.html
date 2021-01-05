@@ -1,4 +1,4 @@
-<div fxFlexFill class="manage" *ngIf="!State?.Loading">
+<div fxFlexFill class="manage" *ngIf="!Loading">
   <div fxFlexFill fxLayout="column" fxLayoutGap="5px">
     <div fxLayout="row" fxLayoutGap="5px">
       <div
@@ -123,7 +123,7 @@
                 <div fxFlex></div>
 
                 <lcu-enabled-toggle
-                  [enabled]="State.Emulated?.Enabled"
+                  [enabled]="Emulated?.Enabled"
                   (enabled-toggled)="ToggleEmulatedEnabledChanged($event)"
                 ></lcu-enabled-toggle>
               </mat-card-header>
@@ -170,7 +170,7 @@
               </mat-card-header>
 
               <mat-card-content [class.margin-left-5]="AddingDevice">
-                <mat-progress-bar class="margin-top-2" mode="indeterminate" *ngIf="State.Devices?.Loading"></mat-progress-bar>
+                <mat-progress-bar class="margin-top-2" mode="indeterminate" *ngIf="Devices?.Loading"></mat-progress-bar>
 
                 <div *ngIf="AddingDevice">
                   <ng-container *ngIf="!MaxDevicesReached">
@@ -183,9 +183,9 @@
                   <ng-container *ngIf="MaxDevicesReached">
                     <p class="paragraph-text">
                       To connect more than
-                      {{ State.Devices.MaxDevicesCount }}
+                      {{ Devices.MaxDevicesCount }}
                       {{
-                        State.Devices.MaxDevicesCount > 1
+                        Devices.MaxDevicesCount > 1
                           ? "devices"
                           : "device"
                       }}, please see our purchasable plans.
@@ -195,7 +195,7 @@
 
                 <div class="device-list" *ngIf="!AddingDevice">
                   <lcu-devices-table
-                    [devices]="State.Devices?.Devices"
+                    [devices]="Devices?.Devices"
                     [displayed-columns]="ConnectedDevicesDisplayedColumns"
                     (issued-sas-token)="IssueDeviceSASToken($event)"
                     (page-size-changed)="DeviceTablePageEvent($event)"
@@ -320,15 +320,15 @@
                   class="telemetry-update"
                 >
                   <lcu-loader
-                    [loading]="State.Telemetry?.Loading"
+                    [loading]="Telemetry?.Loading"
                     [diameter]="20"
                   ></lcu-loader>
 
                   <div
                     matTooltip="Updates successful"
-                    *ngIf="!State.Telemetry?.Loading"
-                    [class.success-dot]="State.Telemetry?.Enabled"
-                    [class.error-dot]="!State.Telemetry?.Enabled"
+                    *ngIf="!Telemetry?.Loading"
+                    [class.success-dot]="Telemetry?.Enabled"
+                    [class.error-dot]="!Telemetry?.Enabled"
                   ></div>
 
                   Last Updated: {{ LastSyncedAt }}
@@ -341,13 +341,13 @@
                   fxLayoutAlign="end center"
                 >
                   <lcu-refresh-select
-                    [state]="State"
+                    [telemetry]="Telemetry"
                     (refresh-rate-changed)="RefreshRateChanged($event)"
                   >
                   </lcu-refresh-select>
 
                   <lcu-enabled-toggle
-                    [enabled]="State.Telemetry?.Enabled"
+                    [enabled]="Telemetry?.Enabled"
                     enabled-text="Live"
                     (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
                   >
@@ -355,9 +355,9 @@
                 </div>
               </mat-card-header>
 
-              <mat-card-content [class.margin-left-5]="State.Telemetry?.Payloads?.length <= 0">
+              <mat-card-content [class.margin-left-5]="Telemetry?.Payloads?.length <= 0">
                 <lcu-telemetry-list
-                  [telemetry]="State.Telemetry"
+                  [telemetry]="Telemetry"
                   (page-size-changed)="HandlePageSizeChange($event)"
                 >
                 </lcu-telemetry-list>
@@ -433,8 +433,8 @@
 
               <mat-card-content>
                 <lcu-api-access
-                  [api-keys]="State.Storage?.APIKeys"
-                  [api-options]="State.Storage?.APIOptions"
+                  [api-keys]="Storage?.APIKeys"
+                  [api-options]="Storage?.APIOptions"
                   (regenerated)="RegenerateAPIKey($event)"
                 ></lcu-api-access>
               </mat-card-content>
@@ -450,4 +450,4 @@
   </div>
 </div>
 
-<lcu-loader [loading]="State?.Loading"></lcu-loader>
+<lcu-loader [loading]="Loading"></lcu-loader>

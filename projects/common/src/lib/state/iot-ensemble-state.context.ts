@@ -17,6 +17,8 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
     super(injector);
   }
 
+  protected oldState: IoTEnsembleState = {};
+
   // API Methods
   public ColdQuery(
     startDate: Date = new Date(new Date().setDate(new Date().getDate() - 30)),
@@ -163,5 +165,38 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
 
   protected loadStateName(): string {
     return 'iotensemble';
+  }
+
+  protected setupReceiveState(groupName: string) {
+    this.rt.RegisterHandler(`ReceiveState=>${groupName}`).subscribe((req) => {
+      console.log(`Handled state from ${groupName}`);
+
+      const diffed = this.diffState(req);
+
+      this.subject.next(diffed);
+
+      console.log(diffed);
+    });
+  }
+
+  protected diffState(reqState: any) {
+    // debugger;
+    const stateKeys = Object.keys(reqState);
+
+    const diffed = {};
+
+    stateKeys.forEach((stateKey) => {
+      const reqVal = JSON.stringify(reqState[stateKey]);
+
+      const oldVal = JSON.stringify(this.oldState[stateKey]);
+
+      if (reqVal !== oldVal) {
+        diffed[stateKey] = reqState[stateKey];
+      }
+    });
+
+    this.oldState = reqState;
+
+    return diffed;
   }
 }

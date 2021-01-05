@@ -25,7 +25,9 @@ export class DynamicComponent implements OnInit {
   constructor(
     protected iotEnsCtxt: IoTEnsembleStateContext,
     protected breakpointUtils: BreakpointUtils
-  ) {}
+  ) {
+    this.State = {};
+  }
 
   //  Life Cycle
   public ngOnInit(): void {
@@ -136,7 +138,7 @@ export class DynamicComponent implements OnInit {
 
   protected setupStateHandler() {
     this.iotEnsCtxt.Context.subscribe((state) => {
-      this.State = state;
+      this.State = Object.assign(this.State, state);
 
       this.handleStateChanged();
     });

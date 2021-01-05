@@ -14,7 +14,10 @@ import {
   DataGridFeaturesModel,
   DataGridPaginationModel,
 } from '@lowcodeunit/data-grid';
-import { IoTEnsembleAPIKeyData, IoTEnsembleAPIOption } from '../../state/iot-ensemble.state';
+import {
+  IoTEnsembleAPIKeyData,
+  IoTEnsembleAPIOption,
+} from '../../state/iot-ensemble.state';
 import { of } from 'rxjs';
 
 @Component({
@@ -69,22 +72,28 @@ export class ApiAccessComponent implements OnChanges, OnInit {
   }
 
   public Regenerate(keyData: IoTEnsembleAPIKeyData) {
-    if (confirm(`Are you sure you want to regenerate the key: ${keyData.KeyName}?`)) {
+    if (
+      confirm(
+        `Are you sure you want to regenerate the key: ${keyData.KeyName}?`
+      )
+    ) {
       this.Regenerated.emit(keyData.KeyName);
     }
   }
 
   //  Helpers
   protected setupGrid(): void {
-    const colDefs = this.setupColumnDefs();
+    if (this.APIKeys) {
+      const colDefs = this.setupColumnDefs();
 
-    const features = this.setupGridFeatures();
+      const features = this.setupGridFeatures();
 
-    this.GridParameters = new DataGridConfigModel(
-      of(this.APIKeys),
-      colDefs,
-      features
-    );
+      this.GridParameters = new DataGridConfigModel(
+        of(this.APIKeys),
+        colDefs,
+        features
+      );
+    }
   }
 
   protected setupColumnDefs() {
