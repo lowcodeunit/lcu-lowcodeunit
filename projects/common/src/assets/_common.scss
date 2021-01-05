@@ -25,7 +25,6 @@ $foreground: map-get(map-get($global-theme, 'foreground'), 'base');
 $primary-text: mat-color($primary);
 $secondary-text: map-get(map-get($global-theme, 'foreground'), 'secondary-text');
 
-
 @function set-opacity($color, $opacity) {
     @return rgba($color, $opacity);
 }
