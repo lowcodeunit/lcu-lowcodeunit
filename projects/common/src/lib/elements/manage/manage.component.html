@@ -126,6 +126,10 @@
                   [enabled]="Emulated?.Enabled"
                   (enabled-toggled)="ToggleEmulatedEnabledChanged($event)"
                 ></lcu-enabled-toggle>
+
+                <a href="https://www.iot-ensemble.com/docs/getting-started/emulated-data" target="_blank">
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content class="margin-left-5">
@@ -161,12 +165,14 @@
                 >
                   <mat-icon>loop</mat-icon>
                 </div>
-
                 <mat-card-title> Connected Devices </mat-card-title>
-
+                <div fxFlex></div>
                 <mat-card-subtitle *ngIf="MaxDevicesReached && AddingDevice">
                   Max number of devices reached
                 </mat-card-subtitle>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-first-device" target=”_blank”>
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content [class.margin-left-5]="AddingDevice">
@@ -353,6 +359,9 @@
                   >
                   </lcu-enabled-toggle>
                 </div>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#devices-telemetry" target="_blank">
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content [class.margin-left-5]="Telemetry?.Payloads?.length <= 0">
@@ -391,6 +400,10 @@
                 </div>
 
                 <mat-card-title>Devices Dashboard</mat-card-title>
+                <div fxFlex></div>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#freeboard-dashboard" target="_blank">
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content>
@@ -429,6 +442,10 @@
                 </div>
 
                 <mat-card-title>Storage Access</mat-card-title>
+                <div fxFlex></div>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-downstream-services" target="_blank">
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content>

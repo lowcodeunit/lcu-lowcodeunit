@@ -92,6 +92,17 @@
 .whats-next-text {
   color: mat-color($accent);
 }
+.fathym-logo{
+  background-image: fathym-logo(thinky-circle, $logo-color);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%
+}
+.fathym-logo:hover{
+  box-shadow:  0 0 0 10px rgba(100, 100, 100, 0.3);
+}
 
 // .box-side-triangle {
 //   $path: polygon(90% 0%, 100% 7%, 90% 12%, 90% 100%, 0% 100%, 0% 0%, 90% 0);
