@@ -1,9 +1,19 @@
 <div class="table-container">
-    <lcu-data-grid
-      expand
-      [config]="GridParameters"
-      [dynamic-components]="DynamicComponents"
-      (page-event)="HandlePageEvent($event)">
-    </lcu-data-grid>
-</div>
+  <div *ngIf="Telemetry?.Payloads?.length <= 0">
+    <!--TODO: REmove once data grid supports no item text-->
+    <h4>No telemetry to show at this time.</h4>
 
+    <p>
+      Enable the telemetry sync to see data here.  If you do not have your own device connected, enable emulated data to see sample telemetry.
+    </p>
+  </div>
+
+  <lcu-data-grid
+    expand
+    [config]="GridParameters"
+    [dynamic-components]="DynamicComponents"
+    (page-event)="HandlePageEvent($event)"
+    *ngIf="Telemetry?.Payloads?.length > 0"
+  >
+  </lcu-data-grid>
+</div>

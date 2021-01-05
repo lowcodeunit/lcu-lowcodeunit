@@ -9,6 +9,15 @@
       // margin: 1em;
     }
 
+    .side-column {
+      height: 100%;
+    }
+
+    .side-toggle-container {
+      position: sticky;
+      top: 0;
+    }
+
     .devices {
       .emulated {
       }

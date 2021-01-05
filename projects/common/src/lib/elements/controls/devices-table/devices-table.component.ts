@@ -24,10 +24,9 @@ import { IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
 })
 export class DevicesTableComponent implements OnInit, OnChanges {
   //  Fields
-
-  //  Properties
   protected colunmDefsModel: Array<ColumnDefinitionModel>;
 
+  //  Properties
   @Input('devices')
   public Devices?: IoTEnsembleDeviceInfo[];
 
@@ -140,7 +139,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
         Title: '',
         ShowValue: false,
         ShowIcon: true,
-        IconColor: 'yellow-accent-text',
+        IconColor: 'orange-accent-text',
         IconConfigFunc: (rowData: IoTEnsembleDeviceInfo) => {
           return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
         },
@@ -157,7 +156,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
         Title: '',
         ShowValue: false,
         ShowIcon: true,
-        IconColor: 'orange-accent-text',
+        IconColor: 'yellow-accent-text',
         IconConfigFunc: () => 'build_circle',
         Action: {
           ActionHandler: this.IssueSASToken.bind(this),

@@ -5,7 +5,7 @@ export class IoTEnsembleState {
 
   public AccessPlanGroup?: string;
 
-  public ConnectedDevicesConfig?: IoTEnsembleConnectedDevicesConfig;
+  public Devices?: IoTEnsembleConnectedDevicesConfig;
 
   public Dashboard?: IoTEnsembleDashboardConfiguration;
 
@@ -17,13 +17,11 @@ export class IoTEnsembleState {
 
   public HasAccess?: boolean;
 
-  public LatestDeviceSASTokens?: { [deviceName: string]: string };
-
   public Loading?: boolean;
 
   public SelectedDeviceID?: string;
 
-  public Storage?: IoTEnsembleStorageConfiguration[];
+  public Storage?: IoTEnsembleStorageConfiguration;
 
   public Telemetry?: IoTEnsembleTelemetry;
 
@@ -59,11 +57,15 @@ export class IoTEnsembleDeviceEnrollment {
 export class IoTEnsembleConnectedDevicesConfig {
   public Devices?: IoTEnsembleDeviceInfo[];
 
+  public Loading?: boolean;
+
   public MaxDevicesCount?: number;
 
   public Page?: number;
 
   public PageSize?: number;
+
+  public SASTokens?: { [deviceName: string]: string };
 }
 
 export class IoTEnsembleDeviceInfo {
@@ -127,5 +129,35 @@ export class IoTEnsembleDrawersConfig {
 }
 
 export class IoTEnsembleStorageConfiguration {
-  public APIKeys: { [keyName: string]: string };
+  public APIKeys: IoTEnsembleAPIKeyData[];
+
+  public APIOptions: IoTEnsembleAPIOption[];
+}
+
+export class IoTEnsembleAPIKeyData {
+  public Key: string;
+
+  public KeyName: string;
+}
+
+export class IoTEnsembleAPIOption {
+  public Description: string;
+
+  public Method: string;
+
+  public Name: string;
+
+  public Path: string;
+}
+
+export enum ColdQueryDataTypes {
+  Telemetry = 'Telemetry',
+  Observations = 'Observations',
+  SensorMetadata = 'SensorMetadata',
+}
+
+export enum ColdQueryResultTypes {
+  CSV = 'CSV',
+  JSON = 'JSON',
+  JSONLines = 'JSONLines',
 }
