@@ -1,6 +1,7 @@
 @import '../../../../node_modules/@lcu/common/assets/theming/common-theme';
 @import '../../../../node_modules/@lcu/common/assets/styles/utils/margins-padding';
 @import '../../../../node_modules/@lcu/common/assets/styles/utils/fathym-cursors';
+@import '../../../../node_modules/@lcu/common/assets/styles/branding/logos/fathym-icons';
 
 
 $global-theme: fathym-ivy-theme(true);
@@ -23,6 +24,7 @@ $background-fill: rgba(map-get($mat-grey, 900), .75);
 $foreground: map-get(map-get($global-theme, 'foreground'), 'base');
 $primary-text: mat-color($primary);
 $secondary-text: map-get(map-get($global-theme, 'foreground'), 'secondary-text');
+
 
 @function set-opacity($color, $opacity) {
     @return rgba($color, $opacity);

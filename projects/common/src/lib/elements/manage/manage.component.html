@@ -89,9 +89,16 @@
                 <mat-card-title>Emulated Devices</mat-card-title>
 
                 <div fxFlex></div>
+                
+                <lcu-enabled-toggle 
+                  [enabled]="State.Emulated?.Enabled"
+                  (enabled-toggled)="ToggleEmulatedEnabledChanged($event)">
+                </lcu-enabled-toggle>
 
-                <lcu-enabled-toggle [enabled]="State.Emulated?.Enabled"
-                  (enabled-toggled)="ToggleEmulatedEnabledChanged($event)"></lcu-enabled-toggle>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/emulated-data" >
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
+
               </mat-card-header>
 
               <mat-card-content class="margin-left-5">
@@ -119,10 +126,13 @@
                 <mat-card-title>
                   Connected Devices
                 </mat-card-title>
-
+                <div fxFlex></div>
                 <mat-card-subtitle *ngIf="MaxDevicesReached && AddingDevice">
                   Max number of devices reached
                 </mat-card-subtitle>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-first-device" >
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content [class.margin-left-5]="AddingDevice">
@@ -244,6 +254,9 @@
                     (enabled-toggled)="ToggleTelemetryEnabledChanged($event)">
                   </lcu-enabled-toggle>
                 </div>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#devices-telemetry" >
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content>
@@ -271,6 +284,10 @@
                 </div>
 
                 <mat-card-title>Devices Dashboard</mat-card-title>
+                <div fxFlex></div>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#freeboard-dashboard" >
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content>
@@ -300,6 +317,10 @@
                 </div>
 
                 <mat-card-title>Storage Access</mat-card-title>
+                <div fxFlex></div>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-downstream-services" >
+                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content> </mat-card-content>
