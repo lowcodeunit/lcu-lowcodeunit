@@ -112,9 +112,7 @@ export class LcuSetupManageElementComponent
   public Loading: boolean;
 
   public get MaxDevicesReached(): boolean {
-    return (
-      this.Devices?.Devices?.length >= this.Devices?.MaxDevicesCount
-    );
+    return this.Devices?.Devices?.length >= this.Devices?.MaxDevicesCount;
   }
 
   /**
@@ -394,18 +392,23 @@ export class LcuSetupManageElementComponent
   }
 
   protected handleStateChanged(changes: SimpleChanges) {
-    this.DeviceSASTokensModal();
+    if (changes.Devices) {
+      this.DeviceSASTokensModal();
 
-    this.setAddingDevice();
+      this.setAddingDevice();
 
-    this.setupFreeboard();
-
-    if (this.Telemetry) {
-      this.convertToDate(this.Telemetry.LastSyncedAt);
+      this.DeviceNames = this.Devices?.Devices?.map((d) => d.DeviceName) || [];
     }
 
-    this.DeviceNames =
-      this.Devices?.Devices?.map((d) => d.DeviceName) || [];
+    if (changes.Dashboard) {
+      this.setupFreeboard();
+    }
+
+    if (changes.Telemetry) {
+      if (this.Telemetry) {
+        this.convertToDate(this.Telemetry.LastSyncedAt);
+      }
+    }
   }
 
   protected setAddingDevice() {
