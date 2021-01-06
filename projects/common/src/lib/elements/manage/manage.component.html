@@ -124,6 +124,7 @@
 
                 <lcu-enabled-toggle
                   [enabled]="Emulated?.Enabled"
+                  [loading]="Telemetry?.Loading"
                   (enabled-toggled)="ToggleEmulatedEnabledChanged($event)"
                 ></lcu-enabled-toggle>
 
@@ -355,6 +356,7 @@
                   <lcu-enabled-toggle
                     [enabled]="Telemetry?.Enabled"
                     enabled-text="Live"
+                    [loading]="Telemetry?.Loading"
                     (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
                   >
                   </lcu-enabled-toggle>
