@@ -1,6 +1,12 @@
 @import "../../common/src/assets/common";
 @include theme-setup($global-theme);
 
+//counters freeboards effect on style when modal is open
+#index-page{
+  top: 0px !important;
+  overflow: hidden;
+}
+
 /**
 * Common styles for Napkin-IDE projects
 *
