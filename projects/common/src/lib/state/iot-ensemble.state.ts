@@ -30,6 +30,8 @@ export class IoTEnsembleState {
 
 export class EmulatedDeviceInfo {
   public Enabled?: boolean;
+
+  public Loading?: boolean;
 }
 
 export class IoTEnsembleDashboardConfiguration {
