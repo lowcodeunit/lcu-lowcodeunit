@@ -33,22 +33,20 @@ export class EnabledToggleComponent implements OnChanges, OnInit {
   @Input('enabled-text')
   public EnabledText: string;
 
-  @Input('enabling-text')
-  public EnablingText: string;
-
   @ViewChild('enabledToggle')
   public EnabledToggle: MatSlideToggle;
 
   @Output('enabled-toggled')
   public EnabledToggled: EventEmitter<boolean>;
 
+  @Input('loading')
+  public Loading: string;
+
   //  Constructors
   constructor() {
     this.DisabledText = 'Disabled';
 
     this.EnabledText = 'Enabled';
-
-    this.EnablingText = 'Enabling...';
 
     this.EnabledToggled = new EventEmitter();
   }
@@ -74,12 +72,5 @@ export class EnabledToggleComponent implements OnChanges, OnInit {
   //  Helpers
   protected establishText() {
     this.DisplayText = this.Enabled ? this.EnabledText : this.DisabledText;
-
-    if (
-      (this.EnabledToggle?.checked && this.DisplayText !== this.EnabledText) ||
-      (this.EnabledToggle?.checked && this.DisplayText !== this.DisabledText)
-    ) {
-      this.DisplayText = this.EnablingText;
-    }
   }
 }
