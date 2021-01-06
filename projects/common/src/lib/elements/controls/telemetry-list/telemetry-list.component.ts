@@ -226,6 +226,9 @@ export class TelemetryListComponent implements OnChanges, OnInit {
     );
 
     const features: DataGridFeaturesModel = new DataGridFeaturesModel({
+      NoData: {
+        ShowInline: true
+      },
       Paginator: paginationDetails,
       Filter: false,
       ShowLoader: true,
