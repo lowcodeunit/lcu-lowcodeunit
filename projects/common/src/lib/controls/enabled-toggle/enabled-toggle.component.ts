@@ -76,9 +76,8 @@ export class EnabledToggleComponent implements OnChanges, OnInit {
     this.DisplayText = this.Enabled ? this.EnabledText : this.DisabledText;
 
     if (
-      this.EnabledToggle?.checked &&
-      (this.DisplayText !== this.EnabledText ||
-        this.DisplayText !== this.DisabledText)
+      (this.EnabledToggle?.checked && this.DisplayText !== this.EnabledText) ||
+      (this.EnabledToggle?.checked && this.DisplayText !== this.DisabledText)
     ) {
       this.DisplayText = this.EnablingText;
     }
