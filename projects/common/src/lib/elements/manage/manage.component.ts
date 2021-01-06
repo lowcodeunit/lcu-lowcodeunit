@@ -181,7 +181,9 @@ export class LcuSetupManageElementComponent
 
   //  API Methods
   public DeviceTablePageEvent(event: any) {
+    console.log("PAGE EVENT", event)
     this.UpdateDeviceTablePageSize.emit(event);
+    
   }
 
   public EnrollDeviceSubmit() {

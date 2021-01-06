@@ -90,6 +90,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   }
 
   public HandlePageEvent(event: any): void {
+    console.log("PaGe EvEnT: ", event);
     this.PageSizeChanged.emit(event.pageSize);
   }
 

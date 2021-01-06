@@ -236,6 +236,8 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
       const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
         {
+          Length: 1,
+          PageIndex: this.Telemetry.Page,
           PageSize: this.Telemetry.PageSize,
           PageSizeOptions: [1, 5, 10, 20, 30]
         }
