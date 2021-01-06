@@ -61,6 +61,8 @@ export class EnabledToggleComponent implements OnChanges, OnInit {
   }
 
   public ngOnInit(): void {
+    this.EnabledToggle.checked = this.Enabled;
+
     this.establishText();
   }
 
