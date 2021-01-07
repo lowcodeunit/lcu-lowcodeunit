@@ -129,15 +129,16 @@
                 ></lcu-enabled-toggle>
 
                 <a href="https://www.iot-ensemble.com/docs/getting-started/emulated-data" target="_blank">
-                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
                 </a>
               </mat-card-header>
 
               <mat-card-content class="margin-left-5">
                 <p>
-                  When enabled, emulated data will be provided in your data queries.
-                  The emulated device is for smart room detection and provides data 
-                  on the temperature, humidity and occupancy of a room.
+                  To see the dashboard in action without connecting a device, enable the emulated data. 
+                  When enabled, emulated data will be provided in your data queries. The emulated device 
+                  is for smart room detection and provides data on the temperature, humidity and occupancy 
+                  of a room.
                 </p>
               </mat-card-content>
 
@@ -172,7 +173,7 @@
                   Max number of devices reached
                 </mat-card-subtitle>
                 <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-first-device" target=”_blank”>
-                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
                 </a>
               </mat-card-header>
 
@@ -215,6 +216,7 @@
 
                 <a
                   mat-raised-button
+                  color="primary"
                   href="https://www.iot-ensemble.com/docs/getting-started/connecting-your-first-device"
                   target="_blank"
                   *ngIf="AddingDevice && !MaxDevicesReached"
@@ -361,7 +363,7 @@
                   </lcu-enabled-toggle>
                 </div>
                 <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#devices-telemetry" target="_blank">
-                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
                 </a>
               </mat-card-header>
 
@@ -376,7 +378,7 @@
               <mat-card-actions>
                 <div fxFlex></div>
 
-                <button mat-raised-button (click)="PayloadFormModal()">
+                <button mat-raised-button color="primary" (click)="PayloadFormModal()">
                   Send Device Message
                 </button>
 
@@ -403,7 +405,7 @@
                 <mat-card-title>Devices Dashboard</mat-card-title>
                 <div fxFlex></div>
                 <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#freeboard-dashboard" target="_blank">
-                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
                 </a>
               </mat-card-header>
 
@@ -445,7 +447,7 @@
                 <mat-card-title>Storage Access</mat-card-title>
                 <div fxFlex></div>
                 <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-downstream-services" target="_blank">
-                  <div class="fathym-logo" fxLayoutAlign="end end"></div>
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
                 </a>
               </mat-card-header>
 

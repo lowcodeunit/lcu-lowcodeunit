@@ -40,6 +40,8 @@ export class ApiAccessComponent implements OnChanges, OnInit {
   @Output('regenerated')
   public Regenerated: EventEmitter<string>;
 
+  protected toggleKeyVisibility: boolean;
+
   //  Constructors
   constructor() {
     this.Regenerated = new EventEmitter();
@@ -68,7 +70,9 @@ export class ApiAccessComponent implements OnChanges, OnInit {
   }
 
   public ShowKey(keyData: any) {
+
     keyData.$ShowKey = !keyData.$ShowKey;
+    // this.toggleKeyVisibility = keyData.$ShowKey;
   }
 
   public Regenerate(keyData: IoTEnsembleAPIKeyData) {
@@ -109,6 +113,10 @@ export class ApiAccessComponent implements OnChanges, OnInit {
         Title: 'API Key',
         ShowValue: true,
         ShowIcon: true,
+        Pipe: (keyData: any) => {
+          // Pipe can be a function or a string
+          return keyData.$ShowKey ? '' : 'password';
+        }
       }),
 
       new ColumnDefinitionModel({
