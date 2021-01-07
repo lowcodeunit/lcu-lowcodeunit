@@ -216,6 +216,7 @@
 
                 <a
                   mat-raised-button
+                  color="primary"
                   href="https://www.iot-ensemble.com/docs/getting-started/connecting-your-first-device"
                   target="_blank"
                   *ngIf="AddingDevice && !MaxDevicesReached"
@@ -377,7 +378,7 @@
               <mat-card-actions>
                 <div fxFlex></div>
 
-                <button mat-raised-button (click)="PayloadFormModal()">
+                <button mat-raised-button color="primary" (click)="PayloadFormModal()">
                   Send Device Message
                 </button>
 
