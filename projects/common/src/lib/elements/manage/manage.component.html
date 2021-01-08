@@ -341,11 +341,22 @@
                   fxLayoutGap="20px"
                   fxLayoutAlign="end center"
                 >
+
                   <lcu-refresh-select
                     [telemetry]="Telemetry"
                     (refresh-rate-changed)="RefreshRateChanged($event)"
                   >
                   </lcu-refresh-select>
+
+                  <button 
+                    mat-button 
+                    color="primary"
+                    matTooltip="Download Telemetry Data"
+                    (click)="DownloadTelemetryModal()">
+
+                    <mat-icon id='telemetry-download-element'>download</mat-icon>
+
+                  </button>
 
                   <lcu-enabled-toggle
                     [enabled]="Telemetry?.Enabled"

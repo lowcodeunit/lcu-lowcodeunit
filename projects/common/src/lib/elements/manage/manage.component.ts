@@ -47,6 +47,7 @@ import { GenericModalModel } from '../../models/generice-modal.model';
 import { PayloadFormComponent } from '../controls/payload-form/payload-form.component';
 import { SendMessageDialogComponent } from './controls/send-message-dialog/send-message-dialog.component';
 import { SasTokenDialogComponent } from './controls/sas-token-dialog/sas-token-dialog.component';
+import { TelemetryDownloadDialogComponent } from './controls/telemetry-download-dialog/telemetry-download-dialog.component';
 
 declare var freeboard: any;
 
@@ -278,6 +279,54 @@ export class LcuSetupManageElementComponent
     this.UpdateDeviceTablePageSize.emit(event);
   }
 
+  public DownloadTelemetryModal(): void {
+    /**
+     * Acces component properties not working - shannon
+     *
+     * TODO: get this working
+     */
+    
+    const modalConfig: GenericModalModel = new GenericModalModel({
+      ModalType: 'data', // type of modal we want (data, confirm, info)
+      CallbackAction: (val: any) => {}, // function exposed to the modal
+      Component: TelemetryDownloadDialogComponent, // set component to be used inside the modal
+      Data: {
+        DeviceNames: this.Telemetry.Payloads,
+      },
+      LabelCancel: 'Cancel',
+      LabelAction: 'OK',
+      Title: 'Settings',
+      Width: '50%',
+    });
+
+    /**
+     * Pass modal config to service open function
+     */
+    this.genericModalService.Open(modalConfig);
+
+    this.genericModalService.ModalComponent.afterOpened().subscribe(
+      (res: any) => {
+        console.log('TELEMETRY MODAL OPEN', res);
+      }
+    );
+
+    this.genericModalService.ModalComponent.afterClosed().subscribe(
+      (res: any) => {
+        console.log('TELEMETRY MODAL CLOSED', res);
+      }
+    );
+
+    this.genericModalService
+      .OnAction()
+      .subscribe((payload: IoTEnsembleTelemetryPayload) => {
+        console.log('ONAction', payload);
+
+        if (payload) {
+          this.SendDeviceMesaage(payload);
+        }
+      });
+  }
+
   public EnrollDeviceSubmit() {
     this.EnrollDevice.emit({
       DeviceName: this.AddDeviceFormGroup.controls.deviceName.value,
@@ -366,6 +415,21 @@ export class LcuSetupManageElementComponent
 
   public SendDeviceMesaage(payload: IoTEnsembleTelemetryPayload) {
     this.SentDeviceMessage.emit(payload);
+  }
+
+  public TelemetryDownloadSelected(){
+    console.log("Download selected");
+    console.log("TELE: ", this.Telemetry.Payloads)
+
+    const blob = new Blob([JSON.stringify(this.Telemetry.Payloads)], { type: 'text/json' });
+    const url= window.URL.createObjectURL(blob);
+
+    let link = document.createElement("a");
+        link.download = "telemetry.json";
+        link.href = url;
+        link.click();
+    
+
   }
 
   public ToggleAddingDevice() {

@@ -32,6 +32,7 @@ export class IoTEnsembleStateContext extends StateContext<IoTEnsembleState> {
     flatten: boolean = false,
     zip: boolean = false
   ) {
+    console.log("Calling ColdQuery", startDate, endDate, pageSize, page, selectedDeviceIds, includeEmulated, dataType, resultType, flatten, zip)
     this.Execute({
       Arguments: {
         DataType: dataType,
