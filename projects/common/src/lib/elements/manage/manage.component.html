@@ -291,7 +291,7 @@
                       mat-raised-button
                       type="submit"
                       color="primary"
-                      *ngIf="Devices?.Loading"
+                      *ngIf="!Devices?.Loading"
                       [disabled]="!AddDeviceFormGroup.valid"
                     >
                       Enroll Device
