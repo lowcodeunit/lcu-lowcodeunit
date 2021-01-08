@@ -212,7 +212,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
         Length: 1,
         PageIndex: this.Telemetry.Page,
         PageSize: this.Telemetry.PageSize,
-        PageSizeOptions: [1, 5, 10, 20, 30]k
+        PageSizeOptions: [1, 5, 10, 20, 30],
       }
     );
 
