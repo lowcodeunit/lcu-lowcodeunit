@@ -394,6 +394,8 @@ export class LcuSetupManageElementComponent
       this.setupFreeboard();
     }
 
+    this.DeviceNames = this.Devices?.Devices?.map((d) => d.DeviceName) || [];
+
     if (changes.Telemetry) {
       if (this.Telemetry) {
         this.convertToDate(this.Telemetry.LastSyncedAt);
