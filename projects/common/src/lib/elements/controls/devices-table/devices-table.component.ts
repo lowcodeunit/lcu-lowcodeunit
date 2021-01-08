@@ -29,9 +29,6 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   @Input('devices')
   public Devices?: IoTEnsembleDeviceInfo[];
 
-  @Input('displayed-columns')
-  public DisplayedColumns: string[];
-
   public GridParameters: DataGridConfigModel;
 
   @Output('issued-sas-token')
