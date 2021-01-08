@@ -24,12 +24,9 @@ import { IoTEnsembleConnectedDevicesConfig, IoTEnsembleDeviceInfo } from '../../
 })
 export class DevicesTableComponent implements OnInit, OnChanges {
   //  Fields
-  protected colunmDefsModel: Array<ColumnDefinitionModel>;
 
   @Input('devices')
   public Devices: IoTEnsembleConnectedDevicesConfig;
-
-  public GridFeatures: DataGridFeaturesModel;
 
   public GridParameters: DataGridConfigModel;
 
@@ -101,20 +98,22 @@ export class DevicesTableComponent implements OnInit, OnChanges {
    * Setup all features of the grid
    */
   protected setupGrid(): void {
-    this.setupGridParameters();
+    const columnDefs = this.setupGridColumns();
+
+    const features = this.setupGridFeatures();
 
     this.GridParameters = new DataGridConfigModel(
       of(this.Devices.Devices),
-      this.colunmDefsModel,
-      this.GridFeatures
+      columnDefs,
+      features
     );
   }
 
   /**
    * Create grid columns
    */
-  protected setupGridParameters(): void {
-    this.colunmDefsModel = [
+  protected setupGridColumns() {
+    return [
       new ColumnDefinitionModel({
         ColType: 'DeviceName',
         Title: 'Device Name',
@@ -176,13 +175,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
         },
       }),
     ];
-
-    this.setupGridFeatures();
   }
   /**
    * Setup grid features, such as pagination, row colors, etc.
    */
-  protected setupGridFeatures(): void {
+  protected setupGridFeatures() {
     const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
       {
         PageSize: this.Devices.PageSize,
@@ -191,6 +188,9 @@ export class DevicesTableComponent implements OnInit, OnChanges {
     );
 
     const features: DataGridFeaturesModel = new DataGridFeaturesModel({
+      NoData: {
+        ShowInline: true
+      },
       Paginator: paginationDetails,
       Filter: false,
       ShowLoader: true,
@@ -198,7 +198,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
       RowColorOdd: 'light-gray',
     });
 
-    this.GridFeatures = features;
+    return features;
   }
 
   protected updateTelemetryDataSource() {
