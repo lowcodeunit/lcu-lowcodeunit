@@ -106,7 +106,6 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
     const features = this.setupGridFeatures();
 
-    debugger;
     this.GridParameters = new DataGridConfigModel(
       of(this.Devices),
       columndefs,
