@@ -185,7 +185,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   protected setupGridFeatures(): void {
     const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
       {
-        PageSize: this.ConnectedDevicesConfig.PageSize,
+        PageSize: this.Devices.PageSize,
         PageSizeOptions: [5, 10, 25],
       }
     );
