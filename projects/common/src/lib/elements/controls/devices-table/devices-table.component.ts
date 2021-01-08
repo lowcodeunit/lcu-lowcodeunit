@@ -195,6 +195,9 @@ export class DevicesTableComponent implements OnInit, OnChanges {
     );
 
     const features: DataGridFeaturesModel = new DataGridFeaturesModel({
+      // NoData: {
+      //   ShowInline: true
+      // },
       Paginator: paginationDetails,
       Filter: false,
       ShowLoader: true,
