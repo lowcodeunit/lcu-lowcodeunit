@@ -2,6 +2,15 @@
   <lcu-data-grid
     expand
     [config]="GridParameters"
-    (page-event)="HandlePageEvent($event)">
+    (page-event)="HandlePageEvent($event)"
+  >
+    <!-- When data isn't available, show a message with content projection -->
+    <div>
+      <h4>No devices enrolled yet.</h4>
+
+      <p>
+        Enroll a device to get started.
+      </p>
+    </div>
   </lcu-data-grid>
 </div>
