@@ -32,9 +32,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
   //  Properties
 
-  @Input('displayed-columns')
-  public DisplayedColumns: string[];
-
   @Output('downloaded')
   public Downloaded: EventEmitter<IoTEnsembleTelemetryPayload>;
 
