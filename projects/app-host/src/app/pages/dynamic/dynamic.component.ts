@@ -5,7 +5,7 @@ import {
   IoTEnsembleStateContext,
   BreakpointUtils,
   IoTEnsembleDeviceEnrollment,
-  IoTEnsembleTelemetryPayload
+  IoTEnsembleTelemetryPayload,
 } from '@iot-ensemble/lcu-setup-common';
 
 @Component({
@@ -25,7 +25,9 @@ export class DynamicComponent implements OnInit {
   constructor(
     protected iotEnsCtxt: IoTEnsembleStateContext,
     protected breakpointUtils: BreakpointUtils
-  ) {}
+  ) {
+    this.State = {};
+  }
 
   //  Life Cycle
   public ngOnInit(): void {
@@ -37,27 +39,48 @@ export class DynamicComponent implements OnInit {
   }
 
   //  API Methods
-  public EnrollDevice(device: IoTEnsembleDeviceEnrollment) {
+  public ColdQuery() {
     this.State.Loading = true;
+
+    this.iotEnsCtxt.ColdQuery();
+  }
+
+  public EnrollDevice(device: IoTEnsembleDeviceEnrollment) {
+    this.State.Devices.Loading = true;
 
     this.iotEnsCtxt.EnrollDevice(device);
   }
 
   public IssueDeviceSASToken(deviceName: string) {
-    this.State.Loading = true;
+    this.State.Devices.Loading = true;
 
     //  TODO:  Pass through expiry time in some way?
     this.iotEnsCtxt.IssueDeviceSASToken(deviceName, 0);
   }
 
+  public Refresh(ctxt: string) {
+    const loadingCtxt = this.State[ctxt] || this.State;
+
+    loadingCtxt.Loading = true;
+
+    this.iotEnsCtxt.$Refresh();
+  }
+
+  public RegenerateAPIKey(keyName: string) {
+    // this.State.Loading = true;
+
+    alert('Implement regenerate: ' + keyName);
+    // this.iotEnsCtxt.RegenerateAPIKey(keyName);
+  }
+
   public RevokeDeviceEnrollment(deviceId: string) {
-    this.State.Loading = true;
+    this.State.Devices.Loading = true;
 
     this.iotEnsCtxt.RevokeDeviceEnrollment(deviceId);
   }
 
   public SendDeviceMessage(payload: IoTEnsembleTelemetryPayload) {
-    this.State.Loading = true;
+    this.State.Telemetry.Loading = true;
 
     this.iotEnsCtxt.SendDeviceMessage(payload.DeviceID, payload);
   }
@@ -70,23 +93,34 @@ export class DynamicComponent implements OnInit {
     this.iotEnsCtxt.ToggleEmulatedEnabled();
   }
 
-  public UpdateDeviceTablePageSize(event: any){
-    this.State.Loading = true;
+  public UpdateDeviceTablePageSize(pageSize: number) {
+    this.State.Devices.Loading = true;
 
-    this.iotEnsCtxt.UpdateConnectedDevicesSync(event);
+    this.iotEnsCtxt.UpdateConnectedDevicesSync(pageSize);
   }
 
-  public UpdatePageSize(event: any){
-    this.State.Loading = true;
+  public UpdatePageSize(pageSize: number) {
+    this.State.Telemetry.Loading = true;
 
-    this.iotEnsCtxt.UpdateTelemetrySync(this.State.Telemetry.RefreshRate, event);
-
+    this.iotEnsCtxt.UpdateTelemetrySync(
+      this.State.Telemetry.RefreshRate,
+      pageSize
+    );
   }
 
-  public UpdateRefreshRate(event: number){
+  public UpdateRefreshRate(refreshRate: number) {
+    this.State.Telemetry.Loading = true;
+
+    this.iotEnsCtxt.UpdateTelemetrySync(
+      refreshRate,
+      this.State.Telemetry.PageSize
+    );
+  }
+
+  public WarmQuery() {
     this.State.Loading = true;
 
-    this.iotEnsCtxt.UpdateTelemetrySync(event, this.State.Telemetry.PageSize);
+    this.iotEnsCtxt.WarmQuery(null, null, null, null, null, true);
   }
 
   //  Helpers
@@ -104,7 +138,7 @@ export class DynamicComponent implements OnInit {
 
   protected setupStateHandler() {
     this.iotEnsCtxt.Context.subscribe((state) => {
-      this.State = state;
+      this.State = Object.assign(this.State, state);
 
       this.handleStateChanged();
     });

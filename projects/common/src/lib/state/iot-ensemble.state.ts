@@ -1,7 +1,11 @@
 import { Status } from '@lcu/common';
 
 export class IoTEnsembleState {
-  public ConnectedDevicesConfig?: IoTEnsembleConnectedDevicesConfig;
+  public AccessLicenseType?: string;
+
+  public AccessPlanGroup?: string;
+
+  public Devices?: IoTEnsembleConnectedDevicesConfig;
 
   public Dashboard?: IoTEnsembleDashboardConfiguration;
 
@@ -9,13 +13,15 @@ export class IoTEnsembleState {
 
   public Emulated?: EmulatedDeviceInfo;
 
-  public LatestDeviceSASTokens?: { [deviceName: string]: string };
+  public Error?: ErrorContext;
+
+  public HasAccess?: boolean;
 
   public Loading?: boolean;
 
   public SelectedDeviceID?: string;
 
-  public Storage?: IoTEnsembleStorageConfiguration[];
+  public Storage?: IoTEnsembleStorageConfiguration;
 
   public Telemetry?: IoTEnsembleTelemetry;
 
@@ -32,15 +38,34 @@ export class IoTEnsembleDashboardConfiguration {
   public PowerBIConfig?: any;
 }
 
+export class ErrorContext {
+  public ActionPath?: string;
+
+  public ActionTarget?: string;
+
+  public ActionText?: string;
+
+  public Message?: string;
+
+  public Title?: string;
+}
+
 export class IoTEnsembleDeviceEnrollment {
   public DeviceName?: string;
 }
 
-
 export class IoTEnsembleConnectedDevicesConfig {
   public Devices?: IoTEnsembleDeviceInfo[];
 
+  public Loading?: boolean;
+
+  public MaxDevicesCount?: number;
+
+  public Page?: number;
+
   public PageSize?: number;
+
+  public SASTokens?: { [deviceName: string]: string };
 }
 
 export class IoTEnsembleDeviceInfo {
@@ -104,5 +129,35 @@ export class IoTEnsembleDrawersConfig {
 }
 
 export class IoTEnsembleStorageConfiguration {
-  public APIKeys: { [keyName: string]: string };
+  public APIKeys: IoTEnsembleAPIKeyData[];
+
+  public APIOptions: IoTEnsembleAPIOption[];
+}
+
+export class IoTEnsembleAPIKeyData {
+  public Key: string;
+
+  public KeyName: string;
+}
+
+export class IoTEnsembleAPIOption {
+  public Description: string;
+
+  public Method: string;
+
+  public Name: string;
+
+  public Path: string;
+}
+
+export enum ColdQueryDataTypes {
+  Telemetry = 'Telemetry',
+  Observations = 'Observations',
+  SensorMetadata = 'SensorMetadata',
+}
+
+export enum ColdQueryResultTypes {
+  CSV = 'CSV',
+  JSON = 'JSON',
+  JSONLines = 'JSONLines',
 }

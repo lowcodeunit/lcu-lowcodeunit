@@ -1,6 +1,12 @@
 @import "../../common/src/assets/common";
 @include theme-setup($global-theme);
 
+//counters freeboards effect on style when modal is open
+#index-page{
+  top: 0px !important;
+  overflow: hidden;
+}
+
 /**
 * Common styles for Napkin-IDE projects
 *
@@ -9,8 +15,10 @@
 .spinner-logo {
   position: absolute;
   background-image: fathym-logo(thinky-logo, black, 1);
-  height: 50px !important;
-  width: 50px !important;
+  // height: 50px !important;
+  // width: 50px !important;
+  // height: 50px !important;
+  // width: 50px !important;
   background-repeat: no-repeat;
 }
 
@@ -20,11 +28,11 @@
 
 //TODO:  Move to common and out  of all default styles
 .mat-spinner {
-  margin: auto;
-}
+  ::ng-deep circle {
+      stroke: $success;
+  }
 
-.filler {
-  flex: auto 1 1;
+  margin: auto;
 }
 
 .mat-full-width {

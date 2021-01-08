@@ -24,18 +24,10 @@ import { IoTEnsembleConnectedDevicesConfig, IoTEnsembleDeviceInfo } from '../../
 })
 export class DevicesTableComponent implements OnInit, OnChanges {
   //  Fields
-
-  //  Properties
   protected colunmDefsModel: Array<ColumnDefinitionModel>;
 
-  @Input('connected-devices-config')
-  public ConnectedDevicesConfig: IoTEnsembleConnectedDevicesConfig;
-
-  // @Input('devices')
-  // public Devices?: IoTEnsembleDeviceInfo[];
-
-  @Input('displayed-columns')
-  public DisplayedColumns: string[];
+  @Input('devices')
+  public Devices: IoTEnsembleConnectedDevicesConfig;
 
   public GridFeatures: DataGridFeaturesModel;
 
@@ -70,7 +62,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
     }
   }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {}
 
   //  API Methods
   /**
@@ -112,7 +104,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
     this.setupGridParameters();
 
     this.GridParameters = new DataGridConfigModel(
-      of(this.ConnectedDevicesConfig.Devices),
+      of(this.Devices.Devices),
       this.colunmDefsModel,
       this.GridFeatures
     );
@@ -139,9 +131,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
       new ColumnDefinitionModel({
         ColType: 'copy',
+        ColWidth: '10px',
         Title: '',
         ShowValue: false,
         ShowIcon: true,
+        IconColor: 'orange-accent-text',
         IconConfigFunc: (rowData: IoTEnsembleDeviceInfo) => {
           return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
         },
@@ -154,9 +148,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
       new ColumnDefinitionModel({
         ColType: 'issue-sas-token',
+        ColWidth: '10px',
         Title: '',
         ShowValue: false,
         ShowIcon: true,
+        IconColor: 'yellow-accent-text',
         IconConfigFunc: () => 'build_circle',
         Action: {
           ActionHandler: this.IssueSASToken.bind(this),
@@ -167,9 +163,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
       new ColumnDefinitionModel({
         ColType: 'actions',
+        ColWidth: '10px',
         Title: '',
         ShowValue: false,
         ShowIcon: true,
+        IconColor: 'red-accent-text',
         IconConfigFunc: () => 'delete',
         Action: {
           ActionHandler: this.RevokeClick.bind(this),
@@ -204,8 +202,8 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   }
 
   protected updateTelemetryDataSource() {
-    if (this.ConnectedDevicesConfig.Devices) {
-      console.log('DEVICES: ', this.ConnectedDevicesConfig.Devices);
+    if (this.Devices.Devices) {
+      console.log('DEVICES: ', this.Devices.Devices);
 
       this.setupGrid();
     }
