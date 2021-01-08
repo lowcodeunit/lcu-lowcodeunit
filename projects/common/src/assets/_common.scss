@@ -1,7 +1,6 @@
 @import '../../../../node_modules/@lcu/common/assets/theming/common-theme';
 @import '../../../../node_modules/@lcu/common/assets/styles/utils/margins-padding';
 @import '../../../../node_modules/@lcu/common/assets/styles/utils/fathym-cursors';
-@import '../../../../node_modules/@lcu/common/assets/styles/branding/logos/fathym-icons';
 
 
 $global-theme: fathym-ivy-theme(true);
@@ -96,3 +95,4 @@ html, body {
 .rowHighlight:hover {
     background-color: rgba(map-get($accent, 500), .07);
 }
+
