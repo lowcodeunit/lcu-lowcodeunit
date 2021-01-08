@@ -69,13 +69,13 @@ export class TelemetryDownloadDialogComponent implements OnInit {
  */
   public ZIPDownloadSelected(){
     
-    this.iotEnsCtxt.ColdQuery(new Date(new Date().setDate(new Date().getDate() - 30)), new Date(),10,1,this.DeviceIDs,false,ColdQueryDataTypes.Telemetry,ColdQueryResultTypes.JSON,false,true);
+    this.iotEnsCtxt.ColdQuery(new Date(new Date().setDate(new Date().getDate() - 30)), new Date(),10,1,this.DeviceIDs,false,ColdQueryDataTypes.Telemetry,ColdQueryResultTypes.JSON,false,false);
     let that = this;
     setTimeout(function(){
-      that.getData();
-    },5000);
+      that.getHeaders();
+    },1000);
 
-    
+
       // var zip = new JSZip();
       // zip.folder("Telemetry").file("telemetry.json", JSON.stringify(this.data));
 
@@ -88,10 +88,14 @@ export class TelemetryDownloadDialogComponent implements OnInit {
 
     //Helpers
 
-    protected getData(){
+    protected getHeaders(){
 
-      let data = this.http.get("https://www.iot-ensemble.com/api/state/iotensemble/ColdQuery");    
-      console.log("DATA: ", data);
+    this.http.get('https://www.iot-ensemble.com/api/state/iotensemble/ColdQuery', 
+    {observe: 'response'}).subscribe(resp => {
+
+      console.log("HEADERS", resp.headers);
+    
+    });
     }
 
     protected getDeviceIDs(){
