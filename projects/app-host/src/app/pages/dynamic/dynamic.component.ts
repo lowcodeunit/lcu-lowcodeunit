@@ -86,10 +86,14 @@ export class DynamicComponent implements OnInit {
   }
 
   public ToggleTelemetryEnabled() {
+    this.State.Telemetry.Loading = true;
+
     this.iotEnsCtxt.ToggleTelemetrySync();
   }
 
   public ToggleEmulatedEnabled() {
+    this.State.Emulated.Loading = true;
+
     this.iotEnsCtxt.ToggleEmulatedEnabled();
   }
 

@@ -1,4 +1,5 @@
 import { Status } from '@lcu/common';
+import { logging } from 'protractor';
 
 export class IoTEnsembleState {
   public AccessLicenseType?: string;
@@ -30,6 +31,8 @@ export class IoTEnsembleState {
 
 export class EmulatedDeviceInfo {
   public Enabled?: boolean;
+
+  public Loading?: boolean;
 }
 
 export class IoTEnsembleDashboardConfiguration {
@@ -116,6 +119,8 @@ export class IoTEnsembleTelemetryPayload {
   public SensorReadings?: { [prop: string]: any };
 
   public Timestamp?: Date;
+
+  public TotalPayloads?: number;
 
   public Version?: string;
 }

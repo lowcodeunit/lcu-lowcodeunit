@@ -15,7 +15,7 @@ import {
   DataGridPaginationModel,
 } from '@lowcodeunit/data-grid';
 import { of } from 'rxjs';
-import { IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
+import { IoTEnsembleConnectedDevicesConfig, IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
 
 @Component({
   selector: 'lcu-devices-table',
@@ -24,16 +24,9 @@ import { IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
 })
 export class DevicesTableComponent implements OnInit, OnChanges {
   //  Fields
-  protected colunmDefsModel: Array<ColumnDefinitionModel>;
 
-  //  Properties
   @Input('devices')
-  public Devices?: IoTEnsembleDeviceInfo[];
-
-  @Input('displayed-columns')
-  public DisplayedColumns: string[];
-
-  public GridFeatures: DataGridFeaturesModel;
+  public Devices: IoTEnsembleConnectedDevicesConfig;
 
   public GridParameters: DataGridConfigModel;
 
@@ -48,7 +41,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
   //  Constructors
   constructor() {
-    this.Devices = [];
+    // this.Devices = [];
 
     this.IssuedSASToken = new EventEmitter();
 
@@ -60,9 +53,8 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   //  Life Cycle
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('CHANGES: ', changes);
     if (changes.Devices) {
-      this.updateTelemetryDataSource();
+      this.updateDevicesDataSource();
     }
   }
 
@@ -105,20 +97,22 @@ export class DevicesTableComponent implements OnInit, OnChanges {
    * Setup all features of the grid
    */
   protected setupGrid(): void {
-    this.setupGridParameters();
+    const columnDefs = this.setupGridColumns();
+
+    const features = this.setupGridFeatures();
 
     this.GridParameters = new DataGridConfigModel(
-      of(this.Devices),
-      this.colunmDefsModel,
-      this.GridFeatures
+      of(this.Devices.Devices),
+      columnDefs,
+      features
     );
   }
 
   /**
    * Create grid columns
    */
-  protected setupGridParameters(): void {
-    this.colunmDefsModel = [
+  protected setupGridColumns() {
+    return [
       new ColumnDefinitionModel({
         ColType: 'DeviceName',
         Title: 'Device Name',
@@ -180,21 +174,22 @@ export class DevicesTableComponent implements OnInit, OnChanges {
         },
       }),
     ];
-
-    this.setupGridFeatures();
   }
   /**
    * Setup grid features, such as pagination, row colors, etc.
    */
-  protected setupGridFeatures(): void {
+  protected setupGridFeatures() {
     const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
       {
-        PageSize: 10,
+        PageSize: this.Devices.PageSize,
         PageSizeOptions: [5, 10, 25],
       }
     );
 
     const features: DataGridFeaturesModel = new DataGridFeaturesModel({
+      NoData: {
+        ShowInline: true
+      },
       Paginator: paginationDetails,
       Filter: false,
       ShowLoader: true,
@@ -202,12 +197,12 @@ export class DevicesTableComponent implements OnInit, OnChanges {
       RowColorOdd: 'light-gray',
     });
 
-    this.GridFeatures = features;
+    return features;
   }
 
-  protected updateTelemetryDataSource() {
-    if (this.Devices) {
-      console.log('DEVICES: ', this.Devices);
+  protected updateDevicesDataSource() {
+    if (this.Devices.Devices) {
+      console.log('DEVICES: ', this.Devices.Devices);
 
       this.setupGrid();
     }

@@ -1,19 +1,18 @@
 <div class="table-container">
-  <div *ngIf="Telemetry?.Payloads?.length <= 0">
-    <!--TODO: REmove once data grid supports no item text-->
-    <h4>No telemetry to show at this time.</h4>
-
-    <p>
-      Enable the telemetry sync to see data here.  If you do not have your own device connected, enable emulated data to see sample telemetry.
-    </p>
-  </div>
-
   <lcu-data-grid
     expand
     [config]="GridParameters"
     [dynamic-components]="DynamicComponents"
     (page-event)="HandlePageEvent($event)"
-    *ngIf="Telemetry?.Payloads?.length > 0"
   >
+    <!-- When data isn't available, show a message with content projection -->
+    <div>
+      <h4>No telemetry to show at this time.</h4>
+
+      <p>
+        Enable the telemetry sync to see data here. If you do not have your own
+        device connected, enable emulated data to see sample telemetry.
+      </p>
+    </div>
   </lcu-data-grid>
 </div>

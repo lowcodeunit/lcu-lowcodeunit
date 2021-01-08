@@ -124,15 +124,21 @@
 
                 <lcu-enabled-toggle
                   [enabled]="Emulated?.Enabled"
+                  [loading]="Emulated?.Loading"
                   (enabled-toggled)="ToggleEmulatedEnabledChanged($event)"
                 ></lcu-enabled-toggle>
+
+                <a href="https://www.iot-ensemble.com/docs/getting-started/emulated-data" target="_blank">
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content class="margin-left-5">
                 <p>
-                  When enabled, emulated device data will be provided in your
-                  data queries. The emulated device, is for smart room detection
-                  and provides temperature, humidity and occupancy of a room.
+                  To see the dashboard in action without connecting a device, enable the emulated data.
+                  When enabled, emulated data will be provided in your data queries. The emulated device
+                  is for smart room detection and provides data on the temperature, humidity and occupancy
+                  of a room.
                 </p>
               </mat-card-content>
 
@@ -161,42 +167,42 @@
                 >
                   <mat-icon>loop</mat-icon>
                 </div>
-
                 <mat-card-title> Connected Devices </mat-card-title>
-
+                <div fxFlex></div>
                 <mat-card-subtitle *ngIf="MaxDevicesReached && AddingDevice">
                   Max number of devices reached
                 </mat-card-subtitle>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-first-device" target=”_blank”>
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                </a>
               </mat-card-header>
 
-              <mat-card-content [class.margin-left-5]="AddingDevice">
+              <mat-card-content [class.margin-left-5]="AddingDevice || Devices?.Devices?.length <= 0">
                 <mat-progress-bar class="margin-top-2" mode="indeterminate" *ngIf="Devices?.Loading"></mat-progress-bar>
 
                 <div *ngIf="AddingDevice">
                   <ng-container *ngIf="!MaxDevicesReached">
                     <p class="paragraph-text">
-                      We'll start you off some simple security practices and
-                      help you get your devices connected.
+                      To get your devices connected we will start off with some simple security practices.
                     </p>
                   </ng-container>
 
                   <ng-container *ngIf="MaxDevicesReached">
                     <p class="paragraph-text">
-                      To connect more than
+                      Click "Upgrade Now" to see other plans where you can connect more than
                       {{ Devices.MaxDevicesCount }}
                       {{
                         Devices.MaxDevicesCount > 1
                           ? "devices"
                           : "device"
-                      }}, please see our purchasable plans.
+                      }}, increase your data velocity, increase your data retention and other great benefits.
                     </p>
                   </ng-container>
                 </div>
 
                 <div class="device-list" *ngIf="!AddingDevice">
                   <lcu-devices-table
-                    [devices]="Devices?.Devices"
-                    [displayed-columns]="ConnectedDevicesDisplayedColumns"
+                    [devices]="Devices"
                     (issued-sas-token)="IssueDeviceSASToken($event)"
                     (page-size-changed)="DeviceTablePageEvent($event)"
                     (revoked)="RevokeDeviceEnrollmentClick($event)"
@@ -361,10 +367,14 @@
                   <lcu-enabled-toggle
                     [enabled]="Telemetry?.Enabled"
                     enabled-text="Live"
+                    [loading]="Telemetry?.Loading"
                     (enabled-toggled)="ToggleTelemetryEnabledChanged($event)"
                   >
                   </lcu-enabled-toggle>
                 </div>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#devices-telemetry" target="_blank">
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content [class.margin-left-5]="Telemetry?.Payloads?.length <= 0">
@@ -403,6 +413,10 @@
                 </div>
 
                 <mat-card-title>Devices Dashboard</mat-card-title>
+                <div fxFlex></div>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#freeboard-dashboard" target="_blank">
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content>
@@ -441,6 +455,10 @@
                 </div>
 
                 <mat-card-title>Storage Access</mat-card-title>
+                <div fxFlex></div>
+                <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-downstream-services" target="_blank">
+                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                </a>
               </mat-card-header>
 
               <mat-card-content>
