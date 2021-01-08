@@ -91,6 +91,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
   public SetActivePayload(payload: IoTEnsembleTelemetryPayload) {
     payload.$IsExpanded = !payload.$IsExpanded;
+
     this.updateTelemetryDataSource();
   }
 
