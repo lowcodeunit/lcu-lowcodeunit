@@ -215,16 +215,6 @@
 
                 <a
                   mat-raised-button
-                  color="primary"
-                  href="https://www.iot-ensemble.com/docs/getting-started/connecting-your-first-device"
-                  target="_blank"
-                  *ngIf="AddingDevice && !MaxDevicesReached"
-                >
-                  Read Documentation
-                </a>
-
-                <a
-                  mat-raised-button
                   color="accent"
                   (click)="ToggleAddingDevice()"
                   *ngIf="!AddingDevice"
