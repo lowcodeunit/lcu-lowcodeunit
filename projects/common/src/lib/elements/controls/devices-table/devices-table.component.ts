@@ -53,9 +53,8 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   //  Life Cycle
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('CHANGES: ', changes);
     if (changes.Devices) {
-      this.updateTelemetryDataSource();
+      this.updateDevicesDataSource();
     }
   }
 
@@ -201,7 +200,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
     return features;
   }
 
-  protected updateTelemetryDataSource() {
+  protected updateDevicesDataSource() {
     if (this.Devices.Devices) {
       console.log('DEVICES: ', this.Devices.Devices);
 
