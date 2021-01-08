@@ -32,17 +32,10 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
   //  Properties
 
-  protected colunmDefsModel: Array<ColumnDefinitionModel>;
-
-  @Input('displayed-columns')
-  public DisplayedColumns: string[];
-
   @Output('downloaded')
   public Downloaded: EventEmitter<IoTEnsembleTelemetryPayload>;
 
   public DynamicComponents: Array<DynamicComponentModel>;
-
-  public GridFeatures: DataGridFeaturesModel;
 
   public GridParameters: DataGridConfigModel;
 
@@ -52,8 +45,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   @Input('telemetry')
   public Telemetry: IoTEnsembleTelemetry;
 
-  public TelemetryDataSource: MatTableDataSource<IoTEnsembleTelemetryPayload>;
-
   //  Constructors
   constructor() {
     this.Downloaded = new EventEmitter();
@@ -61,8 +52,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
     this.PageSizeChanged = new EventEmitter();
 
     this.Telemetry = { Payloads: [] };
-
-    this.TelemetryDataSource = new MatTableDataSource();
   }
 
   //  Life Cycle
@@ -99,6 +88,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
   public SetActivePayload(payload: IoTEnsembleTelemetryPayload) {
     payload.$IsExpanded = !payload.$IsExpanded;
+
     this.updateTelemetryDataSource();
   }
 
@@ -110,7 +100,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   //  Helpers
   protected updateTelemetryDataSource() {
     if (this.Telemetry) {
-      this.TelemetryDataSource.data = this.Telemetry.Payloads || [];
       this.setupGrid();
     }
   }
@@ -132,20 +121,22 @@ export class TelemetryListComponent implements OnChanges, OnInit {
    * Setup all features of the grid
    */
   protected setupGrid(): void {
-    this.setupGridParameters();
+    const columnDefs = this.setupGridParameters();
+
+    const features = this.setupGridFeatures();
 
     this.GridParameters = new DataGridConfigModel(
-      of(this.TelemetryDataSource.data),
-      this.colunmDefsModel,
-      this.GridFeatures
+      of(this.Telemetry.Payloads),
+      columnDefs,
+      features
     );
   }
 
   /**
    * Create grid columns
    */
-  protected setupGridParameters(): void {
-    this.colunmDefsModel = [
+  protected setupGridParameters() {
+    return [
       new ColumnDefinitionModel({
         ColType: 'DeviceID',
         Title: 'Device ID',
@@ -206,8 +197,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
         },
       }),
     ];
-
-    this.setupGridFeatures();
   }
 
   protected ColTooltip(rowData: IoTEnsembleTelemetryPayload): string {
@@ -217,7 +206,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   /**
    * Setup grid features, such as pagination, row colors, etc.
    */
-  protected setupGridFeatures(): void {
+  protected setupGridFeatures() {
     const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
       {
         PageSize: this.Telemetry.PageSize,
@@ -227,7 +216,7 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
     const features: DataGridFeaturesModel = new DataGridFeaturesModel({
       NoData: {
-        ShowInline: true
+        ShowInline: true,
       },
       Paginator: paginationDetails,
       Filter: false,
@@ -235,6 +224,6 @@ export class TelemetryListComponent implements OnChanges, OnInit {
       Highlight: 'rowHighlight',
     });
 
-    this.GridFeatures = features;
+    return features;
   }
 }

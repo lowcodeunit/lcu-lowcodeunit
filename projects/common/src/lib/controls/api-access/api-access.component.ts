@@ -153,20 +153,20 @@ export class ApiAccessComponent implements OnChanges, OnInit {
         },
       }),
 
-      new ColumnDefinitionModel({
-        ColType: 'regenerate',
-        ColWidth: '10px',
-        Title: '',
-        ShowValue: false,
-        ShowIcon: true,
-        IconColor: 'blue-accent-text',
-        IconConfigFunc: () => 'loop',
-        Action: {
-          ActionHandler: this.Regenerate.bind(this),
-          ActionType: 'button',
-          ActionTooltip: 'Revoke',
-        },
-      }),
+      // new ColumnDefinitionModel({
+      //   ColType: 'regenerate',
+      //   ColWidth: '10px',
+      //   Title: '',
+      //   ShowValue: false,
+      //   ShowIcon: true,
+      //   IconColor: 'blue-accent-text',
+      //   IconConfigFunc: () => 'loop',
+      //   Action: {
+      //     ActionHandler: this.Regenerate.bind(this),
+      //     ActionType: 'button',
+      //     ActionTooltip: 'Regenerate',
+      //   },
+      // }),
     ];
   }
 

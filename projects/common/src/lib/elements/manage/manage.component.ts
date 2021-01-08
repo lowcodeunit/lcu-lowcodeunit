@@ -77,8 +77,6 @@ export class LcuSetupManageElementComponent
 
   protected componentRef: ComponentRef<any>;
 
-  public ConnectedDevicesDisplayedColumns: string[];
-
   public get ConnectedDevicesInfoCardFlex(): string {
     const maxDeviceFlex = this.MaxDevicesReached ? '100%' : '50%';
 
@@ -175,14 +173,6 @@ export class LcuSetupManageElementComponent
     protected resolver: ComponentFactoryResolver
   ) {
     super(injector);
-
-    this.ConnectedDevicesDisplayedColumns = [
-      'deviceName',
-      'enabled',
-      'lastUpdate',
-      'connStr',
-      'actions',
-    ];
 
     this.EnrollDevice = new EventEmitter();
 
@@ -403,6 +393,8 @@ export class LcuSetupManageElementComponent
     if (changes.Dashboard) {
       this.setupFreeboard();
     }
+
+    this.DeviceNames = this.Devices?.Devices?.map((d) => d.DeviceName) || [];
 
     if (changes.Telemetry) {
       if (this.Telemetry) {
