@@ -291,6 +291,7 @@
                       mat-raised-button
                       type="submit"
                       color="primary"
+                      *ngIf="Devices?.Loading"
                       [disabled]="!AddDeviceFormGroup.valid"
                     >
                       Enroll Device
@@ -377,7 +378,7 @@
               <mat-card-actions>
                 <div fxFlex></div>
 
-                <button mat-raised-button color="primary" (click)="PayloadFormModal()">
+                <button mat-raised-button color="primary" (click)="PayloadFormModal()" *ngIf="Devices?.Devices?.length >= 1">
                   Send Device Message
                 </button>
 
