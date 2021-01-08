@@ -1,6 +1,7 @@
 @import '../../../../node_modules/@lcu/common/assets/theming/common-theme';
 @import '../../../../node_modules/@lcu/common/assets/styles/utils/margins-padding';
 @import '../../../../node_modules/@lcu/common/assets/styles/utils/fathym-cursors';
+@import '../../../../node_modules/@lcu/common/assets/styles/branding/logos/fathym-icons';
 
 
 $global-theme: fathym-ivy-theme(true);
@@ -10,7 +11,10 @@ $accent: map-get($global-theme, accent);
 $warn: map-get($global-theme, warn);
 
 $orange-accent: map-get($mat-orange, 500);
-$green-accent: map-get($mat-green, 500);
+$green-accent: map-get($mat-green, 400);
+$yellow-accent: map-get($mat-yellow, 600);
+
+$success:  map-get($mat-green, A700);
 
 $logo-color: map-get(map-get($global-theme, 'foreground'), 'icon');
 $divider-size: 5px;
@@ -20,6 +24,10 @@ $background-fill: rgba(map-get($mat-grey, 900), .75);
 $foreground: map-get(map-get($global-theme, 'foreground'), 'base');
 $primary-text: mat-color($primary);
 $secondary-text: map-get(map-get($global-theme, 'foreground'), 'secondary-text');
+
+@function set-opacity($color, $opacity) {
+    @return rgba($color, $opacity);
+}
 
 html, body {
     box-sizing: border-box;
@@ -33,7 +41,11 @@ html, body {
     background-color: rgba(mat-color($warn), .5);
 }
 
-.accent-primary-text {
+.main-primary-text {
+    color: mat-color($primary) !important;
+}
+
+.main-accent-text {
     color: mat-color($accent) !important;
 }
 
@@ -43,12 +55,24 @@ html, body {
 
 .orange-accent {
     background-color: $orange-accent;
-    color: map-get(map-get($mat-orange, contrast), 600);
+    color: $light-primary-text !important;
 }
 
 .green-accent {
     background-color: $green-accent;
     color: map-get(map-get($mat-green, contrast), 600);
+}
+
+.orange-accent-text {
+    color: $orange-accent;
+}
+
+.yellow-accent-text {
+    color: $yellow-accent;
+}
+
+.green-accent-text {
+    color: $green-accent;
 }
 
 .divider-fill-vert {
@@ -70,5 +94,5 @@ html, body {
 }
 
 .rowHighlight:hover {
-    background-color: rgba(map-get($accent, 500), .5);
+    background-color: rgba(map-get($accent, 500), .07);
 }

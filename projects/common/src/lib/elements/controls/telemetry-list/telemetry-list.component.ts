@@ -5,17 +5,16 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
 import { ClipboardCopyFunction, DataPipeConstants } from '@lcu/common';
 import { MatTableDataSource } from '@angular/material/table';
-import 
-{ 
+import {
   ColumnDefinitionModel,
   DataGridConfigModel,
   DataGridFeaturesModel,
   DataGridPaginationModel,
-  DynamicComponentModel
+  DynamicComponentModel,
 } from '@lowcodeunit/data-grid';
 import { debug } from 'console';
 import { of } from 'rxjs/internal/observable/of';
@@ -33,50 +32,36 @@ export class TelemetryListComponent implements OnChanges, OnInit {
 
   //  Properties
 
-  protected colunmDefsModel: Array<ColumnDefinitionModel>;
-
-  @Input('displayed-columns')
-  public DisplayedColumns: string[];
-
   @Output('downloaded')
   public Downloaded: EventEmitter<IoTEnsembleTelemetryPayload>;
 
   public DynamicComponents: Array<DynamicComponentModel>;
 
-  public GridFeatures: DataGridFeaturesModel;
-
   public GridParameters: DataGridConfigModel;
-  
+
   @Output('page-size-changed')
   public PageSizeChanged: EventEmitter<any>;
 
   @Input('telemetry')
   public Telemetry: IoTEnsembleTelemetry;
 
-  public TelemetryDataSource: MatTableDataSource<IoTEnsembleTelemetryPayload>;
-
   //  Constructors
   constructor() {
-
     this.Downloaded = new EventEmitter();
 
     this.PageSizeChanged = new EventEmitter();
 
     this.Telemetry = { Payloads: [] };
-
-    this.TelemetryDataSource = new MatTableDataSource();
   }
 
   //  Life Cycle
   public ngOnChanges(changes: SimpleChanges): void {
-
     if (changes.Telemetry) {
       this.updateTelemetryDataSource();
     }
   }
 
   public ngOnInit(): void {
-
     this.setupDynamicComponents();
   }
 
@@ -85,10 +70,9 @@ export class TelemetryListComponent implements OnChanges, OnInit {
   /**
    * Copies the json payload to the clipboard while temporarily setting the copy icon to
    * a checkmark to display to the user that the content was succesfully copied
-   * @param payload 
+   * @param payload
    */
-  public CopyClick(payload: IoTEnsembleTelemetryPayload){
-
+  public CopyClick(payload: IoTEnsembleTelemetryPayload) {
     ClipboardCopyFunction.ClipboardCopy(JSON.stringify(payload));
 
     payload.$IsCopySuccessIcon = true;
@@ -98,160 +82,150 @@ export class TelemetryListComponent implements OnChanges, OnInit {
     }, 2000);
   }
 
-
   public DownloadClick(payload: IoTEnsembleTelemetryPayload) {
-
     this.Downloaded.emit(payload);
   }
 
   public SetActivePayload(payload: IoTEnsembleTelemetryPayload) {
-
     payload.$IsExpanded = !payload.$IsExpanded;
-   this.updateTelemetryDataSource();
+
+    this.updateTelemetryDataSource();
   }
 
-  public HandlePageEvent(event: any): void{
+  public HandlePageEvent(event: any): void {
     // console.log("page event t-list: ", event);
-    this.PageSizeChanged.emit(event.pageSize)
-
+    this.PageSizeChanged.emit(event.pageSize);
   }
 
   //  Helpers
   protected updateTelemetryDataSource() {
-
     if (this.Telemetry) {
-      this.TelemetryDataSource.data = this.Telemetry.Payloads || [];
       this.setupGrid();
     }
   }
 
-    /**
-     * Setup dynamic components to inject into datagrid
-     */
-    protected setupDynamicComponents(): void {
+  /**
+   * Setup dynamic components to inject into datagrid
+   */
+  protected setupDynamicComponents(): void {
+    this.DynamicComponents = [
+      new DynamicComponentModel({
+        Component: PayloadComponent,
+        Data: {},
+        Label: 'JSON Payload',
+      }),
+    ];
+  }
 
-      this.DynamicComponents = [
-        new DynamicComponentModel(
-          {
-            Component: PayloadComponent,
-            Data: {},
-            Label: 'JSON Payload'
-          })
-      ];
-    }
+  /**
+   * Setup all features of the grid
+   */
+  protected setupGrid(): void {
+    const columnDefs = this.setupGridParameters();
 
-    /**
-     * Setup all features of the grid
-     */
-    protected setupGrid(): void {
+    const features = this.setupGridFeatures();
 
-      this.setupGridParameters();
+    this.GridParameters = new DataGridConfigModel(
+      of(this.Telemetry.Payloads),
+      columnDefs,
+      features
+    );
+  }
 
-      this.GridParameters = new DataGridConfigModel(
-        of(this.TelemetryDataSource.data),
-        this.colunmDefsModel,
-        this.GridFeatures
-      )
-    };
+  /**
+   * Create grid columns
+   */
+  protected setupGridParameters() {
+    return [
+      new ColumnDefinitionModel({
+        ColType: 'DeviceID',
+        Title: 'Device ID',
+        ShowValue: true,
+      }),
+      new ColumnDefinitionModel({
+        ColType: 'EventProcessedUtcTime',
+        Title: 'Processed At',
+        ShowValue: true,
+        Pipe: DataPipeConstants.DATE_TIME_ZONE_FMT,
+      }),
+      //  TODO:  Move to header?
+      // new ColumnDefinitionModel({
+      //   ColType: 'download',
+      //   ColWidth: '10px',
+      //   Title: '',
+      //   ShowValue: false,
+      //   ShowIcon: true,
+      //   IconColor: 'yellow-accent-text',
+      //   IconConfigFunc: () => 'download',
+      //   Action: {
+      //     ActionHandler: this.DownloadClick.bind(this),
+      //     ActionType: 'button',
+      //     ActionTooltip: 'Download',
+      //   },
+      // }),
+      new ColumnDefinitionModel({
+        ColType: 'copy',
+        ColWidth: '10px',
+        Title: '',
+        ShowValue: false,
+        ShowIcon: true,
+        IconColor: 'orange-accent-text',
+        IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
+          return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
+        },
+        Action: {
+          ActionHandler: this.CopyClick.bind(this),
+          ActionType: 'button',
+          ActionTooltip: 'Copy Payload',
+        },
+      }),
+      new ColumnDefinitionModel({
+        ColType: 'view', // TODO: allow no ColTypes, without setting some random value - shannon
+        ColWidth: '10px',
+        ColBGColor: 'rgba(111,222,333,0.00)',
+        Title: '', // TODO: allow no Titles, without setting '' - shannon
+        ShowValue: false,
+        ShowIcon: true,
+        IconColor: 'green-accent-text',
+        IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
+          return rowData.$IsExpanded ? 'expand_less' : 'expand_more';
+        },
+        Action: {
+          ActionHandler: this.SetActivePayload.bind(this),
+          ActionType: 'button',
+          ActionTooltip: 'Payload',
+        },
+      }),
+    ];
+  }
 
-    /**
-     * Create grid columns
-     */
-    protected setupGridParameters(): void {
+  protected ColTooltip(rowData: IoTEnsembleTelemetryPayload): string {
+    return rowData.$IsExpanded ? 'Close Payload' : 'View Payload';
+  }
 
-      this.colunmDefsModel = [
-        new ColumnDefinitionModel(
-          {
-            ColType: 'id',
-            Title: 'ID',
-            ShowValue: true
-          }),
-        new ColumnDefinitionModel(
-          {
-            ColType: 'DeviceID',
-            Title: 'Device ID',
-            ShowValue: true
-          }),
-        new ColumnDefinitionModel(
-          {
-            ColType: 'EventProcessedUtcTime',
-            Title: 'Processed At',
-            ShowValue: true,
-            Pipe: DataPipeConstants.DATE_TIME_ZONE_FMT
-          }),
-        new ColumnDefinitionModel(
-          {
-            ColType: 'download',
-            Title: '',
-            ShowValue: false,
-            ShowIcon: true,
-            IconConfigFunc: () => 'download',
-            Action:
-            {
-              ActionHandler: this.DownloadClick.bind(this),
-              ActionType: 'button',
-              ActionTooltip: 'Download'
-            }
-          }),
-          new ColumnDefinitionModel(
-            {
-              ColType: 'copy',
-              Title: '',
-              ShowValue: false,
-              ShowIcon: true,
-              IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
-                return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
-              },
-              Action:
-              {
-                ActionHandler: this.CopyClick.bind(this),
-                ActionType: 'button',
-                ActionTooltip: 'Copy Payload'
-              }
-            }),
-            new ColumnDefinitionModel({
-            ColType: 'view', // TODO: allow no ColTypes, without setting some random value - shannon
-            Title: '', // TODO: allow no Titles, without setting '' - shannon
-            ShowValue: false,
-            ShowIcon: true,
-            IconConfigFunc: (rowData: IoTEnsembleTelemetryPayload) => {
-              return rowData.$IsExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
-            },
-            Action:
-            {
-              ActionHandler: this.SetActivePayload.bind(this),
-              ActionType: 'button',
-              ActionTooltip: 'View Payload'
-            }
-          })
-      ];
+  /**
+   * Setup grid features, such as pagination, row colors, etc.
+   */
+  protected setupGridFeatures() {
+    const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
+      {
+        Length: 1,
+        PageIndex: this.Telemetry.Page,
+        PageSize: this.Telemetry.PageSize,
+        PageSizeOptions: [1, 5, 10, 20, 30]k
+      }
+    );
 
-      this.setupGridFeatures();
-    }
+    const features: DataGridFeaturesModel = new DataGridFeaturesModel({
+      NoData: {
+        ShowInline: true,
+      },
+      Paginator: paginationDetails,
+      Filter: false,
+      ShowLoader: true,
+      Highlight: 'rowHighlight',
+    });
 
-    /**
-     * Setup grid features, such as pagination, row colors, etc.
-     */
-    protected setupGridFeatures(): void {
-
-      const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
-        {
-          Length: 1,
-          PageIndex: this.Telemetry.Page,
-          PageSize: this.Telemetry.PageSize,
-          PageSizeOptions: [1, 5, 10, 20, 30]
-        }
-      );
-
-      const features: DataGridFeaturesModel = new DataGridFeaturesModel(
-        {
-          Paginator: paginationDetails,
-          Filter: false,
-          ShowLoader: true,
-          Highlight: 'rowHighlight'
-        }
-      );
-
-      this.GridFeatures = features;
-    }
+    return features;
+  }
 }

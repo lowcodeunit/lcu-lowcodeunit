@@ -15,7 +15,7 @@ import {
   DataGridPaginationModel,
 } from '@lowcodeunit/data-grid';
 import { of } from 'rxjs';
-import { IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
+import { IoTEnsembleConnectedDevicesConfig, IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
 
 @Component({
   selector: 'lcu-devices-table',
@@ -25,16 +25,8 @@ import { IoTEnsembleDeviceInfo } from '../../../state/iot-ensemble.state';
 export class DevicesTableComponent implements OnInit, OnChanges {
   //  Fields
 
-  //  Properties
-  protected colunmDefsModel: Array<ColumnDefinitionModel>;
-
   @Input('devices')
-  public Devices?: IoTEnsembleDeviceInfo[];
-
-  @Input('displayed-columns')
-  public DisplayedColumns: string[];
-
-  public GridFeatures: DataGridFeaturesModel;
+  public Devices: IoTEnsembleConnectedDevicesConfig;
 
   public GridParameters: DataGridConfigModel;
 
@@ -49,7 +41,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
   //  Constructors
   constructor() {
-    this.Devices = [];
+    // this.Devices = [];
 
     this.IssuedSASToken = new EventEmitter();
 
@@ -61,9 +53,8 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   //  Life Cycle
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log('CHANGES: ', changes);
     if (changes.Devices) {
-      this.updateTelemetryDataSource();
+      this.updateDevicesDataSource();
     }
   }
 
@@ -75,7 +66,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
    * a checkmark to display to the user that the content was succesfully copied
    * @param deviceInfo
    */
-  public CopyClick(deviceInfo: IoTEnsembleDeviceInfo): void {
+  public CopyClick(deviceInfo: IoTEnsembleDeviceInfo) {
     ClipboardCopyFunction.ClipboardCopy(deviceInfo.ConnectionString);
 
     deviceInfo.$IsCopySuccessIcon = true;
@@ -107,20 +98,22 @@ export class DevicesTableComponent implements OnInit, OnChanges {
    * Setup all features of the grid
    */
   protected setupGrid(): void {
-    this.setupGridParameters();
+    const columnDefs = this.setupGridColumns();
+
+    const features = this.setupGridFeatures();
 
     this.GridParameters = new DataGridConfigModel(
-      of(this.Devices),
-      this.colunmDefsModel,
-      this.GridFeatures
+      of(this.Devices.Devices),
+      columnDefs,
+      features
     );
   }
 
   /**
    * Create grid columns
    */
-  protected setupGridParameters(): void {
-    this.colunmDefsModel = [
+  protected setupGridColumns() {
+    return [
       new ColumnDefinitionModel({
         ColType: 'DeviceName',
         Title: 'Device Name',
@@ -132,14 +125,16 @@ export class DevicesTableComponent implements OnInit, OnChanges {
         Title: 'Connection String',
         ShowValue: true,
         ShowIcon: true,
-        Pipe: DataPipeConstants.PIPE_STRING_SLICE_HUNDRED,
+        Pipe: DataPipeConstants.PIPE_STRING_SLICE_SEVENTY,
       }),
 
       new ColumnDefinitionModel({
         ColType: 'copy',
+        ColWidth: '10px',
         Title: '',
         ShowValue: false,
         ShowIcon: true,
+        IconColor: 'orange-accent-text',
         IconConfigFunc: (rowData: IoTEnsembleDeviceInfo) => {
           return rowData.$IsCopySuccessIcon ? 'done' : 'content_copy';
         },
@@ -152,9 +147,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
       new ColumnDefinitionModel({
         ColType: 'issue-sas-token',
+        ColWidth: '10px',
         Title: '',
         ShowValue: false,
         ShowIcon: true,
+        IconColor: 'yellow-accent-text',
         IconConfigFunc: () => 'build_circle',
         Action: {
           ActionHandler: this.IssueSASToken.bind(this),
@@ -165,9 +162,11 @@ export class DevicesTableComponent implements OnInit, OnChanges {
 
       new ColumnDefinitionModel({
         ColType: 'actions',
+        ColWidth: '10px',
         Title: '',
         ShowValue: false,
         ShowIcon: true,
+        IconColor: 'red-accent-text',
         IconConfigFunc: () => 'delete',
         Action: {
           ActionHandler: this.RevokeClick.bind(this),
@@ -176,21 +175,22 @@ export class DevicesTableComponent implements OnInit, OnChanges {
         },
       }),
     ];
-
-    this.setupGridFeatures();
   }
   /**
    * Setup grid features, such as pagination, row colors, etc.
    */
-  protected setupGridFeatures(): void {
+  protected setupGridFeatures() {
     const paginationDetails: DataGridPaginationModel = new DataGridPaginationModel(
       {
-        PageSize: 10,
+        PageSize: this.Devices.PageSize,
         PageSizeOptions: [5, 10, 25],
       }
     );
 
     const features: DataGridFeaturesModel = new DataGridFeaturesModel({
+      NoData: {
+        ShowInline: true
+      },
       Paginator: paginationDetails,
       Filter: false,
       ShowLoader: true,
@@ -198,13 +198,12 @@ export class DevicesTableComponent implements OnInit, OnChanges {
       RowColorOdd: 'light-gray',
     });
 
-    this.GridFeatures = features;
+    return features;
   }
 
-  protected updateTelemetryDataSource() {
-    if (this.Devices) {
-      console.log('DEVICES: ', this.Devices);
-      // this.DevicesDataSource = this.Devices;
+  protected updateDevicesDataSource() {
+    if (this.Devices.Devices) {
+      console.log('DEVICES: ', this.Devices.Devices);
 
       this.setupGrid();
     }

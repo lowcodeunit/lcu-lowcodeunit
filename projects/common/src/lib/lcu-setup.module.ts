@@ -1,3 +1,4 @@
+import { GenericModalService } from './services/generic-modal.service';
 import { SideNavService } from './services/sidenav.service';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +23,10 @@ import { PayloadComponent } from './elements/dynamic/payload/payload.component';
 import { DataGridModule } from '@lowcodeunit/data-grid';
 import { RefreshSelectComponent } from './controls/refresh-select/refresh-select.component';
 import { PayloadFormComponent } from './elements/controls/payload-form/payload-form.component';
+import { GenericModalComponent } from './elements/generic/generic-modal/generic-modal.component';
+import { SendMessageDialogComponent } from './elements/manage/controls/send-message-dialog/send-message-dialog.component';
+import { ApiAccessComponent } from './controls/api-access/api-access.component';
+import { SasTokenDialogComponent } from './elements/manage/controls/sas-token-dialog/sas-token-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +41,10 @@ import { PayloadFormComponent } from './elements/controls/payload-form/payload-f
     PayloadComponent,
     RefreshSelectComponent,
     PayloadFormComponent,
+    GenericModalComponent,
+    SendMessageDialogComponent,
+    ApiAccessComponent,
+    SasTokenDialogComponent
   ],
   imports: [
     FathymSharedModule,
@@ -59,6 +68,10 @@ import { PayloadFormComponent } from './elements/controls/payload-form/payload-f
     PayloadComponent,
     RefreshSelectComponent,
     PayloadFormComponent,
+    GenericModalComponent,
+    SendMessageDialogComponent,
+    ApiAccessComponent,
+    SasTokenDialogComponent
   ],
   entryComponents: [
     LcuSetupManageElementComponent,
@@ -67,6 +80,10 @@ import { PayloadFormComponent } from './elements/controls/payload-form/payload-f
     LcuSetupSetupElementComponent,
     PayloadComponent,
     RefreshSelectComponent,
+    GenericModalComponent,
+    PayloadFormComponent,
+    SendMessageDialogComponent,
+    SasTokenDialogComponent
   ],
 })
 export class LcuSetupModule {
@@ -75,7 +92,8 @@ export class LcuSetupModule {
       ngModule: LcuSetupModule,
       providers: [
         IoTEnsembleStateContext,
-        SideNavService
+        SideNavService,
+        GenericModalService
       ],
     };
   }

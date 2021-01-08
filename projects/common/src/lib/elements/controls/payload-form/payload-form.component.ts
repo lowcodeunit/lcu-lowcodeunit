@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IoTEnsembleTelemetryPayload } from './../../../state/iot-ensemble.state';
 
@@ -26,7 +26,7 @@ export class PayloadFormComponent implements OnInit {
   public Sent: EventEmitter<IoTEnsembleTelemetryPayload>;
 
   //  Constructors
-  constructor(protected formBldr: FormBuilder) {
+  constructor(protected el: ElementRef, protected formBldr?: FormBuilder) {
     this.Canceled = new EventEmitter();
 
     this.Sent = new EventEmitter();
@@ -66,7 +66,7 @@ export class PayloadFormComponent implements OnInit {
       deviceName: [this.DeviceName || '', Validators.required],
       deviceType: ['TestPayload', Validators.required],
       version: ['0.0.1', Validators.required],
-      deviceData: ['{ "Room": 13 }', Validators.required],
+      deviceData: ['{ "Floor": 10, "Room": "Conference B", "Test": true }', Validators.required],
       sensorMetadata: ['{ "_": { "Power": 0.76 }, "Temperature": { "Power": 0.93 }, "Humidity": { "Power": 0.54 } }', Validators.required],
       sensorReadings: ['{ "Temperature": 75, "Humidity": 102 }', Validators.required],
     });
