@@ -129,7 +129,7 @@
                 ></lcu-enabled-toggle>
 
                 <a href="https://www.iot-ensemble.com/docs/getting-started/emulated-data" target="_blank">
-                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                  <mat-icon matTooltip="More info">help_outline</mat-icon>
                 </a>
               </mat-card-header>
 
@@ -173,7 +173,7 @@
                   Max number of devices reached
                 </mat-card-subtitle>
                 <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-first-device" target=”_blank”>
-                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                  <mat-icon matTooltip="More info">help_outline</mat-icon>
                 </a>
               </mat-card-header>
 
@@ -291,6 +291,7 @@
                       mat-raised-button
                       type="submit"
                       color="primary"
+                      *ngIf="Devices?.Loading"
                       [disabled]="!AddDeviceFormGroup.valid"
                     >
                       Enroll Device
@@ -362,7 +363,7 @@
                   </lcu-enabled-toggle>
                 </div>
                 <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#devices-telemetry" target="_blank">
-                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                  <mat-icon matTooltip="More info">help_outline</mat-icon>
                 </a>
               </mat-card-header>
 
@@ -377,7 +378,7 @@
               <mat-card-actions>
                 <div fxFlex></div>
 
-                <button mat-raised-button color="primary" (click)="PayloadFormModal()">
+                <button mat-raised-button color="primary" (click)="PayloadFormModal()" *ngIf="Devices?.Devices?.length >= 1">
                   Send Device Message
                 </button>
 
@@ -404,7 +405,7 @@
                 <mat-card-title>Devices Dashboard</mat-card-title>
                 <div fxFlex></div>
                 <a href="https://www.iot-ensemble.com/docs/getting-started/viewing-device-data#freeboard-dashboard" target="_blank">
-                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                  <mat-icon matTooltip="More info">help_outline</mat-icon>
                 </a>
               </mat-card-header>
 
@@ -446,7 +447,7 @@
                 <mat-card-title>Storage Access</mat-card-title>
                 <div fxFlex></div>
                 <a href="https://www.iot-ensemble.com/docs/getting-started/connecting-downstream-services" target="_blank">
-                  <div class="fathym-logo" fxLayoutAlign="end end" matTooltip="Read more about this topic"></div>
+                  <mat-icon matTooltip="More info">help_outline</mat-icon>
                 </a>
               </mat-card-header>
 

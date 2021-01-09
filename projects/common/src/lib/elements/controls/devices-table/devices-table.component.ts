@@ -59,7 +59,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     // console.log('CHANGES: ', changes);
     if (changes.Devices) {
-      this.updateTelemetryDataSource();
+      this.updateDevicesDataSource();
     }
   }
 
@@ -86,6 +86,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
   }
 
   public HandlePageEvent(event: any): void {
+    console.log("PaGe EvEnT: ", event);
     this.PageSizeChanged.emit(event.pageSize);
   }
 
@@ -205,7 +206,7 @@ export class DevicesTableComponent implements OnInit, OnChanges {
     return features;
   }
 
-  protected updateTelemetryDataSource(): void {
+  protected updateDevicesDataSource(): void {
     if (this.Devices) {
       // console.log('DEVICES: ', this.Devices);
 
