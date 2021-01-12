@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './controls/home/home.component';
 import { DocumentationComponent } from './controls/documentation/documentation.component';
 import { LcuDocumentationModule } from '@lowcodeunit/lcu-documentation-common';
-import { LcuSetupModule } from '@iot-ensemble/lcu-setup-common';
+import { LcuLowCodeUnitModule } from '@iot-ensemble/lcu-lowcodeunit-common';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { environment } from '../environments/environment';
     MaterialModule,
     FlexLayoutModule,
     LcuDocumentationModule.forRoot(),
-    LcuSetupModule.forRoot(),
+    LcuLowCodeUnitModule.forRoot(),
   ],
   providers: [
     {
@@ -30,6 +30,6 @@ import { environment } from '../environments/environment';
     },
   ],
   bootstrap: [AppComponent],
-  exports: [LcuSetupModule],
+  exports: [LcuLowCodeUnitModule],
 })
 export class AppModule {}

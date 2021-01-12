@@ -4,16 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FathymSharedModule, LCUServiceSettings } from '@lcu/common';
 import { environment } from '../environments/environment';
 import {
-  LcuSetupModule,
-  LcuSetupManageElementComponent,
-  SELECTOR_LCU_SETUP_MANAGE_ELEMENT,
-  LcuSetupAdminElementComponent,
-  SELECTOR_LCU_SETUP_ADMIN_ELEMENT,
-  LcuSetupDevicesElementComponent,
-  SELECTOR_LCU_SETUP_DEVICES_ELEMENT,
-  LcuSetupSetupElementComponent,
-  SELECTOR_LCU_SETUP_SETUP_ELEMENT,
-} from '@iot-ensemble/lcu-setup-common';
+  LcuLowCodeUnitModule,
+  LcuLowCodeUnitManageElementComponent,
+  SELECTOR_LCU_LOWCODEUNIT_MANAGE_ELEMENT,
+} from '@iot-ensemble/lcu-lowcodeunit-common';
 import { createCustomElement } from '@angular/elements';
 
 @NgModule({
@@ -22,7 +16,7 @@ import { createCustomElement } from '@angular/elements';
     BrowserModule,
     BrowserAnimationsModule,
     FathymSharedModule.forRoot(),
-    LcuSetupModule.forRoot(),
+    LcuLowCodeUnitModule.forRoot(),
   ],
   providers: [
     {
@@ -30,34 +24,16 @@ import { createCustomElement } from '@angular/elements';
       useValue: FathymSharedModule.DefaultServiceSettings(environment),
     },
   ],
-  exports: [LcuSetupModule],
+  exports: [LcuLowCodeUnitModule],
 })
 export class AppModule implements DoBootstrap {
   constructor(protected injector: Injector) {}
 
   public ngDoBootstrap() {
-    const manage = createCustomElement(LcuSetupManageElementComponent, {
+    const manage = createCustomElement(LcuLowCodeUnitManageElementComponent, {
       injector: this.injector,
     });
 
-    customElements.define(SELECTOR_LCU_SETUP_MANAGE_ELEMENT, manage);
-
-    const admin = createCustomElement(LcuSetupAdminElementComponent, {
-      injector: this.injector,
-    });
-
-    customElements.define(SELECTOR_LCU_SETUP_ADMIN_ELEMENT, admin);
-
-    const devices = createCustomElement(LcuSetupDevicesElementComponent, {
-      injector: this.injector,
-    });
-
-    customElements.define(SELECTOR_LCU_SETUP_DEVICES_ELEMENT, devices);
-
-    const setup = createCustomElement(LcuSetupSetupElementComponent, {
-      injector: this.injector,
-    });
-
-    customElements.define(SELECTOR_LCU_SETUP_SETUP_ELEMENT, setup);
+    customElements.define(SELECTOR_LCU_LOWCODEUNIT_MANAGE_ELEMENT, manage);
   }
 }

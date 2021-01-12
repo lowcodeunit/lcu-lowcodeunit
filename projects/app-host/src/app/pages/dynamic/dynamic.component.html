@@ -1,4 +1,4 @@
-<lcu-setup-manage-element
+<lcu-lowcodeunit-manage-element
   *ngIf="State"
   [dashboard]="State.Dashboard"
   [devices]="State.Devices"
@@ -17,7 +17,7 @@
   (update-device-table-page-size)="UpdateDeviceTablePageSize($event)"
   (update-page-size)="UpdatePageSize($event)"
   (update-refresh-rate)="UpdateRefreshRate($event)"
-></lcu-setup-manage-element>
+></lcu-lowcodeunit-manage-element>
 <!--
 <div>
   <a mat-raised-button color="accent" (click)="WarmQuery()">Warm Query</a>

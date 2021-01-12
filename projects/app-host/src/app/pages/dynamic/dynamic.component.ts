@@ -6,7 +6,7 @@ import {
   BreakpointUtils,
   IoTEnsembleDeviceEnrollment,
   IoTEnsembleTelemetryPayload,
-} from '@iot-ensemble/lcu-setup-common';
+} from '@iot-ensemble/lcu-lowcodeunit-common';
 
 @Component({
   selector: 'lcu-dynamic',
