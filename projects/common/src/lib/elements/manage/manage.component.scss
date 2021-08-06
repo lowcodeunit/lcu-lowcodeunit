@@ -1,10 +1,12 @@
+@import "../../../assets/common";
+
 :host {
   .manage-header {
   }
 
   .manage {
-    .widget {
-      margin: 1em;
+    .section {
+      margin: .5rem 0;
     }
 
     .devices {
@@ -12,20 +14,21 @@
       }
 
       .connected {
-        .deviceId, .connStr {
-          width: 300px;
-          margin: 0.5em;
+        .deviceId,
+        .connStr {
+          // width: 300px;
+          // margin: 0.5em;
         }
       }
 
-      .dashboard {
-        iframe {
-          width: 100%;
-        }
-      }
+      // .dashboard {
+        // iframe {
+          // width: 100%;
+        // }
+      // }
 
-      .telemetry {
-      }
+      // .telemetry {
+      // }
     }
 
     .connected {
@@ -34,6 +37,32 @@
     }
 
     .storage-access {
+    }
+  }
+
+  .border-bottom {
+    // border-bottom: 1px solid set-opacity(grey, .25);
+  }
+
+  .telemetry-update {
+    color: set-opacity(white, 0.25);
+
+    .success-dot {
+      height: 10px;
+      width: 10px;
+      background-color: $success;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .error-dot {
+      height: 10px;
+      width: 10px;
+      background-color: red; // TODO:  Where frm theme to get this
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 10px;
     }
   }
 }

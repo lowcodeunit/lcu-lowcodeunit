@@ -1,25 +1,16 @@
 {
 	"templates": {
 		"repository": "lowcodeunit-devkit/lcu-cli-templates-core",
-		"scope": "@iot-ensemble",
-		"workspace": "lcu-setup"
+		"scope": "@lowcodeunit",
+		"workspace": "lcu-lowcodeunit"
 	},
 	"config": {
 		"wc": [
-			"wc/lcu-setup.lcu.js"
+			"wc/lcu-lowcodeunit.lcu.js"
 		],
 		"solutions": {
 			"manage": {
-				"element": "lcu-setup-manage-element"
-			},
-			"admin": {
-				"element": "lcu-setup-admin-element"
-			},
-			"devices": {
-				"element": "lcu-setup-devices-element"
-			},
-			"setup": {
-				"element": "lcu-setup-setup-element"
+				"element": "lcu-lowcodeunit-manage-element"
 			}
 		},
 		"elements": {},
